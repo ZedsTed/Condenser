@@ -1,0 +1,11 @@
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\bin\Debug\Steam Web Artefact Reader.exe.config
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam Web Artefact Reader.csprojResolveAssemblyReference.cache
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam_Web_Artefact_Reader.Form1.resources
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam_Web_Artefact_Reader.Properties.Resources.resources
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam Web Artefact Reader.csproj.GenerateResource.Cache
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\bin\Debug\Steam Web Artefact Reader.exe
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\bin\Debug\Steam Web Artefact Reader.pdb
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam Web Artefact Reader.exe
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\obj\Debug\Steam Web Artefact Reader.pdb
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\bin\Debug\System.Data.SQLite.dll
+D:\Documents\New\GitHub\Steam Web Artefact Reader\Steam Web Artefact Reader\bin\Debug\System.Data.SQLite.pdb
