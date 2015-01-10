@@ -10,6 +10,8 @@ namespace Steam_Web_Artefact_Reader
     {
         private string steamDir;
         private string[] steamFilesConfig, steamFilesAppCache;
+        public List<string> steamFilesList = new List<string>();
+        private bool config, httpcache;
 
         /// <summary>
         /// Finds and sets the Steam installation directory, has the default directory set currently.
@@ -25,22 +27,27 @@ namespace Steam_Web_Artefact_Reader
         /// Recursively gets an array of all the files in the config directory.
         /// </summary>
         /// <returns>A string array of the config directory's files.</returns>
-        public string[] listSteamFilesConfig()
+        public List<string> listSteamFiles(bool config, bool httpcache)
         {
-            steamFilesConfig = System.IO.Directory.GetFiles(steamDir + @"config\", "*", System.IO.SearchOption.AllDirectories);                 
+            if (config && httpcache)
+            {
+                steamFilesConfig = System.IO.Directory.GetFiles(steamDir + @"config\", "*", System.IO.SearchOption.AllDirectories);
+                steamFilesAppCache = System.IO.Directory.GetFiles(steamDir + @"appcache\httpcache\", "*", System.IO.SearchOption.AllDirectories);
 
-            return steamFilesConfig;
+                int j = steamFilesConfig.Count();
+                for (int i = 0; i < j; i++)
+                {
+                    steamFilesList.Add(steamFilesConfig[i]);
+                }
+
+                int k = steamFilesAppCache.Count();
+                for (int i = 0; i < k; i++)
+                {
+                    steamFilesList.Add(steamFilesAppCache[i]);
+                }
+            }
+            return steamFilesList;
         }
-
-        /// <summary>
-        /// Recursively gets an array of all the files in the httpcache directory.
-        /// </summary>
-        /// <returns>A string array of the httpcache directory's files.</returns>
-        public string[] listSteamFilesAppCache()
-        {
-            steamFilesAppCache = System.IO.Directory.GetFiles(steamDir + @"appcache\httpcache\", "*", System.IO.SearchOption.AllDirectories);
-            
-            return steamFilesAppCache;
-        }  
+ 
     }
 }

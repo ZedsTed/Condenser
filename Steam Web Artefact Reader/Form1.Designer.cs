@@ -42,18 +42,19 @@
             this.sha1check = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cookieAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -85,9 +86,9 @@
             // 
             // steamDirListConfig
             // 
-            this.steamDirListConfig.Location = new System.Drawing.Point(265, 118);
+            this.steamDirListConfig.Location = new System.Drawing.Point(265, 107);
             this.steamDirListConfig.Name = "steamDirListConfig";
-            this.steamDirListConfig.Size = new System.Drawing.Size(232, 140);
+            this.steamDirListConfig.Size = new System.Drawing.Size(232, 151);
             this.steamDirListConfig.TabIndex = 3;
             this.steamDirListConfig.Text = "";
             // 
@@ -180,6 +181,18 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // newSessionToolStripMenuItem
+            // 
+            this.newSessionToolStripMenuItem.Name = "newSessionToolStripMenuItem";
+            this.newSessionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newSessionToolStripMenuItem.Text = "New Session";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
@@ -194,35 +207,6 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeSteamDirectoryToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.debugInformationToolStripMenuItem,
-            this.aboutSteamWebArtefactReaderSWARToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // newSessionToolStripMenuItem
-            // 
-            this.newSessionToolStripMenuItem.Name = "newSessionToolStripMenuItem";
-            this.newSessionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newSessionToolStripMenuItem.Text = "New Session";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            // 
             // cookieAnalysisToolStripMenuItem
             // 
             this.cookieAnalysisToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -236,20 +220,37 @@
             this.displayTableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cookiesTableToolStripMenuItem});
             this.displayTableToolStripMenuItem.Name = "displayTableToolStripMenuItem";
-            this.displayTableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.displayTableToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.displayTableToolStripMenuItem.Text = "Display Table";
             // 
             // cookiesTableToolStripMenuItem
             // 
             this.cookiesTableToolStripMenuItem.Name = "cookiesTableToolStripMenuItem";
-            this.cookiesTableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cookiesTableToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.cookiesTableToolStripMenuItem.Text = "Cookies Table";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeSteamDirectoryToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
             // 
             // changeSteamDirectoryToolStripMenuItem
             // 
             this.changeSteamDirectoryToolStripMenuItem.Name = "changeSteamDirectoryToolStripMenuItem";
             this.changeSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.changeSteamDirectoryToolStripMenuItem.Text = "Change Steam Directory";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debugInformationToolStripMenuItem,
+            this.aboutSteamWebArtefactReaderSWARToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // debugInformationToolStripMenuItem
             // 
@@ -263,11 +264,20 @@
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Text = "About Steam Web Artefact Reader (SWAR)";
             // 
+            // FileListBox
+            // 
+            this.FileListBox.FormattingEnabled = true;
+            this.FileListBox.Location = new System.Drawing.Point(504, 107);
+            this.FileListBox.Name = "FileListBox";
+            this.FileListBox.Size = new System.Drawing.Size(407, 264);
+            this.FileListBox.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 756);
+            this.Controls.Add(this.FileListBox);
             this.Controls.Add(this.sha1check);
             this.Controls.Add(this.md5check);
             this.Controls.Add(this.dataGridView1);
@@ -317,6 +327,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutSteamWebArtefactReaderSWARToolStripMenuItem;
+        private System.Windows.Forms.ListBox FileListBox;
     }
 }
 

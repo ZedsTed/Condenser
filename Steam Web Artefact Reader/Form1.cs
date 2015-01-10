@@ -29,19 +29,19 @@ namespace Steam_Web_Artefact_Reader
             string userSteamDir = steamDir.findSteamDir();
 
             dirOutput.Text = userSteamDir;
-            
 
-            string[] steamFilesAppCache = steamDir.listSteamFilesAppCache();
-            foreach (string path in steamFilesAppCache)
+            
+            List<string> steamFiles = steamDir.listSteamFiles(true, true);
+            foreach (string path in steamFiles)
             {
-                steamDirListAppCache.AppendText(path + Environment.NewLine);
+                FileListBox.Items.Add(path);
             }
 
-            string[] steamFilesConfig = steamDir.listSteamFilesConfig();
+            /*string[] steamFilesConfig = steamDir.listSteamFilesConfig();
             foreach (string path in steamFilesConfig)
             {
                 steamDirListConfig.AppendText(path + Environment.NewLine);
-            }
+            }*/
             
         }
 
