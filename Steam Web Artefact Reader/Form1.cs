@@ -22,28 +22,7 @@ namespace Steam_Web_Artefact_Reader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void parseFiles_Click(object sender, EventArgs e)
-        {
-            SteamDirParser steamDir = new SteamDirParser();
-           
-            string userSteamDir = steamDir.findSteamDir();
 
-            dirOutput.Text = userSteamDir;
-
-            
-            List<string> steamFiles = steamDir.listSteamFiles(true, true);
-            foreach (string path in steamFiles)
-            {
-                FileListBox.Items.Add(path);
-            }
-
-            /*string[] steamFilesConfig = steamDir.listSteamFilesConfig();
-            foreach (string path in steamFilesConfig)
-            {
-                steamDirListConfig.AppendText(path + Environment.NewLine);
-            }*/
-            
-        }
 
         /// <summary>
         /// 
@@ -56,7 +35,9 @@ namespace Steam_Web_Artefact_Reader
 
             DataTable dbout = reader.sqlRead();
 
+            dataGridView1.Columns.Clear();
             dataGridView1.DataSource = dbout;
+            
             /*
             for (int i = 0; i <= strout.Length; i++ )
             {
@@ -70,28 +51,70 @@ namespace Steam_Web_Artefact_Reader
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void md5check_Click(object sender, EventArgs e)
+
+
+        private void newSession_Click(object sender, EventArgs e)
         {
-            HashReader md5hasher = new HashReader(@"C:\hash", true, true);
-            string md5hash =  md5hasher.GetMD5Hash();
-            hashDisplay.AppendText(md5hash + "\n"); 
+            SteamDirParser steamDir = new SteamDirParser();
+
+            string userSteamDir = steamDir.findSteamDir();
+
+            dirOutput.Text = userSteamDir;
+
+
+            List<string> steamFiles = steamDir.listSteamFiles(true, true);
+            foreach (string path in steamFiles)
+            {
+                FileListBox.Items.Add(path);
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void sha1check_Click(object sender, EventArgs e)
+        private void fileSizeLabel_Click(object sender, EventArgs e)
         {
-            HashReader sha1hasher = new HashReader(@"C:\hash", true, true);
-            string sha1hash = sha1hasher.GetSHA1Hash();
-            hashDisplay.AppendText(sha1hash + "\n"); 
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileModifiedLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedFile = FileListBox.SelectedItem.ToString();
+
+            SteamFileInfo fileinfo = new SteamFileInfo(selectedFile);
+
+            fileSizeOut.Text = fileinfo.GetFileSize();
+            accessDateOut.Text = fileinfo.GetAccessDate();
+            creationDateOut.Text = fileinfo.GetCreationDate();
+            modifiedDateOut.Text = fileinfo.GetModifiedDate();
+
+            MD5Out.Text = fileinfo.GetMD5Hash();
+            SHA1Out.Text = fileinfo.GetSHA1Hash();
+
+            //return selectedFile;
+        }
+
+        private void newSession_Click_1(object sender, EventArgs e)
+        {
+            SteamDirParser steamDir = new SteamDirParser();
+
+            string userSteamDir = steamDir.findSteamDir();
+
+            dirOutput.Text = userSteamDir;
+
+
+            List<string> steamFiles = steamDir.listSteamFiles(true, true);
+            foreach (string path in steamFiles)
+            {
+                FileListBox.Items.Add(path);
+            }
         }
 
         
