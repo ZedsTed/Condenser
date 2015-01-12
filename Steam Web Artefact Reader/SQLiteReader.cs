@@ -10,18 +10,24 @@ namespace Steam_Web_Artefact_Reader
 {
     class SQLiteReader
     {
+        public DataTable DBout;
+        public SQLiteDBHelper DBsession;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public DataTable sqlRead()
+        public SQLiteReader()
         {
-            DataTable DBout;
-            SQLiteDBHelper DBsession = new SQLiteDBHelper(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies");
+            
+        }
 
-            DBout = DBsession.GetDataTable("SELECT * FROM cookies");           
+        public DataTable GetConnection()
+        {
+            DBsession = new SQLiteDBHelper(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
+
+            DBout = DBsession.GetDataTable("SELECT * FROM cookies");
 
             return DBout;
-            }
+        }
     }    
 }

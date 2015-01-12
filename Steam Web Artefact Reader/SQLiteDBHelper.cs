@@ -71,6 +71,8 @@ namespace Steam_Web_Artefact_Reader
             return dt;
         }
 
+        
+
         /// <summary>
         ///     Allows the programmer to interact with the database for purposes other than a query.
         /// </summary>

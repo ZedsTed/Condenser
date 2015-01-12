@@ -31,10 +31,6 @@
             this.dirOutput = new System.Windows.Forms.TextBox();
             this.readCookie = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hashDisplay = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,38 +87,13 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3});
             this.dataGridView1.Location = new System.Drawing.Point(13, 421);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ShowCellErrors = false;
+            this.dataGridView1.ShowRowErrors = false;
             this.dataGridView1.Size = new System.Drawing.Size(914, 323);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Column2";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Column3";
-            this.Column3.Name = "Column3";
-            // 
-            // hashDisplay
-            // 
-            this.hashDisplay.Location = new System.Drawing.Point(426, 107);
-            this.hashDisplay.Name = "hashDisplay";
-            this.hashDisplay.Size = new System.Drawing.Size(170, 264);
-            this.hashDisplay.TabIndex = 5;
-            this.hashDisplay.Text = "";
             // 
             // menuStrip1
             // 
@@ -258,7 +229,7 @@
             this.FileListBox.FormattingEnabled = true;
             this.FileListBox.Location = new System.Drawing.Point(13, 107);
             this.FileListBox.Name = "FileListBox";
-            this.FileListBox.Size = new System.Drawing.Size(407, 264);
+            this.FileListBox.Size = new System.Drawing.Size(584, 264);
             this.FileListBox.TabIndex = 9;
             this.FileListBox.SelectedIndexChanged += new System.EventHandler(this.FileListBox_SelectedIndexChanged);
             // 
@@ -419,7 +390,6 @@
             this.Controls.Add(this.fileNameLabel);
             this.Controls.Add(this.FileListBox);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.hashDisplay);
             this.Controls.Add(this.readCookie);
             this.Controls.Add(this.dirOutput);
             this.Controls.Add(this.menuStrip1);
@@ -440,10 +410,6 @@
         private System.Windows.Forms.TextBox dirOutput;
         private System.Windows.Forms.Button readCookie;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.RichTextBox hashDisplay;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newSession;

@@ -33,11 +33,14 @@ namespace Steam_Web_Artefact_Reader
         {
             SQLiteReader reader = new SQLiteReader();
 
-            DataTable dbout = reader.sqlRead();
+            DataTable dbout = reader.GetConnection();
 
             dataGridView1.Columns.Clear();
             dataGridView1.DataSource = dbout;
-            
+            dataGridView1.ReadOnly = true;
+
+            //foreach(string entry in dataGridView1.Columns.ToString();)
+
             /*
             for (int i = 0; i <= strout.Length; i++ )
             {
@@ -45,6 +48,10 @@ namespace Steam_Web_Artefact_Reader
             }*/
         }
 
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
+        }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -115,6 +122,14 @@ namespace Steam_Web_Artefact_Reader
             {
                 FileListBox.Items.Add(path);
             }
+        }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+            
+            MessageBox.Show(e.Context.ToString());
+            e.Cancel = true;
         }
 
         
