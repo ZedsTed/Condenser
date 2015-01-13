@@ -19,6 +19,14 @@ namespace Steam_Web_Artefact_Reader
             this.file = file;
         }
 
+        public string GetFileName()
+        {
+            FileInfo fileinfo = new FileInfo(file);
+            string filename = fileinfo.Name;
+
+            return filename;
+        }
+
         public string GetFileSize()
         {
             long size;
