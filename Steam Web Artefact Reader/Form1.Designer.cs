@@ -37,9 +37,6 @@
             this.openItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cookieAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.displayTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataIntegrityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mD5HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +60,7 @@
             this.creationDateOut = new System.Windows.Forms.Label();
             this.accessDateOut = new System.Windows.Forms.Label();
             this.modifiedDateOut = new System.Windows.Forms.Label();
+            this.sQLiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,11 +85,11 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 421);
+            this.dataGridView1.Location = new System.Drawing.Point(13, 377);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ShowCellErrors = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(914, 323);
+            this.dataGridView1.Size = new System.Drawing.Size(914, 367);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -140,33 +138,11 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cookieAnalysisToolStripMenuItem,
+            this.sQLiteToolStripMenuItem,
             this.dataIntegrityToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // cookieAnalysisToolStripMenuItem
-            // 
-            this.cookieAnalysisToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.displayTableToolStripMenuItem});
-            this.cookieAnalysisToolStripMenuItem.Name = "cookieAnalysisToolStripMenuItem";
-            this.cookieAnalysisToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.cookieAnalysisToolStripMenuItem.Text = "Cookie Analysis";
-            // 
-            // displayTableToolStripMenuItem
-            // 
-            this.displayTableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cookiesTableToolStripMenuItem});
-            this.displayTableToolStripMenuItem.Name = "displayTableToolStripMenuItem";
-            this.displayTableToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.displayTableToolStripMenuItem.Text = "Display Table";
-            // 
-            // cookiesTableToolStripMenuItem
-            // 
-            this.cookiesTableToolStripMenuItem.Name = "cookiesTableToolStripMenuItem";
-            this.cookiesTableToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.cookiesTableToolStripMenuItem.Text = "Cookies Table";
             // 
             // dataIntegrityToolStripMenuItem
             // 
@@ -229,14 +205,14 @@
             this.FileListBox.FormattingEnabled = true;
             this.FileListBox.Location = new System.Drawing.Point(13, 107);
             this.FileListBox.Name = "FileListBox";
-            this.FileListBox.Size = new System.Drawing.Size(584, 264);
+            this.FileListBox.Size = new System.Drawing.Size(639, 264);
             this.FileListBox.TabIndex = 9;
             this.FileListBox.SelectedIndexChanged += new System.EventHandler(this.FileListBox_SelectedIndexChanged);
             // 
             // fileNameLabel
             // 
             this.fileNameLabel.AutoSize = true;
-            this.fileNameLabel.Location = new System.Drawing.Point(603, 107);
+            this.fileNameLabel.Location = new System.Drawing.Point(658, 107);
             this.fileNameLabel.Name = "fileNameLabel";
             this.fileNameLabel.Size = new System.Drawing.Size(57, 13);
             this.fileNameLabel.TabIndex = 10;
@@ -245,7 +221,7 @@
             // fileSizeLabel
             // 
             this.fileSizeLabel.AutoSize = true;
-            this.fileSizeLabel.Location = new System.Drawing.Point(603, 120);
+            this.fileSizeLabel.Location = new System.Drawing.Point(658, 120);
             this.fileSizeLabel.Name = "fileSizeLabel";
             this.fileSizeLabel.Size = new System.Drawing.Size(49, 13);
             this.fileSizeLabel.TabIndex = 11;
@@ -255,7 +231,7 @@
             // fileNameOut
             // 
             this.fileNameOut.AutoSize = true;
-            this.fileNameOut.Location = new System.Drawing.Point(694, 107);
+            this.fileNameOut.Location = new System.Drawing.Point(749, 107);
             this.fileNameOut.Name = "fileNameOut";
             this.fileNameOut.Size = new System.Drawing.Size(22, 13);
             this.fileNameOut.TabIndex = 12;
@@ -265,7 +241,7 @@
             // fileSizeOut
             // 
             this.fileSizeOut.AutoSize = true;
-            this.fileSizeOut.Location = new System.Drawing.Point(694, 120);
+            this.fileSizeOut.Location = new System.Drawing.Point(749, 120);
             this.fileSizeOut.Name = "fileSizeOut";
             this.fileSizeOut.Size = new System.Drawing.Size(22, 13);
             this.fileSizeOut.TabIndex = 13;
@@ -275,7 +251,7 @@
             // fileCreationLabel
             // 
             this.fileCreationLabel.AutoSize = true;
-            this.fileCreationLabel.Location = new System.Drawing.Point(603, 133);
+            this.fileCreationLabel.Location = new System.Drawing.Point(658, 133);
             this.fileCreationLabel.Name = "fileCreationLabel";
             this.fileCreationLabel.Size = new System.Drawing.Size(75, 13);
             this.fileCreationLabel.TabIndex = 11;
@@ -285,7 +261,7 @@
             // fileAccessLabel
             // 
             this.fileAccessLabel.AutoSize = true;
-            this.fileAccessLabel.Location = new System.Drawing.Point(603, 146);
+            this.fileAccessLabel.Location = new System.Drawing.Point(658, 146);
             this.fileAccessLabel.Name = "fileAccessLabel";
             this.fileAccessLabel.Size = new System.Drawing.Size(71, 13);
             this.fileAccessLabel.TabIndex = 14;
@@ -294,7 +270,7 @@
             // fileModifiedLabel
             // 
             this.fileModifiedLabel.AutoSize = true;
-            this.fileModifiedLabel.Location = new System.Drawing.Point(603, 159);
+            this.fileModifiedLabel.Location = new System.Drawing.Point(658, 159);
             this.fileModifiedLabel.Name = "fileModifiedLabel";
             this.fileModifiedLabel.Size = new System.Drawing.Size(79, 13);
             this.fileModifiedLabel.TabIndex = 15;
@@ -304,7 +280,7 @@
             // MD5HashLabel
             // 
             this.MD5HashLabel.AutoSize = true;
-            this.MD5HashLabel.Location = new System.Drawing.Point(603, 172);
+            this.MD5HashLabel.Location = new System.Drawing.Point(658, 172);
             this.MD5HashLabel.Name = "MD5HashLabel";
             this.MD5HashLabel.Size = new System.Drawing.Size(61, 13);
             this.MD5HashLabel.TabIndex = 16;
@@ -313,7 +289,7 @@
             // SHA1HashLabel
             // 
             this.SHA1HashLabel.AutoSize = true;
-            this.SHA1HashLabel.Location = new System.Drawing.Point(603, 185);
+            this.SHA1HashLabel.Location = new System.Drawing.Point(658, 185);
             this.SHA1HashLabel.Name = "SHA1HashLabel";
             this.SHA1HashLabel.Size = new System.Drawing.Size(66, 13);
             this.SHA1HashLabel.TabIndex = 17;
@@ -322,7 +298,7 @@
             // MD5Out
             // 
             this.MD5Out.AutoSize = true;
-            this.MD5Out.Location = new System.Drawing.Point(694, 172);
+            this.MD5Out.Location = new System.Drawing.Point(749, 172);
             this.MD5Out.Name = "MD5Out";
             this.MD5Out.Size = new System.Drawing.Size(22, 13);
             this.MD5Out.TabIndex = 18;
@@ -332,7 +308,7 @@
             // SHA1Out
             // 
             this.SHA1Out.AutoSize = true;
-            this.SHA1Out.Location = new System.Drawing.Point(694, 185);
+            this.SHA1Out.Location = new System.Drawing.Point(749, 185);
             this.SHA1Out.Name = "SHA1Out";
             this.SHA1Out.Size = new System.Drawing.Size(22, 13);
             this.SHA1Out.TabIndex = 18;
@@ -342,7 +318,7 @@
             // creationDateOut
             // 
             this.creationDateOut.AutoSize = true;
-            this.creationDateOut.Location = new System.Drawing.Point(694, 133);
+            this.creationDateOut.Location = new System.Drawing.Point(749, 133);
             this.creationDateOut.Name = "creationDateOut";
             this.creationDateOut.Size = new System.Drawing.Size(22, 13);
             this.creationDateOut.TabIndex = 13;
@@ -352,7 +328,7 @@
             // accessDateOut
             // 
             this.accessDateOut.AutoSize = true;
-            this.accessDateOut.Location = new System.Drawing.Point(694, 146);
+            this.accessDateOut.Location = new System.Drawing.Point(749, 146);
             this.accessDateOut.Name = "accessDateOut";
             this.accessDateOut.Size = new System.Drawing.Size(22, 13);
             this.accessDateOut.TabIndex = 13;
@@ -362,12 +338,18 @@
             // modifiedDateOut
             // 
             this.modifiedDateOut.AutoSize = true;
-            this.modifiedDateOut.Location = new System.Drawing.Point(694, 159);
+            this.modifiedDateOut.Location = new System.Drawing.Point(749, 159);
             this.modifiedDateOut.Name = "modifiedDateOut";
             this.modifiedDateOut.Size = new System.Drawing.Size(22, 13);
             this.modifiedDateOut.TabIndex = 13;
             this.modifiedDateOut.Text = "foo";
             this.modifiedDateOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // sQLiteToolStripMenuItem
+            // 
+            this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
+            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sQLiteToolStripMenuItem.Text = "SQLite Tool";
             // 
             // Form1
             // 
@@ -416,9 +398,6 @@
         private System.Windows.Forms.ToolStripMenuItem openItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cookieAnalysisToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem displayTableToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cookiesTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeSteamDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -442,6 +421,7 @@
         private System.Windows.Forms.Label creationDateOut;
         private System.Windows.Forms.Label accessDateOut;
         private System.Windows.Forms.Label modifiedDateOut;
+        private System.Windows.Forms.ToolStripMenuItem sQLiteToolStripMenuItem;
     }
 }
 

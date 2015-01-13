@@ -38,24 +38,24 @@ namespace Steam_Web_Artefact_Reader
             dataGridView1.Columns.Clear();
             dataGridView1.DataSource = dbout;
             dataGridView1.ReadOnly = true;
-
-            //foreach(string entry in dataGridView1.Columns.ToString();)
-
-            /*
-            for (int i = 0; i <= strout.Length; i++ )
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
-                cookieDisplay.AppendText(strout[i]);
-            }*/
+                if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
+                {
+                    dataGridView1.Columns[i].Visible = false;
+                }
+            }
         }
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
 
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
 
@@ -84,6 +84,15 @@ namespace Steam_Web_Artefact_Reader
         private void Form1_Load(object sender, EventArgs e)
         {
 
+            fileNameOut.Text = " ";
+            fileSizeOut.Text = " ";
+            accessDateOut.Text = " ";
+            creationDateOut.Text = " ";
+            modifiedDateOut.Text = " ";
+
+            MD5Out.Text = " ";
+            SHA1Out.Text = " ";
+
         }
 
         private void fileModifiedLabel_Click(object sender, EventArgs e)
@@ -97,6 +106,7 @@ namespace Steam_Web_Artefact_Reader
 
             SteamFileInfo fileinfo = new SteamFileInfo(selectedFile);
 
+            fileNameOut.Text = fileinfo.GetFileName();
             fileSizeOut.Text = fileinfo.GetFileSize();
             accessDateOut.Text = fileinfo.GetAccessDate();
             creationDateOut.Text = fileinfo.GetCreationDate();
@@ -125,12 +135,12 @@ namespace Steam_Web_Artefact_Reader
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-
-            
+        {            
             MessageBox.Show(e.Context.ToString());
             e.Cancel = true;
         }
+
+
 
         
     }
