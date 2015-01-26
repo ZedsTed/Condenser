@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Steam_Web_Artefact_Reader
 {
-    class HashReader
+    public class HashReader
     {
         string filePath, md5HashString, sha1HashString;
         bool md5, sha1 = false;
@@ -43,8 +43,10 @@ namespace Steam_Web_Artefact_Reader
         /// 
         /// </summary>
         /// <returns></returns>
-        public string MD5Hash()
+        public static string MD5Hash(string filePath)
         {
+            string md5HashString;
+            byte[] md5hash;
             // Create a DirectoryInfo object representing the specified directory.
             //DirectoryInfo dir = new DirectoryInfo(filePath);
             // Get the FileInfo objects for every file in the directory.
@@ -79,8 +81,10 @@ namespace Steam_Web_Artefact_Reader
         /// 
         /// </summary>
         /// <returns></returns>
-        public string SHA1Hash()
+        public static string SHA1Hash(string filePath)
         {
+            string sha1HashString;
+            byte[] sha1hash;
             // Create a DirectoryInfo object representing the specified directory.
             //DirectoryInfo dir = new DirectoryInfo(filePath);
             // Get the FileInfo objects for every file in the directory.

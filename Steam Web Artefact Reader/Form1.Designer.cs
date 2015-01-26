@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.dirOutput = new System.Windows.Forms.TextBox();
-            this.readCookie = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +36,9 @@
             this.openItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sQLiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataIntegrityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mD5HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,36 +62,27 @@
             this.creationDateOut = new System.Windows.Forms.Label();
             this.accessDateOut = new System.Windows.Forms.Label();
             this.modifiedDateOut = new System.Windows.Forms.Label();
-            this.sQLiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dirOutput
             // 
-            this.dirOutput.Location = new System.Drawing.Point(13, 81);
+            this.dirOutput.Location = new System.Drawing.Point(12, 27);
             this.dirOutput.Name = "dirOutput";
             this.dirOutput.Size = new System.Drawing.Size(414, 20);
             this.dirOutput.TabIndex = 2;
             // 
-            // readCookie
-            // 
-            this.readCookie.Location = new System.Drawing.Point(13, 27);
-            this.readCookie.Name = "readCookie";
-            this.readCookie.Size = new System.Drawing.Size(104, 34);
-            this.readCookie.TabIndex = 4;
-            this.readCookie.Text = "Read Cookie File";
-            this.readCookie.UseVisualStyleBackColor = true;
-            this.readCookie.Click += new System.EventHandler(this.readCookie_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 377);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 323);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ShowCellErrors = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(914, 367);
+            this.dataGridView1.Size = new System.Drawing.Size(915, 421);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -118,15 +111,18 @@
             // 
             // newSession
             // 
+            this.newSession.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findSteamDirectoryToolStripMenuItem,
+            this.copyWebBrowserDataToolStripMenuItem});
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(140, 22);
+            this.newSession.Size = new System.Drawing.Size(152, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
             // openItem
             // 
             this.openItem.Name = "openItem";
-            this.openItem.Size = new System.Drawing.Size(140, 22);
+            this.openItem.Size = new System.Drawing.Size(152, 22);
             this.openItem.Text = "Open";
             // 
             // viewToolStripMenuItem
@@ -144,13 +140,35 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
+            // sQLiteToolStripMenuItem
+            // 
+            this.sQLiteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadCookiesTableToolStripMenuItem,
+            this.refreshCookiesTableToolStripMenuItem});
+            this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
+            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sQLiteToolStripMenuItem.Text = "SQLite Reader";
+            // 
+            // loadCookiesTableToolStripMenuItem
+            // 
+            this.loadCookiesTableToolStripMenuItem.Name = "loadCookiesTableToolStripMenuItem";
+            this.loadCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.loadCookiesTableToolStripMenuItem.Text = "Load Cookies Table";
+            this.loadCookiesTableToolStripMenuItem.Click += new System.EventHandler(this.loadCookiesTableToolStripMenuItem_Click);
+            // 
+            // refreshCookiesTableToolStripMenuItem
+            // 
+            this.refreshCookiesTableToolStripMenuItem.Name = "refreshCookiesTableToolStripMenuItem";
+            this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.refreshCookiesTableToolStripMenuItem.Text = "Refresh Cookies Table";
+            // 
             // dataIntegrityToolStripMenuItem
             // 
             this.dataIntegrityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mD5HashToolStripMenuItem,
             this.sHA1HashToolStripMenuItem});
             this.dataIntegrityToolStripMenuItem.Name = "dataIntegrityToolStripMenuItem";
-            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dataIntegrityToolStripMenuItem.Text = "Data Integrity";
             // 
             // mD5HashToolStripMenuItem
@@ -203,7 +221,7 @@
             // FileListBox
             // 
             this.FileListBox.FormattingEnabled = true;
-            this.FileListBox.Location = new System.Drawing.Point(13, 107);
+            this.FileListBox.Location = new System.Drawing.Point(12, 53);
             this.FileListBox.Name = "FileListBox";
             this.FileListBox.Size = new System.Drawing.Size(639, 264);
             this.FileListBox.TabIndex = 9;
@@ -212,7 +230,7 @@
             // fileNameLabel
             // 
             this.fileNameLabel.AutoSize = true;
-            this.fileNameLabel.Location = new System.Drawing.Point(658, 107);
+            this.fileNameLabel.Location = new System.Drawing.Point(657, 53);
             this.fileNameLabel.Name = "fileNameLabel";
             this.fileNameLabel.Size = new System.Drawing.Size(57, 13);
             this.fileNameLabel.TabIndex = 10;
@@ -221,7 +239,7 @@
             // fileSizeLabel
             // 
             this.fileSizeLabel.AutoSize = true;
-            this.fileSizeLabel.Location = new System.Drawing.Point(658, 120);
+            this.fileSizeLabel.Location = new System.Drawing.Point(657, 66);
             this.fileSizeLabel.Name = "fileSizeLabel";
             this.fileSizeLabel.Size = new System.Drawing.Size(49, 13);
             this.fileSizeLabel.TabIndex = 11;
@@ -231,7 +249,7 @@
             // fileNameOut
             // 
             this.fileNameOut.AutoSize = true;
-            this.fileNameOut.Location = new System.Drawing.Point(749, 107);
+            this.fileNameOut.Location = new System.Drawing.Point(748, 53);
             this.fileNameOut.Name = "fileNameOut";
             this.fileNameOut.Size = new System.Drawing.Size(22, 13);
             this.fileNameOut.TabIndex = 12;
@@ -241,7 +259,7 @@
             // fileSizeOut
             // 
             this.fileSizeOut.AutoSize = true;
-            this.fileSizeOut.Location = new System.Drawing.Point(749, 120);
+            this.fileSizeOut.Location = new System.Drawing.Point(748, 66);
             this.fileSizeOut.Name = "fileSizeOut";
             this.fileSizeOut.Size = new System.Drawing.Size(22, 13);
             this.fileSizeOut.TabIndex = 13;
@@ -251,7 +269,7 @@
             // fileCreationLabel
             // 
             this.fileCreationLabel.AutoSize = true;
-            this.fileCreationLabel.Location = new System.Drawing.Point(658, 133);
+            this.fileCreationLabel.Location = new System.Drawing.Point(657, 79);
             this.fileCreationLabel.Name = "fileCreationLabel";
             this.fileCreationLabel.Size = new System.Drawing.Size(75, 13);
             this.fileCreationLabel.TabIndex = 11;
@@ -261,7 +279,7 @@
             // fileAccessLabel
             // 
             this.fileAccessLabel.AutoSize = true;
-            this.fileAccessLabel.Location = new System.Drawing.Point(658, 146);
+            this.fileAccessLabel.Location = new System.Drawing.Point(657, 92);
             this.fileAccessLabel.Name = "fileAccessLabel";
             this.fileAccessLabel.Size = new System.Drawing.Size(71, 13);
             this.fileAccessLabel.TabIndex = 14;
@@ -270,7 +288,7 @@
             // fileModifiedLabel
             // 
             this.fileModifiedLabel.AutoSize = true;
-            this.fileModifiedLabel.Location = new System.Drawing.Point(658, 159);
+            this.fileModifiedLabel.Location = new System.Drawing.Point(657, 105);
             this.fileModifiedLabel.Name = "fileModifiedLabel";
             this.fileModifiedLabel.Size = new System.Drawing.Size(79, 13);
             this.fileModifiedLabel.TabIndex = 15;
@@ -280,7 +298,7 @@
             // MD5HashLabel
             // 
             this.MD5HashLabel.AutoSize = true;
-            this.MD5HashLabel.Location = new System.Drawing.Point(658, 172);
+            this.MD5HashLabel.Location = new System.Drawing.Point(657, 118);
             this.MD5HashLabel.Name = "MD5HashLabel";
             this.MD5HashLabel.Size = new System.Drawing.Size(61, 13);
             this.MD5HashLabel.TabIndex = 16;
@@ -289,7 +307,7 @@
             // SHA1HashLabel
             // 
             this.SHA1HashLabel.AutoSize = true;
-            this.SHA1HashLabel.Location = new System.Drawing.Point(658, 185);
+            this.SHA1HashLabel.Location = new System.Drawing.Point(657, 131);
             this.SHA1HashLabel.Name = "SHA1HashLabel";
             this.SHA1HashLabel.Size = new System.Drawing.Size(66, 13);
             this.SHA1HashLabel.TabIndex = 17;
@@ -298,7 +316,7 @@
             // MD5Out
             // 
             this.MD5Out.AutoSize = true;
-            this.MD5Out.Location = new System.Drawing.Point(749, 172);
+            this.MD5Out.Location = new System.Drawing.Point(748, 118);
             this.MD5Out.Name = "MD5Out";
             this.MD5Out.Size = new System.Drawing.Size(22, 13);
             this.MD5Out.TabIndex = 18;
@@ -308,7 +326,7 @@
             // SHA1Out
             // 
             this.SHA1Out.AutoSize = true;
-            this.SHA1Out.Location = new System.Drawing.Point(749, 185);
+            this.SHA1Out.Location = new System.Drawing.Point(748, 131);
             this.SHA1Out.Name = "SHA1Out";
             this.SHA1Out.Size = new System.Drawing.Size(22, 13);
             this.SHA1Out.TabIndex = 18;
@@ -318,7 +336,7 @@
             // creationDateOut
             // 
             this.creationDateOut.AutoSize = true;
-            this.creationDateOut.Location = new System.Drawing.Point(749, 133);
+            this.creationDateOut.Location = new System.Drawing.Point(748, 79);
             this.creationDateOut.Name = "creationDateOut";
             this.creationDateOut.Size = new System.Drawing.Size(22, 13);
             this.creationDateOut.TabIndex = 13;
@@ -328,7 +346,7 @@
             // accessDateOut
             // 
             this.accessDateOut.AutoSize = true;
-            this.accessDateOut.Location = new System.Drawing.Point(749, 146);
+            this.accessDateOut.Location = new System.Drawing.Point(748, 92);
             this.accessDateOut.Name = "accessDateOut";
             this.accessDateOut.Size = new System.Drawing.Size(22, 13);
             this.accessDateOut.TabIndex = 13;
@@ -338,18 +356,26 @@
             // modifiedDateOut
             // 
             this.modifiedDateOut.AutoSize = true;
-            this.modifiedDateOut.Location = new System.Drawing.Point(749, 159);
+            this.modifiedDateOut.Location = new System.Drawing.Point(748, 105);
             this.modifiedDateOut.Name = "modifiedDateOut";
             this.modifiedDateOut.Size = new System.Drawing.Size(22, 13);
             this.modifiedDateOut.TabIndex = 13;
             this.modifiedDateOut.Text = "foo";
             this.modifiedDateOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // sQLiteToolStripMenuItem
+            // findSteamDirectoryToolStripMenuItem
             // 
-            this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
-            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.sQLiteToolStripMenuItem.Text = "SQLite Tool";
+            this.findSteamDirectoryToolStripMenuItem.Name = "findSteamDirectoryToolStripMenuItem";
+            this.findSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.findSteamDirectoryToolStripMenuItem.Text = "Find Steam Directory";
+            this.findSteamDirectoryToolStripMenuItem.Click += new System.EventHandler(this.findSteamDirectoryToolStripMenuItem_Click);
+            // 
+            // copyWebBrowserDataToolStripMenuItem
+            // 
+            this.copyWebBrowserDataToolStripMenuItem.Name = "copyWebBrowserDataToolStripMenuItem";
+            this.copyWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.copyWebBrowserDataToolStripMenuItem.Text = "Copy Web Browser Data";
+            this.copyWebBrowserDataToolStripMenuItem.Click += new System.EventHandler(this.copyWebBrowserDataToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -372,7 +398,6 @@
             this.Controls.Add(this.fileNameLabel);
             this.Controls.Add(this.FileListBox);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.readCookie);
             this.Controls.Add(this.dirOutput);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -390,7 +415,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox dirOutput;
-        private System.Windows.Forms.Button readCookie;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -422,6 +446,10 @@
         private System.Windows.Forms.Label accessDateOut;
         private System.Windows.Forms.Label modifiedDateOut;
         private System.Windows.Forms.ToolStripMenuItem sQLiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadCookiesTableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshCookiesTableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findSteamDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyWebBrowserDataToolStripMenuItem;
     }
 }
 

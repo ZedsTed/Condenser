@@ -67,16 +67,16 @@ namespace Steam_Web_Artefact_Reader
 
         public string GetMD5Hash()
         {
-            HashReader hashops = new HashReader(file);
-            string md5 = hashops.MD5Hash();           
+            //HashReader hashops = new HashReader();
+            string md5 = HashReader.MD5Hash(file);           
 
             return md5;
         }
 
         public string GetSHA1Hash()
         {
-            HashReader hashops = new HashReader(file);
-            string sha1 = hashops.SHA1Hash();
+            //HashReader hashops = new HashReader(file);
+            string sha1 = HashReader.SHA1Hash(file);
 
             return sha1;
         }

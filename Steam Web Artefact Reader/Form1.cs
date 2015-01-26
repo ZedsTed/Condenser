@@ -22,31 +22,7 @@ namespace Steam_Web_Artefact_Reader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void readCookie_Click(object sender, EventArgs e)
-        {
-            SQLiteReader reader = new SQLiteReader();
-
-            DataTable dbout = reader.GetConnection();
-
-            dataGridView1.Columns.Clear();
-            dataGridView1.DataSource = dbout;
-            dataGridView1.ReadOnly = true;
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
-                if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
-                {
-                    dataGridView1.Columns[i].Visible = false;
-                }
-            }
-        }
-
+ 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
 
@@ -62,18 +38,7 @@ namespace Steam_Web_Artefact_Reader
 
         private void newSession_Click(object sender, EventArgs e)
         {
-            SteamDirParser steamDir = new SteamDirParser();
 
-            string userSteamDir = steamDir.findSteamDir();
-
-            dirOutput.Text = userSteamDir;
-
-
-            List<string> steamFiles = steamDir.listSteamFiles(true, true);
-            foreach (string path in steamFiles)
-            {
-                FileListBox.Items.Add(path);
-            }
         }
 
         private void fileSizeLabel_Click(object sender, EventArgs e)
@@ -113,14 +78,12 @@ namespace Steam_Web_Artefact_Reader
             modifiedDateOut.Text = fileinfo.GetModifiedDate();
 
             MD5Out.Text = fileinfo.GetMD5Hash();
-            SHA1Out.Text = fileinfo.GetSHA1Hash();
-
-            //return selectedFile;
+            SHA1Out.Text = fileinfo.GetSHA1Hash();            
         }
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
-            SteamDirParser steamDir = new SteamDirParser();
+            /*SteamDirParser steamDir = new SteamDirParser();
 
             string userSteamDir = steamDir.findSteamDir();
 
@@ -131,13 +94,56 @@ namespace Steam_Web_Artefact_Reader
             foreach (string path in steamFiles)
             {
                 FileListBox.Items.Add(path);
-            }
+            }*/
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {            
             MessageBox.Show(e.Context.ToString());
             e.Cancel = true;
+        }
+
+        private void loadCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SQLiteReader reader = new SQLiteReader();
+
+            DataTable dbout = reader.GetConnection();
+
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = dbout;
+            dataGridView1.ReadOnly = true;
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
+                {
+                    dataGridView1.Columns[i].Visible = false;
+                }
+            }
+        }
+
+        private void findSteamDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            FileOperations FI = new FileOperations();
+            List<string> steamFiles = FI.GetAllFiles(FI.SteamDirectory());
+            foreach (string path in steamFiles)
+            {
+                FileListBox.Items.Add(path);
+            } 
+
+            //SteamDirParser steamDir = new SteamDirParser();
+            //string userSteamDir = steamDir.findSteamDir();
+            //dirOutput.Text = userSteamDir;
+            
+           
+        }
+
+        private void copyWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileOperations FO = new FileOperations();
+            //FO.GetConfigFiles(FO.SteamDirectory());
+            //FO.GetAppCacheFiles(FO.SteamDirectory());
+            FO.FileCopy(@"C:\Program Files (x86)\Steam\", @"C:\Condenser\");
         }
 
 

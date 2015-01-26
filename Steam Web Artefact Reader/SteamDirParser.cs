@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+                                //      DEPRECATED      //
+
 namespace Steam_Web_Artefact_Reader
 {
     class SteamDirParser
