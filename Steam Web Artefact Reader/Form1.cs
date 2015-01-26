@@ -83,18 +83,7 @@ namespace Steam_Web_Artefact_Reader
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
-            /*SteamDirParser steamDir = new SteamDirParser();
 
-            string userSteamDir = steamDir.findSteamDir();
-
-            dirOutput.Text = userSteamDir;
-
-
-            List<string> steamFiles = steamDir.listSteamFiles(true, true);
-            foreach (string path in steamFiles)
-            {
-                FileListBox.Items.Add(path);
-            }*/
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -129,20 +118,13 @@ namespace Steam_Web_Artefact_Reader
             foreach (string path in steamFiles)
             {
                 FileListBox.Items.Add(path);
-            } 
-
-            //SteamDirParser steamDir = new SteamDirParser();
-            //string userSteamDir = steamDir.findSteamDir();
-            //dirOutput.Text = userSteamDir;
-            
+            }            
            
         }
 
         private void copyWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileOperations FO = new FileOperations();
-            //FO.GetConfigFiles(FO.SteamDirectory());
-            //FO.GetAppCacheFiles(FO.SteamDirectory());
             FO.FileCopy(@"C:\Program Files (x86)\Steam\", @"C:\Condenser\");
         }
 
