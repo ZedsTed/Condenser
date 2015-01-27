@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Steam_Web_Artefact_Reader
 {
@@ -13,6 +14,7 @@ namespace Steam_Web_Artefact_Reader
     {
 
         public string directorySteam, directoryConfig, directoryAppCache, directoryCopy, subDirConfig, subDirAppCache;
+        public string sourcepath, destinationpath;
         private string[] FilesConfig, FilesAppCache;
         public List<string> sourceAllFilesList = new List<string>();
         public List<string> sourceConfigFilesList = new List<string>();
@@ -20,7 +22,15 @@ namespace Steam_Web_Artefact_Reader
         //private bool config, httpcache;
 
         public FileOperations()
-        { }      
+        { 
+        
+        }
+
+        public FileOperations(string _sourcepath, string _destinationpath)
+        {
+            sourcepath = _sourcepath;
+            destinationpath = _destinationpath;
+        }      
 
         
 
@@ -95,7 +105,7 @@ namespace Steam_Web_Artefact_Reader
             return sourceAppCacheFilesList;
         }
 
-        public void FileCopy(string sourcepath, string destinationpath)
+        public void FileCopy()
         {
             //Get config and appcache subdirs
             string configpath = @"config\";

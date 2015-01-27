@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -124,8 +125,11 @@ namespace Steam_Web_Artefact_Reader
 
         private void copyWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FileOperations FO = new FileOperations();
-            FO.FileCopy(@"C:\Program Files (x86)\Steam\", @"C:\Condenser\");
+            FileOperations FO = new FileOperations(@"C:\Program Files (x86)\Steam\", @"C:\Condenser\");
+            Thread thread = new Thread(new ThreadStart(FO.FileCopy));
+            
+            thread.Start();
+            
         }
 
 
