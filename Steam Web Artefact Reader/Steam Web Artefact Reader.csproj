@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileCarver.cs" />
     <Compile Include="FileOperations.cs" />
     <Compile Include="SteamFileInfo.cs" />
     <Compile Include="Form1.cs">
