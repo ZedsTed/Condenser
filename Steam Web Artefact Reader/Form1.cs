@@ -125,11 +125,36 @@ namespace Steam_Web_Artefact_Reader
 
         private void copyWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FileOperations FO = new FileOperations(@"C:\Program Files (x86)\Steam\", @"C:\Condenser\");
-            Thread thread = new Thread(new ThreadStart(FO.FileCopy));
+
+            FileOperations FO = new FileOperations(@"C:\Condenser\Source\", @"C:\Condenser\");
+            //Run File Operations on a new thread to allow the user to use the UI during the process.
+            Thread copyThread = new Thread(new ThreadStart(FO.FileCopy));
             
-            thread.Start();
-            
+            copyThread.Start();
+
+            //Thread carveThread = new Thread(new ThreadStart(FO.CarveIdentify));
+
+            //carveThread.Start();
+
+
+        }
+
+        private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileCarver FC = new FileCarver();
+            FC.Carve(FC.GetBytes(@"C:\Condenser\Source\appcache\httpcache\4d\4dae7c301df8ec1046ffbb82cda40c7377c8dc85_da39a3ee5e6b4b0d3255bfef95601890afd80709"));
+
+            /*StringBuilder sBuilder = new StringBuilder();
+            // Loop through each byte of the hashed data  
+            // and format each one as a hexadecimal string. 
+            for (int i = 0; i < stream.Length; i++)
+            {
+                sBuilder.Append(stream[i].ToString("x2"));
+            }
+
+            string streamString = sBuilder.ToString();
+
+            richTextBox1.Text = streamString;*/
         }
 
 

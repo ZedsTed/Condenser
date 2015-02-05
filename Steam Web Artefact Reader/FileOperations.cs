@@ -39,8 +39,8 @@ namespace Steam_Web_Artefact_Reader
         /// </summary>
         /// <returns>A steam directory string.</returns>
         public string SteamDirectory()
-        {     
-            directorySteam = @"C:\Program Files (x86)\Steam\";
+        {
+            directorySteam = @"C:\Condenser\Source\";
             return directorySteam;
         }
         /// <summary>
@@ -233,5 +233,9 @@ namespace Steam_Web_Artefact_Reader
 
             return hashsuccess;
         }
+
+        
+
+        
     }
 }

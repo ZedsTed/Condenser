@@ -33,6 +33,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.findSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,8 +64,8 @@
             this.creationDateOut = new System.Windows.Forms.Label();
             this.accessDateOut = new System.Windows.Forms.Label();
             this.modifiedDateOut = new System.Windows.Forms.Label();
-            this.findSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -115,14 +117,28 @@
             this.findSteamDirectoryToolStripMenuItem,
             this.copyWebBrowserDataToolStripMenuItem});
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(152, 22);
+            this.newSession.Size = new System.Drawing.Size(140, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
+            // 
+            // findSteamDirectoryToolStripMenuItem
+            // 
+            this.findSteamDirectoryToolStripMenuItem.Name = "findSteamDirectoryToolStripMenuItem";
+            this.findSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.findSteamDirectoryToolStripMenuItem.Text = "Find Steam Directory";
+            this.findSteamDirectoryToolStripMenuItem.Click += new System.EventHandler(this.findSteamDirectoryToolStripMenuItem_Click);
+            // 
+            // copyWebBrowserDataToolStripMenuItem
+            // 
+            this.copyWebBrowserDataToolStripMenuItem.Name = "copyWebBrowserDataToolStripMenuItem";
+            this.copyWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.copyWebBrowserDataToolStripMenuItem.Text = "Copy Web Browser Data";
+            this.copyWebBrowserDataToolStripMenuItem.Click += new System.EventHandler(this.copyWebBrowserDataToolStripMenuItem_Click);
             // 
             // openItem
             // 
             this.openItem.Name = "openItem";
-            this.openItem.Size = new System.Drawing.Size(152, 22);
+            this.openItem.Size = new System.Drawing.Size(140, 22);
             this.openItem.Text = "Open";
             // 
             // viewToolStripMenuItem
@@ -135,7 +151,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sQLiteToolStripMenuItem,
-            this.dataIntegrityToolStripMenuItem});
+            this.dataIntegrityToolStripMenuItem,
+            this.fileCarveToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -146,7 +163,7 @@
             this.loadCookiesTableToolStripMenuItem,
             this.refreshCookiesTableToolStripMenuItem});
             this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
-            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.sQLiteToolStripMenuItem.Text = "SQLite Reader";
             // 
             // loadCookiesTableToolStripMenuItem
@@ -168,7 +185,7 @@
             this.mD5HashToolStripMenuItem,
             this.sHA1HashToolStripMenuItem});
             this.dataIntegrityToolStripMenuItem.Name = "dataIntegrityToolStripMenuItem";
-            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.dataIntegrityToolStripMenuItem.Text = "Data Integrity";
             // 
             // mD5HashToolStripMenuItem
@@ -363,25 +380,27 @@
             this.modifiedDateOut.Text = "foo";
             this.modifiedDateOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // findSteamDirectoryToolStripMenuItem
+            // richTextBox1
             // 
-            this.findSteamDirectoryToolStripMenuItem.Name = "findSteamDirectoryToolStripMenuItem";
-            this.findSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.findSteamDirectoryToolStripMenuItem.Text = "Find Steam Directory";
-            this.findSteamDirectoryToolStripMenuItem.Click += new System.EventHandler(this.findSteamDirectoryToolStripMenuItem_Click);
+            this.richTextBox1.Location = new System.Drawing.Point(658, 148);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(269, 169);
+            this.richTextBox1.TabIndex = 19;
+            this.richTextBox1.Text = "";
             // 
-            // copyWebBrowserDataToolStripMenuItem
+            // fileCarveToolStripMenuItem
             // 
-            this.copyWebBrowserDataToolStripMenuItem.Name = "copyWebBrowserDataToolStripMenuItem";
-            this.copyWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.copyWebBrowserDataToolStripMenuItem.Text = "Copy Web Browser Data";
-            this.copyWebBrowserDataToolStripMenuItem.Click += new System.EventHandler(this.copyWebBrowserDataToolStripMenuItem_Click);
+            this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
+            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fileCarveToolStripMenuItem.Text = "File Carve";
+            this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 756);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.SHA1Out);
             this.Controls.Add(this.MD5Out);
             this.Controls.Add(this.SHA1HashLabel);
@@ -450,6 +469,8 @@
         private System.Windows.Forms.ToolStripMenuItem refreshCookiesTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findSteamDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyWebBrowserDataToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem fileCarveToolStripMenuItem;
     }
 }
 
