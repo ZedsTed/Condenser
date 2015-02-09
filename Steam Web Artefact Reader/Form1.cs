@@ -20,6 +20,11 @@ namespace Condenser
             //CreateUtil();
             
         }
+        public string source;
+        public string output;
+        public string cache = @"\appcache\httpcache\";
+        public string config = @"\config\";
+
 
         /*public Util CreateUtil()
         {
@@ -76,23 +81,23 @@ namespace Condenser
         {
             string selectedFile = FileListBox.SelectedItem.ToString();
 
-            SteamFileInfo fileinfo = new SteamFileInfo(selectedFile);
+            SteamFileInfo FI = new SteamFileInfo(selectedFile);
 
-            fileNameOut.Text = fileinfo.GetFileName();
-            fileSizeOut.Text = fileinfo.GetFileSize();
-            accessDateOut.Text = fileinfo.GetAccessDate();
-            creationDateOut.Text = fileinfo.GetCreationDate();
-            modifiedDateOut.Text = fileinfo.GetModifiedDate();
+            fileNameOut.Text = FI.GetFileName();
+            fileSizeOut.Text = FI.GetFileSize();
+            accessDateOut.Text = FI.GetAccessDate();
+            creationDateOut.Text = FI.GetCreationDate();
+            modifiedDateOut.Text = FI.GetModifiedDate();
 
-            MD5Out.Text = fileinfo.GetMD5Hash();
-            SHA1Out.Text = fileinfo.GetSHA1Hash();            
+            MD5Out.Text = FI.GetMD5Hash();
+            SHA1Out.Text = FI.GetSHA1Hash();            
         }
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
             Debug.WriteLine("Clicked.");
             steamDirBrowser.ShowDialog();
-            string source = steamDirBrowser.SelectedPath;
+            Source = steamDirBrowser.SelectedPath;
             
             Debug.WriteLine("source: " + source);
 
@@ -100,24 +105,61 @@ namespace Condenser
             outputBrowser.ShowDialog();
             string output = outputBrowser.SelectedPath;
 
-            SetupUtils(source, output);
+
+            
+            
 
             Debug.WriteLine("dest: " + output);
+
+            FileOperations FO = new FileOperations(source, output, config, cache);
+            List<string> steamFiles = FO.GetAllFiles();
+            for (int i = 0; i < steamFiles.Count; i++)
+            {
+                CompleteFileListView.Items.Add(steamFiles[i]);
+                FileListBox.Items.Add(steamFiles[i]);
+            }
+       
+        }
+
+        public string Source
+        {
+            get
+            {
+                return source;
+            }
+            set 
+            {
+                source = value;
+            }
+        }
+
+        public string Output
+        {
+            get
+            {
+                return output;
+            }
+            set 
+            {
+                output = value;
+            }
         }
 
         public Util SetupUtils(string source, string output)
         {
-            Util u = new Util();
-            u.SteamDirectory = source;
-            u.OutputDirectory = output;
+            Util util = new Util();
+            util.SteamDirectory = source;
+            util.OutputDirectory = output;            
 
-            return u;
+            return util;
         }
+        
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {            
             MessageBox.Show(e.Context.ToString());
             e.Cancel = true;
+            
         }
 
         private void loadCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
@@ -141,12 +183,7 @@ namespace Condenser
         private void findSteamDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            FileOperations FI = new FileOperations();
-            List<string> steamFiles = FI.GetAllFiles(FI.SteamDirectory());
-            foreach (string path in steamFiles)
-            {
-                FileListBox.Items.Add(path);
-            }            
+        
            
         }
 
@@ -172,7 +209,7 @@ namespace Condenser
         private void fileCopyWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             Debug.WriteLine("starting...");
-            FileOperations FO = new FileOperations(@"C:\Condenser\Source\", @"C:\Condenser\Image\");
+            FileOperations FO = new FileOperations(source, output, cache, config);
             FO.FileCopy();
             //fileCopyWorker.ReportProgress(FO.listprogress);
         }

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Condenser
 {
-    class FileCarver : FileOperations
+    class FileCarver
     {
 
         public FileCarver()

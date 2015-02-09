@@ -69,6 +69,7 @@
             this.imageWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backupCookiesDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CompleteFileListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -111,7 +112,7 @@
             this.newSession.Name = "newSession";
             this.newSession.Size = new System.Drawing.Size(152, 22);
             this.newSession.Text = "New Session";
-            this.newSession.Click += new System.EventHandler(this.fileModifiedLabel_Click);
+            this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
             // viewToolStripMenuItem
             // 
@@ -143,14 +144,14 @@
             // loadCookiesTableToolStripMenuItem
             // 
             this.loadCookiesTableToolStripMenuItem.Name = "loadCookiesTableToolStripMenuItem";
-            this.loadCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.loadCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.loadCookiesTableToolStripMenuItem.Text = "Load Cookies Table";
             this.loadCookiesTableToolStripMenuItem.Click += new System.EventHandler(this.loadCookiesTableToolStripMenuItem_Click);
             // 
             // refreshCookiesTableToolStripMenuItem
             // 
             this.refreshCookiesTableToolStripMenuItem.Name = "refreshCookiesTableToolStripMenuItem";
-            this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.refreshCookiesTableToolStripMenuItem.Text = "Refresh Cookies Table";
             // 
             // dataIntegrityToolStripMenuItem
@@ -178,7 +179,7 @@
             // fileCarveToolStripMenuItem
             // 
             this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
-            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.fileCarveToolStripMenuItem.Text = "File Carve";
             this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
             // 
@@ -220,9 +221,9 @@
             // FileListBox
             // 
             this.FileListBox.FormattingEnabled = true;
-            this.FileListBox.Location = new System.Drawing.Point(12, 27);
+            this.FileListBox.Location = new System.Drawing.Point(12, 235);
             this.FileListBox.Name = "FileListBox";
-            this.FileListBox.Size = new System.Drawing.Size(639, 290);
+            this.FileListBox.Size = new System.Drawing.Size(639, 82);
             this.FileListBox.TabIndex = 9;
             this.FileListBox.SelectedIndexChanged += new System.EventHandler(this.FileListBox_SelectedIndexChanged);
             // 
@@ -409,11 +410,21 @@
             this.carveFileToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.carveFileToolStripMenuItem.Text = "Carve File...";
             // 
+            // CompleteFileListView
+            // 
+            this.CompleteFileListView.Location = new System.Drawing.Point(13, 28);
+            this.CompleteFileListView.Name = "CompleteFileListView";
+            this.CompleteFileListView.Size = new System.Drawing.Size(638, 201);
+            this.CompleteFileListView.TabIndex = 21;
+            this.CompleteFileListView.UseCompatibleStateImageBehavior = false;
+            this.CompleteFileListView.View = System.Windows.Forms.View.List;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 756);
+            this.Controls.Add(this.CompleteFileListView);
             this.Controls.Add(this.fileCopyBar);
             this.Controls.Add(this.SHA1Out);
             this.Controls.Add(this.MD5Out);
@@ -487,6 +498,7 @@
         private System.Windows.Forms.ToolStripMenuItem backupCookiesDatabaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem carveFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageWebBrowserDataToolStripMenuItem;
+        private System.Windows.Forms.ListView CompleteFileListView;
     }
 }
 

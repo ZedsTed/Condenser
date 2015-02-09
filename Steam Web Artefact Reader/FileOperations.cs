@@ -1,38 +1,38 @@
 ﻿using System;
-using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
 
 namespace Condenser
 {
     class FileOperations
     {
 
-        public string directorySteam, directoryConfig, directoryAppCache, directoryCopy, subDirConfig, subDirAppCache;
+        public string directorySteam, directoryConfig, directoryAppCache, configpath, cachepath;
         public string sourcepath, destinationpath;
-        public int listprogress, listtotal;
+        
         private string[] FilesConfig, FilesAppCache;
+
         public List<string> sourceAllFilesList = new List<string>();
         public List<string> sourceDirsList = new List<string>();
         public List<string> sourceConfigFilesList = new List<string>();
         public List<string> sourceAppCacheFilesList = new List<string>();
-        //private bool config, httpcache;
-
-        public FileOperations()
-        { 
         
-        }
 
-        public FileOperations(string _sourcepath, string _destinationpath)
+        /*public FileOperations(string _sourcepath, string _destinationpath)
         {
             sourcepath = _sourcepath;
             destinationpath = _destinationpath;
-        }      
+        }*/
+
+        public FileOperations(string _sourcepath, string _destinationpath, string _cachepath, string _configpath)
+        {
+            sourcepath = _sourcepath;
+            destinationpath = _destinationpath;
+            cachepath = _cachepath;
+            configpath = _configpath;
+        }
 
         
 
@@ -49,13 +49,11 @@ namespace Condenser
         /// Recursively gets an array of all the files in the config directory.
         /// </summary>
         /// <returns>A string array of the config directory's files.</returns>
-        public List<string> GetAllFiles(string path)
+        public List<string> GetAllFiles()
         {
-            subDirConfig = @"config\";
-            subDirAppCache = @"appcache\httpcache\";
-
-            directoryConfig = path + subDirConfig;
-            directoryAppCache = path + subDirAppCache;
+           
+            directoryConfig = sourcepath + configpath;
+            directoryAppCache = sourcepath + cachepath;
 
             // Grab files from directories.
             FilesConfig = Directory.GetFiles(directoryConfig, "*", System.IO.SearchOption.AllDirectories);
@@ -77,11 +75,9 @@ namespace Condenser
 
         public List<string> GetAllDirectories(string path)
         {
-            subDirConfig = @"config\";
-            subDirAppCache = @"appcache\httpcache\";
 
-            directoryConfig = path + subDirConfig;
-            directoryAppCache = path + subDirAppCache;
+            directoryConfig = path + configpath;
+            directoryAppCache = path + cachepath;
 
             Debug.WriteLine("Config Directory: " + directoryConfig);
             Debug.WriteLine("AppCache Directory: " + directoryAppCache);
@@ -111,8 +107,8 @@ namespace Condenser
         public List<string> GetConfigFiles(string path)
         {
             directorySteam = path;
-            subDirConfig = @"config\";
-            directoryConfig = directorySteam + subDirConfig;
+            configpath = @"config\";
+            directoryConfig = directorySteam + configpath;
             // Grab files from directories.
             FilesConfig = Directory.GetFiles(directoryConfig, "*", System.IO.SearchOption.AllDirectories);
 
@@ -127,8 +123,8 @@ namespace Condenser
         public List<string> GetAppCacheFiles(string path)
         {
             directorySteam = path;
-            subDirAppCache = @"appcache\httpcache\"; 
-            directoryAppCache = directorySteam + subDirAppCache;
+            cachepath = @"appcache\httpcache\"; 
+            directoryAppCache = directorySteam + cachepath;
 
             // Grab files from directories.
             FilesAppCache = Directory.GetFiles(directoryAppCache, "*", System.IO.SearchOption.AllDirectories);
@@ -144,10 +140,10 @@ namespace Condenser
         {
             //Get config and appcache subdirs
             string configpath = @"config\";
-            string appcachepath = @"appcache\httpcache\";
+            string cachepath = @"appcache\httpcache\";
 
             List<string> configsubs = GetSubdirectories(sourcepath, configpath);
-            List<string> appcachesubs = GetSubdirectories(sourcepath, appcachepath);
+            List<string> appcachesubs = GetSubdirectories(sourcepath, cachepath);
 
             //Copy config contents.
             string _destinationpath = Path.Combine(destinationpath, configpath);
@@ -158,8 +154,8 @@ namespace Condenser
             
             Debug.WriteLine("Finished copying source Config files...");
 
-            _destinationpath = Path.Combine(destinationpath, appcachepath);
-            _sourcepath = Path.Combine(sourcepath, appcachepath);
+            _destinationpath = Path.Combine(destinationpath, cachepath);
+            _sourcepath = Path.Combine(sourcepath, cachepath);
 
             Debug.WriteLine("Copying source appcache files...");
 
@@ -201,7 +197,7 @@ namespace Condenser
             
             DirectoryInfo destdir = new DirectoryInfo(destination);
 
-            List<string> sourceDirectories = GetAllDirectories(@"C:\Condenser\Source\");
+            List<string> sourceDirectories = GetAllDirectories(sourcepath);
             List<string> destDirectories = new List<string>();
 
             for (int i = 0; i < sourceDirectories.Count; i++)
@@ -216,7 +212,7 @@ namespace Condenser
                 Directory.CreateDirectory(destDirectories[i]);
             }
 
-            List<string> sourceFiles = GetAllFiles(@"C:\Condenser\Source\");
+            List<string> sourceFiles = GetAllFiles();
             List<string> destFiles = new List<string>();
 
             Debug.WriteLine("File count: " + sourceFiles.Count);

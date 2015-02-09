@@ -8,6 +8,7 @@ namespace Condenser
 {
     /// <summary>
     /// The Util class stores much of the information that Condenser relies upon, such as the source directory, the output directory, etc.
+    /// NOT REALLY NEEDED.
     /// </summary>
     public class Util
     {
@@ -39,6 +40,29 @@ namespace Condenser
             {
                 outputdir = value;
             }
+        }
+
+        public static string configpath = @"\config\";
+
+        public string ConfigPath
+        {
+            get
+            {
+                return configpath;
+            }
+            
+        }
+
+
+        public static string cachepath = @"\appcache\httpcache\";
+
+        public string CachePath
+        {
+            get 
+            {
+                return cachepath;
+            }
+            
         }
     }
 
