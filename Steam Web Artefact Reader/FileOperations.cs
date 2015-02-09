@@ -242,7 +242,7 @@ namespace Condenser
                     
                     data = reader.ReadBytes(isize);
 
-                    reader.Close();
+                    
                 }
                 
                 Debug.WriteLine("Created byte array, about to write file...");
@@ -254,7 +254,7 @@ namespace Condenser
                         Debug.WriteLine("Writing file...");
                         writer.Write(data);
                         Debug.WriteLine("Created file!");
-                        writer.Close();
+                        
                     }
                 }
                 

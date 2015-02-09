@@ -24,6 +24,7 @@ namespace Condenser
         public string output;
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
+        public ListView listDataStore = new ListView();
 
         public string Source
         {
@@ -108,16 +109,47 @@ namespace Condenser
             
 
             Debug.WriteLine("dest: " + output);
-
-            PopulateFileList();
+            PopulateList();
+            //fileListWorker.RunWorkerAsync();
+            //CompleteFileListView = listDataStore;
             
        
         }
 
-        public void PopulateFileList()
-        {
+        public void PopulateList()
+        { 
             FileOperations FO = new FileOperations(source, output, config, cache);
             List<string> steamFiles = FO.GetAllFiles();
+            
+            int total = steamFiles.Count;
+
+            for (int i = 0; i < steamFiles.Count; i++)
+            {
+                SteamFileInfo FI = new SteamFileInfo(steamFiles[i]);
+
+                string name = FI.GetFileName();
+                string path = FI.GetFilePath();
+                string size = (FI.GetFileSize() + " bytes");
+                string accessdate = FI.GetAccessDate();
+                string creationdate = FI.GetCreationDate();
+                string modifieddate = FI.GetModifiedDate();
+
+                string md5 = FI.GetMD5Hash();
+                string sha1 = FI.GetSHA1Hash();
+
+                ListViewItem item = new ListViewItem(new[] { name, path, size, accessdate, creationdate, modifieddate, md5, sha1 });
+                CompleteFileListView.Items.Add(item);
+            }
+        }
+
+        private void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Debug.WriteLine("started backgroundworker");
+            FileOperations FO = new FileOperations(source, output, config, cache);
+            List<string> steamFiles = FO.GetAllFiles();
+            
+            int total = steamFiles.Count;
+
             for (int i = 0; i < steamFiles.Count; i++)
             {
                 SteamFileInfo FI = new SteamFileInfo(steamFiles[i]);
@@ -133,9 +165,22 @@ namespace Condenser
                 string sha1 = FI.GetSHA1Hash();
                    
                 ListViewItem item = new ListViewItem(new[] {name, path, size, accessdate, creationdate, modifieddate, md5, sha1});
-                CompleteFileListView.Items.Add(item);
+                listDataStore.Items.Add(item);
+                Debug.WriteLine(total + " items.");
+                Debug.WriteLine(i + " current index.");
                 
+                float percent = (i / total);
+                Debug.WriteLine(percent + " percent done (float).");
+                int ipercent = Convert.ToInt32(percent);
+                Debug.WriteLine(ipercent + " percent done (int).");
+                if (i > 0) { fileListWorker.ReportProgress(ipercent); }
             }
+        }
+        private void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBar.Value = e.ProgressPercentage;
+            // Set the text.
+            //this.Text = e.ProgressPercentage.ToString();
         }
 
         private void CompleteFileListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -241,6 +286,11 @@ namespace Condenser
         }
 
         private void steamDirBrowser_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProgressBar_Click(object sender, EventArgs e)
         {
 
         }

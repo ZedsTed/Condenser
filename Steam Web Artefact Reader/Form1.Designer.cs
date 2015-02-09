@@ -214,9 +214,12 @@
             // ProgressBar
             // 
             this.ProgressBar.Location = new System.Drawing.Point(12, 713);
+            this.ProgressBar.Maximum = 101;
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(1121, 23);
+            this.ProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.ProgressBar.TabIndex = 20;
+            this.ProgressBar.Click += new System.EventHandler(this.ProgressBar_Click);
             // 
             // fileCopyWorker
             // 
@@ -227,6 +230,8 @@
             // fileListWorker
             // 
             this.fileListWorker.WorkerReportsProgress = true;
+            this.fileListWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileListWorker_DoWork);
+            this.fileListWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileListWorker_ProgressChanged);
             // 
             // steamDirBrowser
             // 
