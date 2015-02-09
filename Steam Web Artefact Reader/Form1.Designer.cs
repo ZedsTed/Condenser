@@ -44,6 +44,7 @@
             this.dataIntegrityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mD5HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +66,9 @@
             this.accessDateOut = new System.Windows.Forms.Label();
             this.modifiedDateOut = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileCopyBar = new System.Windows.Forms.ProgressBar();
+            this.fileCopyWorker = new System.ComponentModel.BackgroundWorker();
+            this.fileListWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -199,6 +202,13 @@
             this.sHA1HashToolStripMenuItem.Name = "sHA1HashToolStripMenuItem";
             this.sHA1HashToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.sHA1HashToolStripMenuItem.Text = "SHA1 Hash";
+            // 
+            // fileCarveToolStripMenuItem
+            // 
+            this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
+            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.fileCarveToolStripMenuItem.Text = "File Carve";
+            this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -388,18 +398,29 @@
             this.richTextBox1.TabIndex = 19;
             this.richTextBox1.Text = "";
             // 
-            // fileCarveToolStripMenuItem
+            // fileCopyBar
             // 
-            this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
-            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fileCarveToolStripMenuItem.Text = "File Carve";
-            this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
+            this.fileCopyBar.Location = new System.Drawing.Point(433, 23);
+            this.fileCopyBar.Name = "fileCopyBar";
+            this.fileCopyBar.Size = new System.Drawing.Size(462, 23);
+            this.fileCopyBar.TabIndex = 20;
+            // 
+            // fileCopyWorker
+            // 
+            this.fileCopyWorker.WorkerReportsProgress = true;
+            this.fileCopyWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileCopyWorker_DoWork);
+            this.fileCopyWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileCopyWorker_ProgressChanged);
+            // 
+            // fileListWorker
+            // 
+            this.fileListWorker.WorkerReportsProgress = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 756);
+            this.Controls.Add(this.fileCopyBar);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.SHA1Out);
             this.Controls.Add(this.MD5Out);
@@ -471,6 +492,9 @@
         private System.Windows.Forms.ToolStripMenuItem copyWebBrowserDataToolStripMenuItem;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripMenuItem fileCarveToolStripMenuItem;
+        private System.Windows.Forms.ProgressBar fileCopyBar;
+        private System.ComponentModel.BackgroundWorker fileCopyWorker;
+        private System.ComponentModel.BackgroundWorker fileListWorker;
     }
 }
 

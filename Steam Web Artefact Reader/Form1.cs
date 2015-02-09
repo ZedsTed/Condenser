@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Steam_Web_Artefact_Reader
 {
@@ -126,17 +127,35 @@ namespace Steam_Web_Artefact_Reader
         private void copyWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            FileOperations FO = new FileOperations(@"C:\Condenser\Source\", @"C:\Condenser\");
+            //FileOperations FO = new FileOperations(@"C:\Condenser\Source\", @"C:\Condenser\");
             //Run File Operations on a new thread to allow the user to use the UI during the process.
-            Thread copyThread = new Thread(new ThreadStart(FO.FileCopy));
+            //Thread copyThread = new Thread(new ThreadStart(FO.FileCopy));
             
-            copyThread.Start();
-
+            //copyThread.Start();
+            Debug.WriteLine("Clicked.");
+            fileCopyWorker.RunWorkerAsync();
+            
             //Thread carveThread = new Thread(new ThreadStart(FO.CarveIdentify));
 
             //carveThread.Start();
 
 
+        }
+
+        private void fileCopyWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Debug.WriteLine("starting...");
+            FileOperations FO = new FileOperations(@"C:\Condenser\Source\", @"C:\Condenser\Image\");
+            FO.FileCopy();
+            //fileCopyWorker.ReportProgress(FO.listprogress);
+        }
+
+        private void fileCopyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            // Change the value of the ProgressBar to the BackgroundWorker progress.
+            fileCopyBar.Value = e.ProgressPercentage;
+            // Set the text.
+            this.Text = e.ProgressPercentage.ToString();
         }
 
         private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)

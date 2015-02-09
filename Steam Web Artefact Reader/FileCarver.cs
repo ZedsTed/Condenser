@@ -24,7 +24,7 @@ namespace Steam_Web_Artefact_Reader
                 throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + filepath);
             }
 
-            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            //FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
 
             try
             {
@@ -38,7 +38,7 @@ namespace Steam_Web_Artefact_Reader
             }
             finally
             {
-                fs.Close();
+                //fs.Close();
             }
 
 
