@@ -17,7 +17,16 @@ namespace Condenser
         public Form1()
         {
             InitializeComponent();
+            //CreateUtil();
+            
         }
+
+        /*public Util CreateUtil()
+        {
+            Util u = new Util();
+
+            return u;
+        }*/
 
         /// <summary>
         /// 
@@ -38,10 +47,6 @@ namespace Condenser
 
 
 
-        private void newSession_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void fileSizeLabel_Click(object sender, EventArgs e)
         {
@@ -85,7 +90,28 @@ namespace Condenser
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
+            Debug.WriteLine("Clicked.");
+            steamDirBrowser.ShowDialog();
+            string source = steamDirBrowser.SelectedPath;
+            
+            Debug.WriteLine("source: " + source);
 
+            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
+            outputBrowser.ShowDialog();
+            string output = outputBrowser.SelectedPath;
+
+            SetupUtils(source, output);
+
+            Debug.WriteLine("dest: " + output);
+        }
+
+        public Util SetupUtils(string source, string output)
+        {
+            Util u = new Util();
+            u.SteamDirectory = source;
+            u.OutputDirectory = output;
+
+            return u;
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -133,7 +159,7 @@ namespace Condenser
             
             //copyThread.Start();
             Debug.WriteLine("Clicked.");
-            fileCopyWorker.RunWorkerAsync();
+            //fileCopyWorker.RunWorkerAsync();
             
             
             //Thread carveThread = new Thread(new ThreadStart(FO.CarveIdentify));
@@ -175,6 +201,11 @@ namespace Condenser
             string streamString = sBuilder.ToString();
 
             richTextBox1.Text = streamString;*/
+        }
+
+        private void steamDirBrowser_HelpRequest(object sender, EventArgs e)
+        {
+
         }
 
 
