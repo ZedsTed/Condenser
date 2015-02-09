@@ -27,6 +27,14 @@ namespace Condenser
             return filename;
         }
 
+        public string GetFilePath()
+        {
+            FileInfo fileinfo = new FileInfo(file);
+            string filepath = fileinfo.DirectoryName;
+
+            return filepath;
+        }
+
         public string GetFileSize()
         {
             long size;
