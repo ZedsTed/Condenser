@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     public partial class Form1 : Form
     {
@@ -134,6 +134,7 @@ namespace Steam_Web_Artefact_Reader
             //copyThread.Start();
             Debug.WriteLine("Clicked.");
             fileCopyWorker.RunWorkerAsync();
+            
             
             //Thread carveThread = new Thread(new ThreadStart(FO.CarveIdentify));
 

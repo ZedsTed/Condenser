@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steam Web Artefact Reader", "Steam Web Artefact Reader\Steam Web Artefact Reader.csproj", "{16CBB059-F2FD-4AA1-8FF3-9A1C18510838}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Condenser", "Steam Web Artefact Reader\Condenser.csproj", "{16CBB059-F2FD-4AA1-8FF3-9A1C18510838}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

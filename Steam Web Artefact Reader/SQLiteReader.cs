@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SQLite;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class SQLiteReader
     {

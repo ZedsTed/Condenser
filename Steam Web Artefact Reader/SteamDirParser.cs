@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
                                 //      DEPRECATED      //
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class SteamDirParser
     {

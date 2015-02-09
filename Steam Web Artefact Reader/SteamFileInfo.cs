@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class SteamFileInfo
     {

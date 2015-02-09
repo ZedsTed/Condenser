@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class FileCarver : FileOperations
     {

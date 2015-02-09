@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class FileOperations
     {
@@ -219,6 +219,7 @@ namespace Steam_Web_Artefact_Reader
             List<string> sourceFiles = GetAllFiles(@"C:\Condenser\Source\");
             List<string> destFiles = new List<string>();
 
+            Debug.WriteLine("File count: " + sourceFiles.Count);
             for (int i = 0; i < sourceFiles.Count; i++)
             { 
                 destFiles.Add(sourceFiles[i].Replace(source, destination));
@@ -244,10 +245,12 @@ namespace Steam_Web_Artefact_Reader
                     Debug.WriteLine("Creating byte array of size: " + isize);
                     
                     data = reader.ReadBytes(isize);
+
+                    reader.Close();
                 }
-                //byte[] data = File.ReadAllBytes(path);
+                
                 Debug.WriteLine("Created byte array, about to write file...");
-                //File.WriteAllBytes(destination, data);
+                
                 if (data != null)
                 {
                     using (BinaryWriter writer = new BinaryWriter(File.Open(destination, FileMode.Create)))
@@ -255,6 +258,7 @@ namespace Steam_Web_Artefact_Reader
                         Debug.WriteLine("Writing file...");
                         writer.Write(data);
                         Debug.WriteLine("Created file!");
+                        writer.Close();
                     }
                 }
                 

@@ -1,4 +1,4 @@
-﻿namespace Steam_Web_Artefact_Reader
+﻿namespace Condenser
 {
     partial class Form1
     {
