@@ -12,18 +12,19 @@ namespace Condenser
     {
         public DataTable DBout;
         public SQLiteDBHelper DBsession;
+        public string dbpath;
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public SQLiteReader()
+        public SQLiteReader(string path)
         {
-            
+            dbpath = path;
         }
 
         public DataTable GetConnection()
         {
-            DBsession = new SQLiteDBHelper(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
+            DBsession = new SQLiteDBHelper(dbpath);
 
             DBout = DBsession.GetDataTable("SELECT * FROM cookies");
 
