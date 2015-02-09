@@ -25,13 +25,30 @@ namespace Condenser
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
 
-
-        /*public Util CreateUtil()
+        public string Source
         {
-            Util u = new Util();
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
 
-            return u;
-        }*/
+        public string Output
+        {
+            get
+            {
+                return output;
+            }
+            set
+            {
+                output = value;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -60,15 +77,7 @@ namespace Condenser
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            fileNameOut.Text = " ";
-            fileSizeOut.Text = " ";
-            accessDateOut.Text = " ";
-            creationDateOut.Text = " ";
-            modifiedDateOut.Text = " ";
-
-            MD5Out.Text = " ";
-            SHA1Out.Text = " ";
+                       
 
         }
 
@@ -79,18 +88,7 @@ namespace Condenser
 
         public void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedFile = FileListBox.SelectedItem.ToString();
-
-            SteamFileInfo FI = new SteamFileInfo(selectedFile);
-
-            fileNameOut.Text = FI.GetFileName();
-            fileSizeOut.Text = FI.GetFileSize();
-            accessDateOut.Text = FI.GetAccessDate();
-            creationDateOut.Text = FI.GetCreationDate();
-            modifiedDateOut.Text = FI.GetModifiedDate();
-
-            MD5Out.Text = FI.GetMD5Hash();
-            SHA1Out.Text = FI.GetSHA1Hash();            
+     
         }
 
         private void newSession_Click_1(object sender, EventArgs e)
@@ -103,7 +101,7 @@ namespace Condenser
 
             outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
             outputBrowser.ShowDialog();
-            string output = outputBrowser.SelectedPath;
+            Output = outputBrowser.SelectedPath;
 
 
             
@@ -111,39 +109,52 @@ namespace Condenser
 
             Debug.WriteLine("dest: " + output);
 
+            PopulateFileList();
+            
+       
+        }
+
+        public void PopulateFileList()
+        {
             FileOperations FO = new FileOperations(source, output, config, cache);
             List<string> steamFiles = FO.GetAllFiles();
             for (int i = 0; i < steamFiles.Count; i++)
             {
-                CompleteFileListView.Items.Add(steamFiles[i]);
-                FileListBox.Items.Add(steamFiles[i]);
+                SteamFileInfo FI = new SteamFileInfo(steamFiles[i]);
+
+                string name = FI.GetFileName();
+                string path = FI.GetFilePath();
+                string size = (FI.GetFileSize() + " bytes");
+                string accessdate = FI.GetAccessDate();
+                string creationdate = FI.GetCreationDate();
+                string modifieddate = FI.GetModifiedDate();
+
+                string md5 = FI.GetMD5Hash();
+                string sha1 = FI.GetSHA1Hash();
+                   
+                ListViewItem item = new ListViewItem(new[] {name, path, size, accessdate, creationdate, modifieddate, md5, sha1});
+                CompleteFileListView.Items.Add(item);
+                
             }
-       
         }
 
-        public string Source
+        private void CompleteFileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            get
-            {
-                return source;
-            }
-            set 
-            {
-                source = value;
-            }
+            /*string selectedFile = FileListBox.SelectedItem.ToString();
+
+            SteamFileInfo FI = new SteamFileInfo(selectedFile);
+
+            fileNameOut.Text = FI.GetFileName();
+            fileSizeOut.Text = (FI.GetFileSize() + " bytes");
+            accessDateOut.Text = FI.GetAccessDate();
+            creationDateOut.Text = FI.GetCreationDate();
+            modifiedDateOut.Text = FI.GetModifiedDate();
+
+            MD5Out.Text = FI.GetMD5Hash();
+            SHA1Out.Text = FI.GetSHA1Hash(); */      
         }
 
-        public string Output
-        {
-            get
-            {
-                return output;
-            }
-            set 
-            {
-                output = value;
-            }
-        }
+
 
         public Util SetupUtils(string source, string output)
         {
@@ -164,7 +175,7 @@ namespace Condenser
 
         private void loadCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SQLiteReader reader = new SQLiteReader();
+            SQLiteReader reader = new SQLiteReader(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
 
             DataTable dbout = reader.GetConnection();
 
@@ -172,7 +183,7 @@ namespace Condenser
             dataGridView1.DataSource = dbout;
             dataGridView1.ReadOnly = true;
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
+            {   //We don't want to output any byte arrays to the data grid.
                 if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
                 {
                     dataGridView1.Columns[i].Visible = false;
@@ -217,7 +228,7 @@ namespace Condenser
         private void fileCopyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             // Change the value of the ProgressBar to the BackgroundWorker progress.
-            fileCopyBar.Value = e.ProgressPercentage;
+            ProgressBar.Value = e.ProgressPercentage;
             // Set the text.
             this.Text = e.ProgressPercentage.ToString();
         }
@@ -227,23 +238,14 @@ namespace Condenser
             FileCarver FC = new FileCarver();
             FC.Carve(FC.GetBytes(@"C:\Condenser\Source\appcache\httpcache\4d\4dae7c301df8ec1046ffbb82cda40c7377c8dc85_da39a3ee5e6b4b0d3255bfef95601890afd80709"));
 
-            /*StringBuilder sBuilder = new StringBuilder();
-            // Loop through each byte of the hashed data  
-            // and format each one as a hexadecimal string. 
-            for (int i = 0; i < stream.Length; i++)
-            {
-                sBuilder.Append(stream[i].ToString("x2"));
-            }
-
-            string streamString = sBuilder.ToString();
-
-            richTextBox1.Text = streamString;*/
         }
 
         private void steamDirBrowser_HelpRequest(object sender, EventArgs e)
         {
 
         }
+
+
 
 
 
