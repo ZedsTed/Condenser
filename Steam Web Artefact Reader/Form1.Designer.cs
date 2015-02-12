@@ -49,9 +49,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.fileCopyWorker = new System.ComponentModel.BackgroundWorker();
-            this.fileListWorker = new System.ComponentModel.BackgroundWorker();
             this.steamDirBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.outputBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.CompleteFileListView = new System.Windows.Forms.ListView();
@@ -65,8 +62,12 @@
             this.sha1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.discoverWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.StatusInfo = new System.Windows.Forms.Panel();
+            this.statusOutputLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.StatusInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -233,28 +234,6 @@
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Text = "About Steam Web Artefact Reader (SWAR)";
             // 
-            // ProgressBar
-            // 
-            this.ProgressBar.Location = new System.Drawing.Point(12, 713);
-            this.ProgressBar.Maximum = 101;
-            this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(1121, 23);
-            this.ProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.ProgressBar.TabIndex = 20;
-            this.ProgressBar.Click += new System.EventHandler(this.ProgressBar_Click);
-            // 
-            // fileCopyWorker
-            // 
-            this.fileCopyWorker.WorkerReportsProgress = true;
-            this.fileCopyWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileCopyWorker_DoWork);
-            this.fileCopyWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileCopyWorker_ProgressChanged);
-            // 
-            // fileListWorker
-            // 
-            this.fileListWorker.WorkerReportsProgress = true;
-            this.fileListWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.fileListWorker_DoWork);
-            this.fileListWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.fileListWorker_ProgressChanged);
-            // 
             // steamDirBrowser
             // 
             this.steamDirBrowser.Description = "Please select the Steam installation\'s root folder.";
@@ -336,13 +315,43 @@
             this.outputToCSVToolStripMenuItem.Text = "Output to CSV";
             this.outputToCSVToolStripMenuItem.Click += new System.EventHandler(this.outputToCSVToolStripMenuItem_Click);
             // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.Location = new System.Drawing.Point(3, 1);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(60, 16);
+            this.statusLabel.TabIndex = 22;
+            this.statusLabel.Text = "Status:    ";
+            // 
+            // StatusInfo
+            // 
+            this.StatusInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.StatusInfo.Controls.Add(this.statusOutputLabel);
+            this.StatusInfo.Controls.Add(this.statusLabel);
+            this.StatusInfo.Location = new System.Drawing.Point(13, 723);
+            this.StatusInfo.Name = "StatusInfo";
+            this.StatusInfo.Size = new System.Drawing.Size(567, 21);
+            this.StatusInfo.TabIndex = 23;
+            // 
+            // statusOutputLabel
+            // 
+            this.statusOutputLabel.AutoSize = true;
+            this.statusOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusOutputLabel.Location = new System.Drawing.Point(47, 1);
+            this.statusOutputLabel.Name = "statusOutputLabel";
+            this.statusOutputLabel.Size = new System.Drawing.Size(32, 16);
+            this.statusOutputLabel.TabIndex = 23;
+            this.statusOutputLabel.Text = "Foo";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1145, 756);
+            this.Controls.Add(this.StatusInfo);
             this.Controls.Add(this.CompleteFileListView);
-            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -352,6 +361,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.StatusInfo.ResumeLayout(false);
+            this.StatusInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,9 +388,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadCookiesTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshCookiesTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileCarveToolStripMenuItem;
-        private System.Windows.Forms.ProgressBar ProgressBar;
-        private System.ComponentModel.BackgroundWorker fileCopyWorker;
-        private System.ComponentModel.BackgroundWorker fileListWorker;
         private System.Windows.Forms.FolderBrowserDialog steamDirBrowser;
         private System.Windows.Forms.FolderBrowserDialog outputBrowser;
         private System.Windows.Forms.ToolStripMenuItem backupCookiesDatabaseToolStripMenuItem;
@@ -396,6 +404,9 @@
         private System.Windows.Forms.ColumnHeader sha1;
         private System.Windows.Forms.ToolStripMenuItem discoverWebBrowserDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputToCSVToolStripMenuItem;
+        private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Panel StatusInfo;
+        private System.Windows.Forms.Label statusOutputLabel;
     }
 }
 

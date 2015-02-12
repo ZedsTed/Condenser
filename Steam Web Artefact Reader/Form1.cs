@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -115,22 +116,49 @@ namespace Condenser
             
        
         }
-
+        
         private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateCSV();
+            statusOutputLabel.Text = "CSV output starting. This may take some time...";
+            Stopwatch time = new Stopwatch();            
+            
+            Thread csvthread = new Thread(CreateCSV);            
+
+            time.Start();
+            csvthread.Start();
+
+            //Run while loop in another thread?
+            while (csvthread.ThreadState == System.Threading.ThreadState.Running)
+            {
+                if (csvthread.ThreadState == System.Threading.ThreadState.Stopped)
+                {
+                    time.Stop();
+
+                    break;
+                }
+            }
+
+            long timetaken = time.ElapsedMilliseconds;
+            statusOutputLabel.Text = "Output to csv complete! Took " + timetaken.ToString() + " milliseconds";
+            
         }
 
         public void CreateCSV()
         {
             string csvpath = @"C:\Condenser\CSVOutput\";
             string csvname = @"output";
-            FileOperations FO = new FileOperations(source, output, config, cache);
-            CSVHelper csvh = new CSVHelper(FO.GetAllFiles());
-            CSVWriter csv = new CSVWriter(csvh.GetFileListData(), csvpath, csvname);
+            
+            
+            FileOperations FO = new FileOperations(source, output, config, cache);            
+            List<string> files = FO.GetAllFiles();
+            CSVHelper csvh = new CSVHelper(files);
+            List<string[]> fileinfo = csvh.GetFileListData();
+            CSVWriter csv = new CSVWriter(fileinfo, csvpath, csvname);
             Debug.WriteLine("Created objects, about to write.");
 
             csv.Write();
+
+            
             Debug.WriteLine("Written.");
         }
 
@@ -160,46 +188,7 @@ namespace Condenser
             }
         }
 
-        private void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Debug.WriteLine("started backgroundworker");
-            FileOperations FO = new FileOperations(source, output, config, cache);
-            List<string> steamFiles = FO.GetAllFiles();
-            
-            int total = steamFiles.Count;
 
-            for (int i = 0; i < steamFiles.Count; i++)
-            {
-                SteamFileInfo FI = new SteamFileInfo(steamFiles[i]);
-
-                string name = FI.GetFileName();
-                string path = FI.GetFilePath();
-                string size = (FI.GetFileSize() + " bytes");
-                string accessdate = FI.GetAccessDate();
-                string creationdate = FI.GetCreationDate();
-                string modifieddate = FI.GetModifiedDate();
-
-                string md5 = FI.GetMD5Hash();
-                string sha1 = FI.GetSHA1Hash();
-                   
-                ListViewItem item = new ListViewItem(new[] {name, path, size, accessdate, creationdate, modifieddate, md5, sha1});
-                listDataStore.Items.Add(item);
-                Debug.WriteLine(total + " items.");
-                Debug.WriteLine(i + " current index.");
-                
-                float percent = (i / total);
-                Debug.WriteLine(percent + " percent done (float).");
-                int ipercent = Convert.ToInt32(percent);
-                Debug.WriteLine(ipercent + " percent done (int).");
-                if (i > 0) { fileListWorker.ReportProgress(ipercent); }
-            }
-        }
-        private void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressBar.Value = e.ProgressPercentage;
-            // Set the text.
-            //this.Text = e.ProgressPercentage.ToString();
-        }
 
         private void CompleteFileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -288,13 +277,6 @@ namespace Condenser
             //fileCopyWorker.ReportProgress(FO.listprogress);
         }
 
-        private void fileCopyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // Change the value of the ProgressBar to the BackgroundWorker progress.
-            ProgressBar.Value = e.ProgressPercentage;
-            // Set the text.
-            this.Text = e.ProgressPercentage.ToString();
-        }
 
         private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)
         {
