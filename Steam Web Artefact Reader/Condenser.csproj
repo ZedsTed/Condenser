@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSVHelper.cs" />
+    <Compile Include="CSVWriter.cs" />
     <Compile Include="FileCarver.cs" />
     <Compile Include="FileOperations.cs" />
     <Compile Include="SteamFileInfo.cs" />

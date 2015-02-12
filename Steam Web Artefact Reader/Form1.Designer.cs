@@ -37,10 +37,13 @@
             this.sQLiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backupCookiesDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataIntegrityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mD5HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.carveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,9 +54,6 @@
             this.fileListWorker = new System.ComponentModel.BackgroundWorker();
             this.steamDirBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.outputBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.imageWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backupCookiesDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.carveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CompleteFileListView = new System.Windows.Forms.ListView();
             this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.path = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -63,6 +63,8 @@
             this.modifieddate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.md5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.sha1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.discoverWebBrowserDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.outputToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +105,7 @@
             // newSession
             // 
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(152, 22);
+            this.newSession.Size = new System.Drawing.Size(140, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
@@ -116,10 +118,12 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.discoverWebBrowserDataToolStripMenuItem,
             this.sQLiteToolStripMenuItem,
             this.dataIntegrityToolStripMenuItem,
             this.fileCarveToolStripMenuItem,
-            this.imageWebBrowserDataToolStripMenuItem});
+            this.imageWebBrowserDataToolStripMenuItem,
+            this.outputToCSVToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -131,7 +135,7 @@
             this.refreshCookiesTableToolStripMenuItem,
             this.backupCookiesDatabaseToolStripMenuItem});
             this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
-            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.sQLiteToolStripMenuItem.Text = "SQLite Reader";
             // 
             // loadCookiesTableToolStripMenuItem
@@ -147,6 +151,12 @@
             this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.refreshCookiesTableToolStripMenuItem.Text = "Refresh Cookies Table";
             // 
+            // backupCookiesDatabaseToolStripMenuItem
+            // 
+            this.backupCookiesDatabaseToolStripMenuItem.Name = "backupCookiesDatabaseToolStripMenuItem";
+            this.backupCookiesDatabaseToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.backupCookiesDatabaseToolStripMenuItem.Text = "Backup Cookies Database";
+            // 
             // dataIntegrityToolStripMenuItem
             // 
             this.dataIntegrityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -154,7 +164,7 @@
             this.sHA1HashToolStripMenuItem,
             this.carveFileToolStripMenuItem});
             this.dataIntegrityToolStripMenuItem.Name = "dataIntegrityToolStripMenuItem";
-            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.dataIntegrityToolStripMenuItem.Text = "File Operations";
             // 
             // mD5HashToolStripMenuItem
@@ -169,12 +179,24 @@
             this.sHA1HashToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.sHA1HashToolStripMenuItem.Text = "SHA1 Hash File...";
             // 
+            // carveFileToolStripMenuItem
+            // 
+            this.carveFileToolStripMenuItem.Name = "carveFileToolStripMenuItem";
+            this.carveFileToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.carveFileToolStripMenuItem.Text = "Carve File...";
+            // 
             // fileCarveToolStripMenuItem
             // 
             this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
-            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.fileCarveToolStripMenuItem.Text = "File Carve";
             this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
+            // 
+            // imageWebBrowserDataToolStripMenuItem
+            // 
+            this.imageWebBrowserDataToolStripMenuItem.Name = "imageWebBrowserDataToolStripMenuItem";
+            this.imageWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.imageWebBrowserDataToolStripMenuItem.Text = "Image Web Browser Data";
             // 
             // optionsToolStripMenuItem
             // 
@@ -245,24 +267,6 @@
             this.outputBrowser.Description = "Please select your desired output folder for Condenser\'s File Operations.";
             this.outputBrowser.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // imageWebBrowserDataToolStripMenuItem
-            // 
-            this.imageWebBrowserDataToolStripMenuItem.Name = "imageWebBrowserDataToolStripMenuItem";
-            this.imageWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.imageWebBrowserDataToolStripMenuItem.Text = "Image Web Browser Data";
-            // 
-            // backupCookiesDatabaseToolStripMenuItem
-            // 
-            this.backupCookiesDatabaseToolStripMenuItem.Name = "backupCookiesDatabaseToolStripMenuItem";
-            this.backupCookiesDatabaseToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.backupCookiesDatabaseToolStripMenuItem.Text = "Backup Cookies Database";
-            // 
-            // carveFileToolStripMenuItem
-            // 
-            this.carveFileToolStripMenuItem.Name = "carveFileToolStripMenuItem";
-            this.carveFileToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.carveFileToolStripMenuItem.Text = "Carve File...";
-            // 
             // CompleteFileListView
             // 
             this.CompleteFileListView.AllowColumnReorder = true;
@@ -317,6 +321,20 @@
             // sha1
             // 
             this.sha1.Text = "SHA1 Hash";
+            // 
+            // discoverWebBrowserDataToolStripMenuItem
+            // 
+            this.discoverWebBrowserDataToolStripMenuItem.Name = "discoverWebBrowserDataToolStripMenuItem";
+            this.discoverWebBrowserDataToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.discoverWebBrowserDataToolStripMenuItem.Text = "Discover Web Browser Data";
+            this.discoverWebBrowserDataToolStripMenuItem.Click += new System.EventHandler(this.discoverWebBrowserDataToolStripMenuItem_Click);
+            // 
+            // outputToCSVToolStripMenuItem
+            // 
+            this.outputToCSVToolStripMenuItem.Name = "outputToCSVToolStripMenuItem";
+            this.outputToCSVToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.outputToCSVToolStripMenuItem.Text = "Output to CSV";
+            this.outputToCSVToolStripMenuItem.Click += new System.EventHandler(this.outputToCSVToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -376,6 +394,8 @@
         private System.Windows.Forms.ColumnHeader modifieddate;
         private System.Windows.Forms.ColumnHeader md5;
         private System.Windows.Forms.ColumnHeader sha1;
+        private System.Windows.Forms.ToolStripMenuItem discoverWebBrowserDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem outputToCSVToolStripMenuItem;
     }
 }
 

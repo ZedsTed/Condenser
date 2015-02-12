@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,8 @@ namespace Condenser
 
             for (int i = 0; i < filelist.Count; i++)
             {
-                GetFileData(filelist[i]);
+                Debug.WriteLine("Getting file list data for file: " + i);
+                filesdata.Add(GetFileData(filelist[i]));                
             }
 
             return filesdata;
@@ -50,7 +52,7 @@ namespace Condenser
             filedata[7] = FI.GetSHA1Hash();
 
 
-
+            Debug.WriteLine("Got file data.");
             return filedata;
         }
     }

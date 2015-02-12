@@ -109,11 +109,29 @@ namespace Condenser
             
 
             Debug.WriteLine("dest: " + output);
-            PopulateList();
+            
             //fileListWorker.RunWorkerAsync();
             //CompleteFileListView = listDataStore;
             
        
+        }
+
+        private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateCSV();
+        }
+
+        public void CreateCSV()
+        {
+            string csvpath = @"C:\Condenser\CSVOutput\";
+            string csvname = @"output";
+            FileOperations FO = new FileOperations(source, output, config, cache);
+            CSVHelper csvh = new CSVHelper(FO.GetAllFiles());
+            CSVWriter csv = new CSVWriter(csvh.GetFileListData(), csvpath, csvname);
+            Debug.WriteLine("Created objects, about to write.");
+
+            csv.Write();
+            Debug.WriteLine("Written.");
         }
 
         public void PopulateList()
@@ -294,6 +312,13 @@ namespace Condenser
         {
 
         }
+
+        private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PopulateList();
+        }
+
+
 
 
 
