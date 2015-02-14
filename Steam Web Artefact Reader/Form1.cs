@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,8 +22,8 @@ namespace Condenser
             //CreateUtil();
             
         }
-        public string source;
-        public string output;
+        public string source = @"C:\Condenser\Source\";
+        public string output = @"C:\Condenser\Output\";
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
         public ListView listDataStore = new ListView();
@@ -93,29 +94,7 @@ namespace Condenser
      
         }
 
-        private void newSession_Click_1(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Clicked.");
-            steamDirBrowser.ShowDialog();
-            Source = steamDirBrowser.SelectedPath;
-            
-            Debug.WriteLine("source: " + source);
-
-            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
-            outputBrowser.ShowDialog();
-            Output = outputBrowser.SelectedPath;
-
-
-            
-            
-
-            Debug.WriteLine("dest: " + output);
-            
-            //fileListWorker.RunWorkerAsync();
-            //CompleteFileListView = listDataStore;
-            
-       
-        }
+        
         
         private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -162,12 +141,52 @@ namespace Condenser
             Debug.WriteLine("Written.");
         }
 
-        public void PopulateList()
+        private void newSession_Click_1(object sender, EventArgs e)
+        {
+#if RELEASE
+            Debug.WriteLine("Clicked.");
+            steamDirBrowser.ShowDialog();
+            Source = steamDirBrowser.SelectedPath;
+
+            
+
+            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
+            outputBrowser.ShowDialog();
+            Output = outputBrowser.SelectedPath;
+#endif
+
+#if DEBUG
+
+
+            Debug.WriteLine("source: " + source);
+            Debug.WriteLine("dest: " + output);
+
+            //fileListWorker.RunWorkerAsync();
+            //CompleteFileListView = listDataStore;
+
+#endif
+            
+
+
+        }
+
+        private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<ListViewItem> items = PopulateList();
+            for (int i = 0; i < items.Count; i++)
+            {
+                CompleteFileListView.Items.Add(items[i]);
+            }
+            //PopulateList();
+        }
+
+        public List<ListViewItem> PopulateList()
         { 
             FileOperations FO = new FileOperations(source, output, config, cache);
             List<string> steamFiles = FO.GetAllFiles();
             
             int total = steamFiles.Count;
+            List<ListViewItem> items = new List<ListViewItem>();
 
             for (int i = 0; i < steamFiles.Count; i++)
             {
@@ -184,14 +203,20 @@ namespace Condenser
                 string sha1 = FI.GetSHA1Hash();
 
                 ListViewItem item = new ListViewItem(new[] { name, path, size, accessdate, creationdate, modifieddate, md5, sha1 });
-                CompleteFileListView.Items.Add(item);
+                items.Add(item);
+                Debug.WriteLine("Added file number " + i + " of " + steamFiles.Count); 
             }
+
+            return items;
         }
 
 
 
         private void CompleteFileListView_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+
+
             /*string selectedFile = FileListBox.SelectedItem.ToString();
 
             SteamFileInfo FI = new SteamFileInfo(selectedFile);
@@ -278,10 +303,36 @@ namespace Condenser
         }
 
 
+        private string GetFileSelected()
+        {
+            
+            
+            /*if (CompleteFileListView.SelectedIndices. == 0)
+            {
+                return null;
+            }*/
+            int selectedindex = CompleteFileListView.SelectedIndices[0];
+            string filepath = CompleteFileListView.Items[selectedindex].SubItems[1].Text + @"\" + CompleteFileListView.Items[selectedindex].Text;
+
+
+            MessageBox.Show(filepath);
+
+            return filepath;
+
+                
+          
+        }
+
         private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+
             FileCarver FC = new FileCarver();
-            FC.Carve(FC.GetBytes(@"C:\Condenser\Source\config\htmlcache\f_000204"));
+            string file = GetFileSelected();
+            FC.Carve(FC.GetBytes(file));
+            
+
+            
 
         }
 
@@ -295,10 +346,7 @@ namespace Condenser
 
         }
 
-        private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PopulateList();
-        }
+
 
 
 

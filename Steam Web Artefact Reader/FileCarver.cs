@@ -11,7 +11,9 @@ namespace Condenser
 {
     public class FileCarver
     {
+        
         string[] startHexCodes = SetupStartHexCodes();
+
         //Dictionary<string, string> endHexCodes = new Dictionary<string, string>();
 
         public FileCarver()
@@ -86,9 +88,11 @@ namespace Condenser
 
         public void Carve(byte[] data)
         {
+            
 
+            
             int offset = 0;
-            byte[] file = new byte[data.Length];
+            byte[] file = new byte[data.Length + 1];
 
             // We want to convert the byte array to a hex-formatted string.
             StringBuilder sBuilder = new StringBuilder();
@@ -107,50 +111,56 @@ namespace Condenser
                 {
                     Debug.WriteLine("Match success!");
                     offset = (match.Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
+                    Debug.WriteLine(offset);
                     int k = 0;
                     if (offset > 0)
                     {
-                        for (int j = offset; j < data.Length; j++)
+                        int copysize = data.Length - offset;
+                        Array.Copy(data, offset, file, 0, copysize);
+                        //file.CopyTo(data, offset);
+                        Debug.WriteLine("Copying to new array. With offset.");
+                        /*for (int j = offset; j < data.Length; j++)
                         {
-                            file[j] = data[j];
+                            file[k] = data[j];
                             k++;
                             Debug.WriteLine("Copying to to new array. On byte" + j + " of " + data.Length + " bytes.");
-                        }
+                        }*/
                     }
-                    else { file = data; Debug.WriteLine("Created new byte array."); }
+                    else { file = data; Debug.WriteLine("Created new byte array from 0 offset."); }
                     switch (i)
                     { 
                         case 0:
-                            CreateGIF(file);
+                            GIF(file);
                             break;
                         case 1:
-                            CreateGIF(file);
+                            GIF(file);
                             break;
                         case 2:
-                            CreateJPG(file);
+                            JPG(file);
                             break;
                         case 3:
-                            CreateJPG(file);
+                            JPG(file);
                             break;
                         case 4:
-                            CreateJPG(file);
+                            JPG(file);
                             break;
                         case 5:
-                            CreateFLV(file);
+                            FLV(file);
                             break;
                         case 6:
-                            CreatePNG(file);
+                            PNG(file);
                             break;
                         case 7:
-                            CreateBMP(file);
+                            BMP(file);
                             break;
                         case 8:
-                            CreateBMP(file);
+                            BMP(file);
                             break;
                         case 9:
-                            CreateBMP(file);
+                            BMP(file);
                             break;
-                    }                    
+                    }
+                    break;
                     //Debug.WriteLine("Found JPG at: " + offset);
 
                     //Create(file);
@@ -162,30 +172,82 @@ namespace Condenser
             //return file;
         }
 
+       
 
-        public void CreateJPG(byte[] file)
+
+        public void JPG(byte[] file)
         {
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            }
+            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg"))
+            {
+                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg");
+                Debug.WriteLine("Deleted JPG!");
+            }
+            
             File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg", file);
             Debug.WriteLine("Created JPG!");
         }
 
-        public void CreateGIF(byte[] file)
+        public void GIF(byte[] file)
         {
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\GIFs\");
+            }
+            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.gif"))
+            {
+                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.gif");
+            }
+
             File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\GIFs\file.gif", file);
             Debug.WriteLine("Created GIF!");
         }
-        public void CreatePNG(byte[] file)
+        public void PNG(byte[] file)
         {
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\PNGs\");
+            }
+            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.png"))
+            {
+                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.png");
+            }
+
             File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\PNGs\file.png", file);
             Debug.WriteLine("Created PNG!");
         }
-        public void CreateFLV(byte[] file)
+        public void FLV(byte[] file)
         {
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\FLVs\");
+            }
+            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.flv"))
+            {
+                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.flv");
+            }
+
             File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\FLVs\file.flv", file);
             Debug.WriteLine("Created FLV!");
         }
-        public void CreateBMP(byte[] file)
+        public void BMP(byte[] file)
         {
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\BMPs\");
+            }
+            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.bmp"))
+            {
+                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.bmp");
+            }
             File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\BMPs\file.bmp", file);
             Debug.WriteLine("Created BMP!");
         }
