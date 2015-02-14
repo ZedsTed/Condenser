@@ -13,12 +13,21 @@ namespace Condenser
     {
         
         string[] startHexCodes = SetupStartHexCodes();
+        public static string name = "file";
+        public static string path = @"C:\Condenser\Data_Carve_Results\";
+        
+        public int index = 0;
 
         //Dictionary<string, string> endHexCodes = new Dictionary<string, string>();
 
         public FileCarver()
         {
             
+        }
+
+        public FileCarver(int _index)
+        {
+            index = _index;
         }
 
         private static string[] SetupStartHexCodes()
@@ -86,7 +95,7 @@ namespace Condenser
             return data;
         }
 
-        public void Carve(byte[] data)
+        public void Carve(byte[] data, int findex)
         {
             
 
@@ -130,34 +139,34 @@ namespace Condenser
                     switch (i)
                     { 
                         case 0:
-                            GIF(file);
+                            GIF(file, findex);
                             break;
                         case 1:
-                            GIF(file);
+                            GIF(file, findex);
                             break;
                         case 2:
-                            JPG(file);
+                            JPG(file, findex);
                             break;
                         case 3:
-                            JPG(file);
+                            JPG(file, findex);
                             break;
                         case 4:
-                            JPG(file);
+                            JPG(file, findex);
                             break;
                         case 5:
-                            FLV(file);
+                            FLV(file, findex);
                             break;
                         case 6:
-                            PNG(file);
+                            PNG(file, findex);
                             break;
                         case 7:
-                            BMP(file);
+                            BMP(file, findex);
                             break;
                         case 8:
-                            BMP(file);
+                            BMP(file, findex);
                             break;
                         case 9:
-                            BMP(file);
+                            BMP(file, findex);
                             break;
                     }
                     break;
@@ -172,84 +181,94 @@ namespace Condenser
             //return file;
         }
 
-       
 
 
-        public void JPG(byte[] file)
+
+        public void JPG(byte[] file, int findex)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            string fpath = Path.Combine(path, @"jpg\");
+            string type = ".jpg";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
             if (!dir.Exists)
             {
-                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\JPGs\");
+                Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg"))
+            if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg");
+                File.Delete(fpath + name + findex + type);
                 Debug.WriteLine("Deleted JPG!");
             }
-            
-            File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\JPGs\file.jpg", file);
-            Debug.WriteLine("Created JPG!");
+
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            Debug.WriteLine("Created JPG:\n" + fpath + name + findex + type + "\n");
         }
 
-        public void GIF(byte[] file)
+        public void GIF(byte[] file, int findex)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            string fpath = Path.Combine(path, @"gif\");
+            string type = ".gif";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
             if (!dir.Exists)
             {
-                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\GIFs\");
+                Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.gif"))
+            if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.gif");
+                File.Delete(fpath + name + findex + type);
             }
 
-            File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\GIFs\file.gif", file);
-            Debug.WriteLine("Created GIF!");
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            Debug.WriteLine("Created GIF\n" + fpath + name + findex + type + "\n");
         }
-        public void PNG(byte[] file)
+        public void PNG(byte[] file, int findex)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            string fpath = Path.Combine(path, @"png\");
+            string type = ".png";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
             if (!dir.Exists)
             {
-                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\PNGs\");
+                Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.png"))
+            if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.png");
+                File.Delete(fpath + name + findex + type);
             }
 
-            File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\PNGs\file.png", file);
-            Debug.WriteLine("Created PNG!");
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            Debug.WriteLine("Created PNG\n" + fpath + name + findex + type + "\n");
         }
-        public void FLV(byte[] file)
+        public void FLV(byte[] file, int findex)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            string fpath = Path.Combine(path, @"flv\");
+            string type = ".flv";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
             if (!dir.Exists)
             {
-                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\FLVs\");
+                Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.flv"))
+            if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.flv");
+                File.Delete(fpath + name + findex + type);
             }
 
-            File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\FLVs\file.flv", file);
-            Debug.WriteLine("Created FLV!");
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            Debug.WriteLine("Created FLV\n" + fpath + name + findex + type + "\n");
         }
-        public void BMP(byte[] file)
+        public void BMP(byte[] file, int findex)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Condenser\Data_Carve_Results\JPGs\");
+            string fpath = Path.Combine(path, @"bmp\");
+            string type = ".bmp";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
             if (!dir.Exists)
             {
-                Directory.CreateDirectory(@"C:\Condenser\Data_Carve_Results\BMPs\");
+                Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(@"C:\Condenser\Data_Carve_Results\JPGs\file.bmp"))
+            if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(@"C:\Condenser\Data_Carve_Results\JPGs\file.bmp");
+                File.Delete(fpath + name + findex + type);
             }
-            File.WriteAllBytes(@"C:\Condenser\Data_Carve_Results\BMPs\file.bmp", file);
-            Debug.WriteLine("Created BMP!");
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            Debug.WriteLine("Created BMP\n" + fpath + name + findex + type + "\n");
         }
 
     }

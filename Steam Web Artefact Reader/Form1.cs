@@ -326,12 +326,6 @@ namespace Condenser
         private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-
-            FileCarver FC = new FileCarver();
-            string file = GetFileSelected();
-            FC.Carve(FC.GetBytes(file));
-            
-
             
 
         }
@@ -343,6 +337,30 @@ namespace Condenser
 
         private void ProgressBar_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void carveSingleFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileCarver FC = new FileCarver();
+            string file = GetFileSelected();
+            FC.Carve(FC.GetBytes(file), 0);         
+
+        }
+
+        private void carveFolderContentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            carverFolderBrowser.SelectedPath = Source;
+            carverFolderBrowser.ShowDialog();
+            
+            string[] files = Directory.GetFiles(carverFolderBrowser.SelectedPath, "*", SearchOption.AllDirectories);
+            FileCarver FC = new FileCarver();
+            int total = files.Length;
+            for (int i = 0; i < files.Length; i++)
+            {
+                FC.Carve(FC.GetBytes(files[i]), i); 
+                Debug.WriteLine("Carving file " + i + " of " + total + " files.");
+            }
 
         }
 
