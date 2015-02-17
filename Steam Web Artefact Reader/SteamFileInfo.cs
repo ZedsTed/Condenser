@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class SteamFileInfo
     {
@@ -25,6 +25,14 @@ namespace Steam_Web_Artefact_Reader
             string filename = fileinfo.Name;
 
             return filename;
+        }
+
+        public string GetFilePath()
+        {
+            FileInfo fileinfo = new FileInfo(file);
+            string filepath = fileinfo.DirectoryName;
+
+            return filepath;
         }
 
         public string GetFileSize()

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     public class HashReader
     {

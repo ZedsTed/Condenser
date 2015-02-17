@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
-namespace Steam_Web_Artefact_Reader
+namespace Condenser
 {
     class SQLiteDBHelper
     {
