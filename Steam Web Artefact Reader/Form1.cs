@@ -177,12 +177,16 @@ namespace Condenser
             {
                 CompleteFileListView.Items.Add(items[i]);
             }
+            for (int i = 0; i < CompleteFileListView.Columns.Count; i++)
+            {
+            CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+            }
             //PopulateList();
         }
 
         public List<ListViewItem> PopulateList()
         { 
-            FileOperations FO = new FileOperations(source, output, config, cache);
+            FileOperations FO = new FileOperations(source, output, cache, config);
             List<string> steamFiles = FO.GetAllFiles();
             
             int total = steamFiles.Count;

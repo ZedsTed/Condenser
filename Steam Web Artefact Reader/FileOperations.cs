@@ -58,18 +58,9 @@ namespace Condenser
             // Grab files from directories.
             FilesConfig = Directory.GetFiles(directoryConfig, "*", System.IO.SearchOption.AllDirectories);
             FilesAppCache = Directory.GetFiles(directoryAppCache, "*", System.IO.SearchOption.AllDirectories);
-            
-            for (int i = 0; i < FilesConfig.Length; i++)
-            {
+            sourceAllFilesList.AddRange(FilesConfig);
+            sourceAllFilesList.AddRange(FilesAppCache);
 
-                sourceAllFilesList.Add(FilesConfig[i]);
-            }
-            
-            for (int i = 0; i < FilesAppCache.Length; i++)
-            {
-               
-                sourceAllFilesList.Add(FilesAppCache[i]);
-            }
             return sourceAllFilesList;
         }
 
@@ -89,52 +80,15 @@ namespace Condenser
 
             //listprogress = 0;
             //listtotal = (FilesConfig.Length + FilesAppCache.Length);
+            sourceDirsList.AddRange(configDir);
+            sourceDirsList.AddRange(appCacheDir);
 
-            for (int i = 0; i < configDir.Length; i++)
-            {
-                sourceDirsList.Add(configDir[i]);
-            }
-
-            for (int i = 0; i < appCacheDir.Length; i++)
-            {
-
-                sourceDirsList.Add(appCacheDir[i]);
-            }
             Debug.WriteLine("Got directories...");
             return sourceDirsList;
         }
 
-        public List<string> GetConfigFiles(string path)
-        {
-            directorySteam = path;
-            configpath = @"config\";
-            directoryConfig = directorySteam + configpath;
-            // Grab files from directories.
-            FilesConfig = Directory.GetFiles(directoryConfig, "*", System.IO.SearchOption.AllDirectories);
 
-            for (int i = 0; i < FilesConfig.Count(); i++)
-            {
-                sourceConfigFilesList.Add(FilesConfig[i]);
-            }
-            
-            return sourceAllFilesList;
-        }
 
-        public List<string> GetAppCacheFiles(string path)
-        {
-            directorySteam = path;
-            cachepath = @"appcache\httpcache\"; 
-            directoryAppCache = directorySteam + cachepath;
-
-            // Grab files from directories.
-            FilesAppCache = Directory.GetFiles(directoryAppCache, "*", System.IO.SearchOption.AllDirectories);
-
-            for (int i = 0; i < FilesAppCache.Count(); i++)
-            {
-                sourceAppCacheFilesList.Add(FilesAppCache[i]);
-            }
-            return sourceAppCacheFilesList;
-        }
 
         public void FileCopy()
         {
@@ -220,13 +174,13 @@ namespace Condenser
             { 
                 destFiles.Add(sourceFiles[i].Replace(source, destination));
                 //Debug.WriteLine(destFiles[i]);
-                ByteCopy(sourceFiles[i], destFiles[i]);
+                File.Copy(sourceFiles[i], destFiles[i]);
             }
             Debug.WriteLine("For loop finished!");                
 
         }
 
-        public void ByteCopy(string path, string destination)
+       /* public void ByteCopy(string path, string destination)
         {
             Debug.WriteLine("Running byte copy on: " + path);
             FileInfo f = new FileInfo(path);
@@ -264,7 +218,7 @@ namespace Condenser
             {
                 throw new FileLoadException("Couldn't load: " + path);                
             }
-        }
+        }*/
 
         public bool HashChecking(string source, string destination)
         { 

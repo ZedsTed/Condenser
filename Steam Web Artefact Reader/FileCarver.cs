@@ -104,6 +104,7 @@ namespace Condenser
             byte[] file = new byte[data.Length + 1];
 
             // We want to convert the byte array to a hex-formatted string.
+            
             StringBuilder sBuilder = new StringBuilder();
             
             for (int i = 0; i < data.Length; i++)
@@ -113,6 +114,10 @@ namespace Condenser
             string datastring = Convert.ToString(sBuilder);
             //Now we scan the string for the hex code we want.
             //Debug.WriteLine(datastring);
+             
+
+           
+
             for (int i = 0; i < startHexCodes.Length; i++)
             {
                 Match match = Regex.Match(datastring, startHexCodes[i], RegexOptions.IgnoreCase & RegexOptions.Singleline);
@@ -121,19 +126,13 @@ namespace Condenser
                     Debug.WriteLine("Match success!");
                     offset = (match.Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
                     Debug.WriteLine(offset);
-                    int k = 0;
+                    
                     if (offset > 0)
                     {
                         int copysize = data.Length - offset;
-                        Array.Copy(data, offset, file, 0, copysize);
-                        //file.CopyTo(data, offset);
+                        Array.Copy(data, offset, file, 0, copysize);                        
                         Debug.WriteLine("Copying to new array. With offset.");
-                        /*for (int j = offset; j < data.Length; j++)
-                        {
-                            file[k] = data[j];
-                            k++;
-                            Debug.WriteLine("Copying to to new array. On byte" + j + " of " + data.Length + " bytes.");
-                        }*/
+  
                     }
                     else { file = data; Debug.WriteLine("Created new byte array from 0 offset."); }
                     switch (i)
