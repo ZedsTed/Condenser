@@ -172,16 +172,16 @@ namespace Condenser
 
         private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<ListViewItem> items = PopulateList();
+            List<ListViewItem> items = PopulateList();            
             for (int i = 0; i < items.Count; i++)
             {
                 CompleteFileListView.Items.Add(items[i]);
             }
             for (int i = 0; i < CompleteFileListView.Columns.Count; i++)
             {
-            CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
-            //PopulateList();
+            
         }
 
         public List<ListViewItem> PopulateList()
@@ -220,19 +220,7 @@ namespace Condenser
         {
 
 
-
-            /*string selectedFile = FileListBox.SelectedItem.ToString();
-
-            SteamFileInfo FI = new SteamFileInfo(selectedFile);
-
-            fileNameOut.Text = FI.GetFileName();
-            fileSizeOut.Text = (FI.GetFileSize() + " bytes");
-            accessDateOut.Text = FI.GetAccessDate();
-            creationDateOut.Text = FI.GetCreationDate();
-            modifiedDateOut.Text = FI.GetModifiedDate();
-
-            MD5Out.Text = FI.GetMD5Hash();
-            SHA1Out.Text = FI.GetSHA1Hash(); */      
+   
         }
 
 
@@ -256,6 +244,8 @@ namespace Condenser
 
         private void loadCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            string dbpath = Source + @"\config\htmlcache\Cookies";
             SQLiteReader reader = new SQLiteReader(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
 
             DataTable dbout = reader.GetConnection();
@@ -265,7 +255,26 @@ namespace Condenser
             dataGridView1.ReadOnly = true;
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {   //We don't want to output any byte arrays to the data grid.
-                if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
+                if (dataGridView1.Columns[i].ValueType == typeof(Byte[]))
+                {
+                    dataGridView1.Columns[i].Visible = false;
+                }
+            }
+        }
+
+        private void refreshCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string dbpath = Source + @"\config\htmlcache\Cookies";
+            SQLiteReader reader = new SQLiteReader(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
+
+            DataTable dbout = reader.GetConnection();
+
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = dbout;
+            dataGridView1.ReadOnly = true;
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {   //We don't want to output any byte arrays to the data grid.
+                if (dataGridView1.Columns[i].ValueType == typeof(Byte[]))
                 {
                     dataGridView1.Columns[i].Visible = false;
                 }
@@ -367,6 +376,8 @@ namespace Condenser
             }
 
         }
+
+
 
 
 
