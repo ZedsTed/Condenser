@@ -19,13 +19,18 @@ namespace Condenser
         public Main()
         {
             InitializeComponent();
+            RefreshManager();
             //CreateUtil();
+
             
         }
-        public string source = @"C:\Condenser\Source\";
-        public string output = @"C:\Condenser\Output\";
-        public string cache = @"appcache\httpcache\";
-        public string config = @"config\";
+        public string source = @"C:\Condenser\Source";
+        public string output = @"C:\Condenser\Output";
+        public string cache = @"\appcache\httpcache\";
+        public string config = @"\config\";
+        public string csvdir = @"\files_csv\";
+        public string csvname = "file_list";
+        public string carveoutputdir = @"\carve_results\";
         public ListView listDataStore = new ListView();
 
         public string Source
@@ -58,40 +63,21 @@ namespace Condenser
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
- 
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+
+        public void RefreshManager()
         {
-
-
+            System.Timers.Timer updateinterval = new System.Timers.Timer(50);
+            updateinterval.Elapsed += new ElapsedEventHandler(FixedUpdate);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public void Update()
         {
-            
+            this.Refresh();
         }
 
-
-
-
-        private void fileSizeLabel_Click(object sender, EventArgs e)
+        public void FixedUpdate(object sender, ElapsedEventArgs e)
         {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-                       
-
-        }
-
-        private void fileModifiedLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-     
+            this.Refresh();
         }
 
         
@@ -124,8 +110,7 @@ namespace Condenser
 
         public void CreateCSV()
         {
-            string csvpath = @"C:\Condenser\CSVOutput\";
-            string csvname = @"output";
+            string csvpath = Output + csvdir;            
 
 
             FileOperations FO = new FileOperations(source, output, config, cache);            
@@ -144,7 +129,7 @@ namespace Condenser
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
-#if RELEASE
+
             Debug.WriteLine("Clicked.");
             steamDirBrowser.ShowDialog();
             Source = steamDirBrowser.SelectedPath;
@@ -154,9 +139,6 @@ namespace Condenser
             outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
             outputBrowser.ShowDialog();
             Output = outputBrowser.SelectedPath;
-#endif
-
-#if DEBUG
 
 
             Debug.WriteLine("source: " + source);
@@ -165,7 +147,7 @@ namespace Condenser
             //fileListWorker.RunWorkerAsync();
             //CompleteFileListView = listDataStore;
 
-#endif
+
             
 
 
@@ -218,22 +200,7 @@ namespace Condenser
 
 
         private void CompleteFileListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-
-            /*string selectedFile = FileListBox.SelectedItem.ToString();
-
-            SteamFileInfo FI = new SteamFileInfo(selectedFile);
-
-            fileNameOut.Text = FI.GetFileName();
-            fileSizeOut.Text = (FI.GetFileSize() + " bytes");
-            accessDateOut.Text = FI.GetAccessDate();
-            creationDateOut.Text = FI.GetCreationDate();
-            modifiedDateOut.Text = FI.GetModifiedDate();
-
-            MD5Out.Text = FI.GetMD5Hash();
-            SHA1Out.Text = FI.GetSHA1Hash(); */      
+        { 
         }
 
 
@@ -326,22 +293,7 @@ namespace Condenser
           
         }
 
-        private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            
-
-        }
-
-        private void steamDirBrowser_HelpRequest(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ProgressBar_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void carveSingleFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -359,11 +311,13 @@ namespace Condenser
             IO io = new IO();
             io.Show();
 
-            io.IOtext.AppendText("Getting files...");
+            io.IOtext.AppendText("Getting files...\n");
             string[] files = Directory.GetFiles(carverFolderBrowser.SelectedPath, "*", SearchOption.AllDirectories);
-            io.IOtext.AppendText("Got files, now carving them...");
+            io.IOtext.AppendText("Got files, now carving them...\n");
 
-            FileCarver FC = new FileCarver(files);
+            string _carveoutputdir = Output + carveoutputdir;
+
+            FileCarver FC = new FileCarver(files, _carveoutputdir);
             Thread carveThread = new Thread(FC.CarveManager);
             Stopwatch time = new Stopwatch();
 
@@ -382,7 +336,7 @@ namespace Condenser
             long timetaken = time.ElapsedMilliseconds;
 
 
-            io.IOtext.AppendText("Files carved in " + timetaken.ToString() + " milliseconds.");
+            io.IOtext.AppendText("Files carved in " + timetaken.ToString() + " milliseconds.\n");
 
         }
 
@@ -390,19 +344,35 @@ namespace Condenser
         {
             FileOperations FO = new FileOperations(source, output, cache, config);
             Thread copyThread = new Thread(new ThreadStart(FO.FileCopy));
-
             copyThread.Start();
-
+            while (copyThread.ThreadState == System.Threading.ThreadState.Running)
+            {
+                statusOutputLabel.Text = "Copying files!";
+                Update();
+                if (copyThread.ThreadState == System.Threading.ThreadState.Stopped)
+                {
+                    statusOutputLabel.Text = "Finished copying all files.!";
+                }
+            }
+            
+            
         }
-
-
-
-
-
-
-
-
-
         
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)       {       }
+
+        private void fileSizeLabel_Click(object sender, EventArgs e)       {       }
+
+        private void Form1_Load(object sender, EventArgs e)       {        }
+
+        private void fileModifiedLabel_Click(object sender, EventArgs e)       {       }
+
+        public void FileListBox_SelectedIndexChanged(object sender, EventArgs e)       {       }
+
+        private void fileCarveToolStripMenuItem_Click(object sender, EventArgs e)       {        }
+
+        private void steamDirBrowser_HelpRequest(object sender, EventArgs e)       {       }
+
+        private void ProgressBar_Click(object sender, EventArgs e)       {       }
     }
 }

@@ -14,7 +14,7 @@ namespace Condenser
         string[] files;
         string[] startHexCodes = SetupStartHexCodes();
         public static string name = "file";
-        public static string path = @"C:\Condenser\Data_Carve_Results\";
+        public string path;
         
         public int index = 0;
 
@@ -25,9 +25,10 @@ namespace Condenser
             
         }
 
-        public FileCarver(string[] _files)
+        public FileCarver(string[] _files, string _path)
         {
-            files = _files;  
+            files = _files;
+            path = _path;
         }
 
         private static string[] SetupStartHexCodes()

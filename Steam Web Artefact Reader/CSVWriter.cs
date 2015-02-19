@@ -32,6 +32,10 @@ namespace Condenser
             //5: modificationdate
             //6: md5hash
             //7: sha1hash 
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             string fullpath = path + csvname;
             string headers = "Name,Path,Size (bytes),Access Date,Creation Date,Modification Date,MD5 Hash,SHA1 Hash";
 

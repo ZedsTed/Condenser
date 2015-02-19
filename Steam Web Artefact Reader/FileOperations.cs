@@ -36,15 +36,7 @@ namespace Condenser
 
         
 
-        /// <summary>
-        /// Finds and sets the Steam installation directory, has the default directory set currently.
-        /// </summary>
-        /// <returns>A steam directory string.</returns>
-        public string SteamDirectory()
-        {
-            directorySteam = @"C:\Condenser\Source\";
-            return directorySteam;
-        }
+
         /// <summary>
         /// Recursively gets an array of all the files in the config directory.
         /// </summary>
@@ -119,7 +111,7 @@ namespace Condenser
             Debug.WriteLine("Finished copying source appcache files...");
             
             Debug.WriteLine("Generating and comparing hashses...");
-            if (HashChecking(_sourcepath, _destinationpath))
+            if (HashChecking(sourcepath, destinationpath))
             {
                 Debug.WriteLine("Hash check success!");
             }
@@ -178,7 +170,7 @@ namespace Condenser
                 Debug.WriteLine(destFiles[i]);
                 Debug.WriteLine(source);
                 Debug.WriteLine(destination);
-                File.Copy(sourceFiles[i], destFiles[i]);
+                File.Copy(sourceFiles[i], destFiles[i], true);
             }
             Debug.WriteLine("For loop finished!");                
 
