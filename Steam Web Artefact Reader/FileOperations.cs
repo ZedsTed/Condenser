@@ -103,9 +103,9 @@ namespace Condenser
             string _destinationpath = Path.Combine(destinationpath, configpath);
             string _sourcepath = Path.Combine(sourcepath, configpath);
             Debug.WriteLine("Copying source config files...");
-            Debug.WriteLine(_destinationpath);
+            Debug.WriteLine(destinationpath);
 
-            FullCopy(_sourcepath, _destinationpath);//copy main config folder contents.
+            FullCopy(sourcepath, destinationpath);//copy main config folder contents.
             
             Debug.WriteLine("Finished copying source Config files...");
 
@@ -114,17 +114,17 @@ namespace Condenser
             Debug.WriteLine(_destinationpath);
             Debug.WriteLine("Copying source appcache files...");
 
-            FullCopy(_sourcepath, _destinationpath);
+            //FullCopy(_sourcepath, _destinationpath);
 
             Debug.WriteLine("Finished copying source appcache files...");
-            /*
+            
             Debug.WriteLine("Generating and comparing hashses...");
             if (HashChecking(_sourcepath, _destinationpath))
             {
                 Debug.WriteLine("Hash check success!");
             }
             else { Debug.WriteLine("Hash fail."); }            
-             */
+             
         }
 
         public List<string> GetSubdirectories(string path, string subpath)
@@ -152,12 +152,12 @@ namespace Condenser
             
             DirectoryInfo destdir = new DirectoryInfo(destination);
 
-            List<string> sourceDirectories = GetAllDirectories(sourcepath);
+            List<string> sourceDirectories = GetAllDirectories(source);
             List<string> destDirectories = new List<string>();
 
             for (int i = 0; i < sourceDirectories.Count; i++)
             {
-                DirectoryInfo sourcedir = new DirectoryInfo(sourcepath);
+                DirectoryInfo sourcedir = new DirectoryInfo(source);
                 if (!sourcedir.Exists)
                 {
                     throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + source);
