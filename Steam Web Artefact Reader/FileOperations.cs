@@ -93,16 +93,17 @@ namespace Condenser
         public void FileCopy()
         {
             //Get config and appcache subdirs
-            string configpath = @"config\";
-            string cachepath = @"appcache\httpcache\";
+            //string configpath = @"config\";
+            //string cachepath = @"appcache\httpcache\";
 
-            List<string> configsubs = GetSubdirectories(sourcepath, configpath);
-            List<string> appcachesubs = GetSubdirectories(sourcepath, cachepath);
+            //List<string> configsubs = GetSubdirectories(sourcepath, configpath);
+            //List<string> appcachesubs = GetSubdirectories(sourcepath, cachepath);
 
             //Copy config contents.
             string _destinationpath = Path.Combine(destinationpath, configpath);
             string _sourcepath = Path.Combine(sourcepath, configpath);
             Debug.WriteLine("Copying source config files...");
+            Debug.WriteLine(_destinationpath);
 
             FullCopy(_sourcepath, _destinationpath);//copy main config folder contents.
             
@@ -110,7 +111,7 @@ namespace Condenser
 
             _destinationpath = Path.Combine(destinationpath, cachepath);
             _sourcepath = Path.Combine(sourcepath, cachepath);
-
+            Debug.WriteLine(_destinationpath);
             Debug.WriteLine("Copying source appcache files...");
 
             FullCopy(_sourcepath, _destinationpath);
@@ -156,13 +157,14 @@ namespace Condenser
 
             for (int i = 0; i < sourceDirectories.Count; i++)
             {
-                DirectoryInfo sourcedir = new DirectoryInfo(source);
+                DirectoryInfo sourcedir = new DirectoryInfo(sourcepath);
                 if (!sourcedir.Exists)
                 {
                     throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + source);
                 }
-                Debug.WriteLine("Creating directory: " + sourceDirectories[i]);
+                
                 destDirectories.Add(sourceDirectories[i].Replace(source, destination));
+                Debug.WriteLine("Creating directory: " + destDirectories[i]);
                 Directory.CreateDirectory(destDirectories[i]);
             }
 
@@ -173,7 +175,9 @@ namespace Condenser
             for (int i = 0; i < sourceFiles.Count; i++)
             { 
                 destFiles.Add(sourceFiles[i].Replace(source, destination));
-                //Debug.WriteLine(destFiles[i]);
+                Debug.WriteLine(destFiles[i]);
+                Debug.WriteLine(source);
+                Debug.WriteLine(destination);
                 File.Copy(sourceFiles[i], destFiles[i]);
             }
             Debug.WriteLine("For loop finished!");                

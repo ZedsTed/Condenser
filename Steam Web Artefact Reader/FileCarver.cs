@@ -11,7 +11,7 @@ namespace Condenser
 {
     public class FileCarver
     {
-        
+        string[] files;
         string[] startHexCodes = SetupStartHexCodes();
         public static string name = "file";
         public static string path = @"C:\Condenser\Data_Carve_Results\";
@@ -25,9 +25,9 @@ namespace Condenser
             
         }
 
-        public FileCarver(int _index)
+        public FileCarver(string[] _files)
         {
-            index = _index;
+            files = _files;  
         }
 
         private static string[] SetupStartHexCodes()
@@ -74,30 +74,33 @@ namespace Condenser
                 throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + filepath);
             }
 
-            //FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            
 
             try
             {
-                data = File.ReadAllBytes(filepath);
-                //fs.Read(data, 0, data.Length);
+                data = File.ReadAllBytes(filepath);                
             }
             catch
             {
-                throw new FileLoadException("Couldn't load: " + filepath);
-                //return null;
+                throw new FileLoadException("Couldn't load: " + filepath);                
             }
-            finally
-            {
-                //fs.Close();
-            }
-
 
             return data;
         }
 
-        public void Carve(byte[] data, int findex)
+        public void CarveManager()
         {
-            
+            Debug.WriteLine("Started Carve Manager.");
+            int total = files.Length;
+            for (int i = 0; i < total; i++)
+            {
+                Carve(GetBytes(files[i]), i);
+                Debug.WriteLine("Carving file " + i + " of " + total + " files.");
+            }
+        }
+
+        public void Carve(byte[] data, int findex)
+        {     
 
             
             int offset = 0;
