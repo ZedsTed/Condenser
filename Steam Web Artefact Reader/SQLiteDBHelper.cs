@@ -14,14 +14,6 @@ namespace Condenser
         String dbConnection;
 
         /// <summary>
-        ///     Default Constructor for SQLiteDatabase Class.
-        /// </summary>
-        public SQLiteDBHelper()
-        {
-            dbConnection = "Data Source=recipes.s3db";
-        }
-
-        /// <summary>
         ///     Single Param Constructor for specifying the DB file.
         /// </summary>
         /// <param name="inputFile">The File containing the DB</param>

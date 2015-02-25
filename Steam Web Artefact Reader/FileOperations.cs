@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Condenser
 {
@@ -176,78 +177,90 @@ namespace Condenser
 
         }
 
-       /* public void ByteCopy(string path, string destination)
-        {
-            Debug.WriteLine("Running byte copy on: " + path);
-            FileInfo f = new FileInfo(path);
-            long size = f.Length;
-            int isize = Convert.ToInt32(size);
-            byte[] data = null;
-            try
-            {
-                
-                using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))
-                {
-                    Debug.WriteLine("Creating byte array of size: " + isize);
-                    
-                    data = reader.ReadBytes(isize);
-
-                    
-                }
-                
-                Debug.WriteLine("Created byte array, about to write file...");
-                
-                if (data != null)
-                {
-                    using (BinaryWriter writer = new BinaryWriter(File.Open(destination, FileMode.Create)))
-                    {
-                        Debug.WriteLine("Writing file...");
-                        writer.Write(data);
-                        Debug.WriteLine("Created file!");
-                        
-                    }
-                }
-                
-
-            }
-            catch
-            {
-                throw new FileLoadException("Couldn't load: " + path);                
-            }
-        }*/
-
         public bool HashChecking(string source, string destination)
         { 
             bool hashsuccess = false;
             int d = 0;
-            int l = 0;
-            List<string> MD5source = new List<string>();
+            List<FileHashes> sourceHashes = new List<FileHashes>();
+            List<FileHashes> destHashes = new List<FileHashes>();
             List<string> SHA1source = new List<string>();
 
             List<string> MD5destination = new List<string>();
             List<string> SHA1destination = new List<string>();
+           
 
             foreach(string path in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
             {
                 Debug.WriteLine("Generating MD5 Hash for: " + path);
-                MD5source.Add(HashReader.MD5Hash(path));
                 Debug.WriteLine("Generating SHA1 Hash for: " + path);
-                SHA1source.Add(HashReader.SHA1Hash(path));
+                FileInfo FI = new FileInfo(path);
+                sourceHashes.Add(new FileHashes 
+                {                     
+                    name = FI.Name,
+                    filepath = path,
+                    md5 = HashOperations.MD5Hash(path), 
+                    sha1 = HashOperations.SHA1Hash(path)
+                });
+               
             }
 
-            foreach(string path in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
+
+            for (int i = 0; i < sourceHashes.Count; i++ )
             {
-                Debug.WriteLine("Generating MD5 Hash for: " + path);
-                MD5destination.Add(HashReader.MD5Hash(path));
-                Debug.WriteLine("Generating SHA1 Hash for: " + path);
-                SHA1destination.Add(HashReader.SHA1Hash(path));
+                try
+                {
+                    string dest = sourceHashes[i].filepath;
+                    dest.Replace(source, destination);
+                    if (File.Exists(dest))
+                    {
+                        string destmd5 = HashOperations.MD5Hash(dest);
+                        string destsha1 = HashOperations.SHA1Hash(dest);
+
+                        StringComparer c = StringComparer.OrdinalIgnoreCase;
+                        if ((c.Compare(sourceHashes[i].md5, destmd5) == 0) && (c.Compare(sourceHashes[i].sha1, destsha1) == 0))
+                        {
+                            Debug.WriteLine("Match for " + dest);
+                        }
+                        else
+                        {
+                            d++;                            
+                        }
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    MessageBox.Show("Issue occurred with hashing of files: " + e.ToString());
+                }
+
+                finally
+                {
+                    if ((d == 0))
+                    {
+                        hashsuccess = true;
+                    }
+                }
             }
 
-            for (int i = 0; i < MD5source.Count && i < MD5destination.Count; i++ )
+            return hashsuccess;
+
+            /*foreach(string path in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
             {
+                Debug.WriteLine("Generating MD5 Hash for: " + path);                
+                Debug.WriteLine("Generating SHA1 Hash for: " + path);
+                destHashes.Add(new FileHashes
+                {
+                    filepath = path,
+                    md5 = HashOperations.MD5Hash(path),
+                    sha1 = HashOperations.SHA1Hash(path)
+                });
                 
+            }
+
+            for (int i = 0; i < sourceHashes.Count && i < destHashes.Count; i++ )
+            { 
                 StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-                if (comparer.Compare(MD5source[i], MD5destination[i]) == 0)
+                if (comparer.Compare(sourceHashes[i].filepath., MD5destination[i]) == 0)
                 {
                     Debug.WriteLine("MD5 match!");
                 }
@@ -263,14 +276,11 @@ namespace Condenser
                     Debug.WriteLine("SHA1 match!");
                 }
                 else { d++; }
-            }
+            }*/
 
-            if ((d == 0) && (l == 0))
-            {
-                hashsuccess = true;
-            }
 
-            return hashsuccess;
+
+            
         }
 
         

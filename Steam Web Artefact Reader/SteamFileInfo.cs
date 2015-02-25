@@ -76,7 +76,7 @@ namespace Condenser
         public string GetMD5Hash()
         {
             //HashReader hashops = new HashReader();
-            string md5 = HashReader.MD5Hash(file);           
+            string md5 = HashOperations.MD5Hash(file);           
 
             return md5;
         }
@@ -84,7 +84,7 @@ namespace Condenser
         public string GetSHA1Hash()
         {
             //HashReader hashops = new HashReader(file);
-            string sha1 = HashReader.SHA1Hash(file);
+            string sha1 = HashOperations.SHA1Hash(file);
 
             return sha1;
         }

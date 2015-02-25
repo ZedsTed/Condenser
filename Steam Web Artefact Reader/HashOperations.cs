@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Condenser
 {
-    public class HashReader
+    public class HashOperations
     {
         string filePath, md5HashString, sha1HashString;
         bool md5, sha1 = false;
         byte[] md5hash, sha1hash;
 
-        public HashReader()
+        public HashOperations()
         { }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="newFilePath"></param>
-        public HashReader(string newFilePath)
+        public HashOperations(string newFilePath)
         {
             filePath = newFilePath;
         }
@@ -32,7 +32,7 @@ namespace Condenser
         /// <param name="newFilePath"></param>
         /// <param name="usemd5"></param>
         /// <param name="usesha1"></param>
-        public HashReader(string newFilePath, bool usemd5, bool usesha1)
+        public HashOperations(string newFilePath, bool usemd5, bool usesha1)
         {
             filePath = newFilePath;
             md5 = usemd5;
