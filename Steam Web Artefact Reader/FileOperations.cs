@@ -152,10 +152,11 @@ namespace Condenser
                 try
                 {
                     File.Copy(sourceFiles[i], destFiles[i], true);
+                    LogWrite.WriteLine("File Copy: Copied file: " + sourceFiles[i]);
                 }
                 catch (Exception e)
                 {
-                    LogWrite.WriteLine("Failed file copy for: " + sourceFiles[i] + " with exception " + e ".");
+                    LogWrite.WriteLine("File Copy: Failed file copy for: " + sourceFiles[i] + " with exception " + e + ".");
                 }
             }
             LogWrite.WriteLine("File Copy: Finished copy job.");                

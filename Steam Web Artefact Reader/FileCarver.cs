@@ -33,20 +33,22 @@ namespace Condenser
 
         private static string[] SetupStartHexCodes()
         {
-            //string array of length 10.
-            //5 types
+            //string array of length 12.
+            //6 types
             string[] _startHexCodes = 
             {
-                "474946383761",//GIF
-                "474946383961",//GIF
-                "ffd8ffe00010",//JPG
-                "ffd8ffe1",    //JPG
-                "ffd8fffe",    //JPG
-                "464c5601",      //FLV
-                "89504e47",    //PNG
-                "424df8a9",    //BMP
-                "424d6225",    //BMP
-                "424d7603"     //BMP
+                "474946383761",                  //GIF
+                "474946383961",                  //GIF
+                "ffd8ffe00010",                  //JPG
+                "ffd8ffee00",                    //JPG
+                "ffd8ffe1",                      //JPG
+                "ffd8fffe",                      //JPG
+                "464c5601",                      //FLV
+                "89504e47",                      //PNG
+                "424df8a9",                      //BMP
+                "424d6225",                      //BMP
+                "424d7603",                      //BMP
+                "3c21444f43545950452068746d6c3e" //HTML
             };
             return _startHexCodes;
         }
@@ -72,8 +74,8 @@ namespace Condenser
             int total = files.Length;
             for (int i = 0; i < total; i++)
             {
-                Carve(GetBytes(files[i]), i);
                 LogWrite.WriteLine("File Carver: Carving file " + files[i].ToString() + ". " + i + " of " + total + " files.");
+                Carve(GetBytes(files[i]), i);                
             }
         }
 
@@ -127,8 +129,7 @@ namespace Condenser
                 {
                     LogWrite.WriteLine("File Carver: Found start hex pattern for file. Type: " + startHexCodes[i]);
                     offset = (match.Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
-                    Debug.WriteLine(offset);
-                    
+                                        
                     if (offset > 0)
                     {
                         int copysize = data.Length - offset;
@@ -153,19 +154,25 @@ namespace Condenser
                             JPG(file, findex);
                             break;
                         case 5:
-                            FLV(file, findex);
+                            JPG(file, findex);
                             break;
                         case 6:
-                            PNG(file, findex);
+                            FLV(file, findex);
                             break;
                         case 7:
-                            BMP(file, findex);
+                            PNG(file, findex);
                             break;
                         case 8:
                             BMP(file, findex);
                             break;
                         case 9:
                             BMP(file, findex);
+                            break;
+                        case 10:
+                            BMP(file, findex);
+                            break;
+                        case 11:
+                            HTML(file, findex);
                             break;
                     }
                     break;
@@ -260,6 +267,23 @@ namespace Condenser
             }
             File.WriteAllBytes(fpath + name + findex + type, file);
             LogWrite.WriteLine("File Carver: Created BMP:\n" + fpath + name + findex + type + "\n\n");
+        }
+
+        public void HTML(byte[] file, int findex)
+        {
+            string fpath = Path.Combine(path, @"html\");
+            string type = ".html";
+            DirectoryInfo dir = new DirectoryInfo(fpath);
+            if (!dir.Exists)
+            {
+                Directory.CreateDirectory(fpath);
+            }
+            if (File.Exists(fpath + name + findex + type))
+            {
+                File.Delete(fpath + name + findex + type);
+            }
+            File.WriteAllBytes(fpath + name + findex + type, file);
+            LogWrite.WriteLine("File Carver: Created HTML:\n" + fpath + name + findex + type + "\n\n");
         }
 
     }
