@@ -149,7 +149,14 @@ namespace Condenser
                 Debug.WriteLine(destFiles[i]);
                 Debug.WriteLine(source);
                 Debug.WriteLine(destination);
-                File.Copy(sourceFiles[i], destFiles[i], true);
+                try
+                {
+                    File.Copy(sourceFiles[i], destFiles[i], true);
+                }
+                catch (Exception e)
+                {
+                    LogWrite.WriteLine("Failed file copy for: " + sourceFiles[i] + " with exception " + e ".");
+                }
             }
             LogWrite.WriteLine("File Copy: Finished copy job.");                
 
@@ -166,8 +173,7 @@ namespace Condenser
 
             foreach(string path in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
             {
-                LogWrite.WriteLine("File Copy: Generating MD5 Hash for: " + path);
-                LogWrite.WriteLine("File Copy: Generating SHA1 Hash for: " + path);
+                LogWrite.WriteLine("File Copy: Generating MD5 and SHA1 Hash for: " + path);
                 FileInfo FI = new FileInfo(path);
                 sourceHashes.Add(new FileHashes 
                 {                     
