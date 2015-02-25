@@ -16,22 +16,15 @@ namespace Condenser
 {
     public partial class Main : Form
     {
-        public Main()
-        {
-            InitializeComponent();
-            RefreshManager();
-            //CreateUtil();
-
-            
-        }
         public string source = @"C:\Condenser\Source";
+        public static string logpath = (@"C:\Condenser" + @"\logs\");
         public string output = @"C:\Condenser\Output";
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
         public string csvdir = @"\files_csv\";
         public string csvname = "file_list";
         public string carveoutputdir = @"\carve_results\";
-        public ListView listDataStore = new ListView();
+        public LogWrite LW = new LogWrite(logpath, "log.txt");
 
         public string Source
         {
@@ -57,6 +50,26 @@ namespace Condenser
             }
         }
 
+        public Main()
+        {
+            InitializeComponent();
+            RefreshManager();
+
+        }
+
+        private void Main_Shown(object sender, EventArgs e)
+        {
+            LogWrite.WriteLineNoDate("=== Condenser: A Steam Web Artefact and Metadata Tool ===");
+            NewSession();
+        }
+
+        private void Form1_Load(object sender, EventArgs e) 
+        {
+            
+
+
+        }
+
 
         /// <summary>
         /// 
@@ -80,7 +93,17 @@ namespace Condenser
             this.Refresh();
         }
 
-        
+        private void NewSession()
+        {
+            steamDirBrowser.ShowDialog();
+            Source = steamDirBrowser.SelectedPath;
+            LogWrite.WriteLine("Session source: " + Source);
+            
+            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
+            outputBrowser.ShowDialog();
+            Output = outputBrowser.SelectedPath;
+            LogWrite.WriteLine("Session output: " + Output);
+        }
         
         private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -129,28 +152,7 @@ namespace Condenser
 
         private void newSession_Click_1(object sender, EventArgs e)
         {
-
-            Debug.WriteLine("Clicked.");
-            steamDirBrowser.ShowDialog();
-            Source = steamDirBrowser.SelectedPath;
-
-            
-
-            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
-            outputBrowser.ShowDialog();
-            Output = outputBrowser.SelectedPath;
-
-
-            Debug.WriteLine("source: " + source);
-            Debug.WriteLine("dest: " + output);
-
-            //fileListWorker.RunWorkerAsync();
-            //CompleteFileListView = listDataStore;
-
-
-            
-
-
+            NewSession();  
         }
 
         private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -363,7 +365,7 @@ namespace Condenser
 
         private void fileSizeLabel_Click(object sender, EventArgs e)       {       }
 
-        private void Form1_Load(object sender, EventArgs e)       {        }
+        
 
         private void fileModifiedLabel_Click(object sender, EventArgs e)       {       }
 
@@ -374,5 +376,7 @@ namespace Condenser
         private void steamDirBrowser_HelpRequest(object sender, EventArgs e)       {       }
 
         private void ProgressBar_Click(object sender, EventArgs e)       {       }
+
+
     }
 }

@@ -10,25 +10,19 @@ namespace Condenser
     class FileOperations
     {
 
-        public string directorySteam, directoryConfig, directoryAppCache, configpath, cachepath;
+        public string directoryConfig, directoryAppCache, configpath, cachepath;
         public string sourcepath, destinationpath;
-        
+
+
         private string[] FilesConfig, FilesAppCache;
 
         public List<string> sourceAllFilesList = new List<string>();
-        public List<string> sourceDirsList = new List<string>();
-        public List<string> sourceConfigFilesList = new List<string>();
-        public List<string> sourceAppCacheFilesList = new List<string>();
-        
+        public List<string> sourceDirsList = new List<string>();       
 
-        /*public FileOperations(string _sourcepath, string _destinationpath)
-        {
-            sourcepath = _sourcepath;
-            destinationpath = _destinationpath;
-        }*/
 
         public FileOperations(string _sourcepath, string _destinationpath, string _cachepath, string _configpath)
         {
+
             sourcepath = _sourcepath;
             destinationpath = _destinationpath;
             cachepath = _cachepath;
@@ -63,8 +57,9 @@ namespace Condenser
             directoryConfig = path + configpath;
             directoryAppCache = path + cachepath;
 
-            Debug.WriteLine("Config Directory: " + directoryConfig);
-            Debug.WriteLine("AppCache Directory: " + directoryAppCache);
+
+            LogWrite.WriteLine("FO (Get Directories): Config Directory: " + directoryConfig);
+            Debug.WriteLine("FO (Get Directories): AppCache Directory: " + directoryAppCache);
 
             // Grab files from directories.
 
@@ -76,7 +71,7 @@ namespace Condenser
             sourceDirsList.AddRange(configDir);
             sourceDirsList.AddRange(appCacheDir);
 
-            Debug.WriteLine("Got directories...");
+            Debug.WriteLine("FO (Get Directories): Got directories.");
             return sourceDirsList;
         }
 
@@ -86,37 +81,20 @@ namespace Condenser
         public void FileCopy()
         {
             //Get config and appcache subdirs
-            //string configpath = @"config\";
-            //string cachepath = @"appcache\httpcache\";
-
-            //List<string> configsubs = GetSubdirectories(sourcepath, configpath);
-            //List<string> appcachesubs = GetSubdirectories(sourcepath, cachepath);
-
             //Copy config contents.
-            string _destinationpath = Path.Combine(destinationpath, configpath);
-            string _sourcepath = Path.Combine(sourcepath, configpath);
-            Debug.WriteLine("Copying source config files...");
-            Debug.WriteLine(destinationpath);
 
+            LogWrite.WriteLine("File Copy: Copying source files from " + sourcepath + " to " + destinationpath);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             FullCopy(sourcepath, destinationpath);//copy main config folder contents.
-            
-            Debug.WriteLine("Finished copying source Config files...");
-
-            _destinationpath = Path.Combine(destinationpath, cachepath);
-            _sourcepath = Path.Combine(sourcepath, cachepath);
-            Debug.WriteLine(_destinationpath);
-            Debug.WriteLine("Copying source appcache files...");
-
-            //FullCopy(_sourcepath, _destinationpath);
-
-            Debug.WriteLine("Finished copying source appcache files...");
-            
-            Debug.WriteLine("Generating and comparing hashses...");
+            sw.Stop();
+            LogWrite.WriteLine("File Copy: Finished copying files in " + sw.ElapsedMilliseconds.ToString() + " milliseconds.");
+            LogWrite.WriteLine("File Copy: Performing data integrity checks on copied files.");
             if (HashChecking(sourcepath, destinationpath))
             {
-                Debug.WriteLine("Hash check success!");
+                LogWrite.WriteLine("File Copy: Hash check success for all files!");
             }
-            else { Debug.WriteLine("Hash fail."); }            
+            else { LogWrite.WriteLine("File Copy: Hash failed on some files."); }            
              
         }
 
@@ -157,14 +135,14 @@ namespace Condenser
                 }
                 
                 destDirectories.Add(sourceDirectories[i].Replace(source, destination));
-                Debug.WriteLine("Creating directory: " + destDirectories[i]);
+                LogWrite.WriteLine("File Copy: Creating directory: " + destDirectories[i]);
                 Directory.CreateDirectory(destDirectories[i]);
             }
 
             List<string> sourceFiles = GetAllFiles();
             List<string> destFiles = new List<string>();
 
-            Debug.WriteLine("File count: " + sourceFiles.Count);
+            LogWrite.WriteLine("File Copy: Number of files to be copied: " + sourceFiles.Count);
             for (int i = 0; i < sourceFiles.Count; i++)
             { 
                 destFiles.Add(sourceFiles[i].Replace(source, destination));
@@ -173,7 +151,7 @@ namespace Condenser
                 Debug.WriteLine(destination);
                 File.Copy(sourceFiles[i], destFiles[i], true);
             }
-            Debug.WriteLine("For loop finished!");                
+            LogWrite.WriteLine("File Copy: Finished copy job.");                
 
         }
 
@@ -183,16 +161,13 @@ namespace Condenser
             int d = 0;
             List<FileHashes> sourceHashes = new List<FileHashes>();
             List<FileHashes> destHashes = new List<FileHashes>();
-            List<string> SHA1source = new List<string>();
 
-            List<string> MD5destination = new List<string>();
-            List<string> SHA1destination = new List<string>();
            
 
             foreach(string path in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
             {
-                Debug.WriteLine("Generating MD5 Hash for: " + path);
-                Debug.WriteLine("Generating SHA1 Hash for: " + path);
+                LogWrite.WriteLine("File Copy: Generating MD5 Hash for: " + path);
+                LogWrite.WriteLine("File Copy: Generating SHA1 Hash for: " + path);
                 FileInfo FI = new FileInfo(path);
                 sourceHashes.Add(new FileHashes 
                 {                     
@@ -219,10 +194,11 @@ namespace Condenser
                         StringComparer c = StringComparer.OrdinalIgnoreCase;
                         if ((c.Compare(sourceHashes[i].md5, destmd5) == 0) && (c.Compare(sourceHashes[i].sha1, destsha1) == 0))
                         {
-                            Debug.WriteLine("Match for " + dest);
+                            LogWrite.WriteLine("File Copy: MD5 and SHA1 match for " + dest);
                         }
                         else
                         {
+                            LogWrite.WriteLine("File Copy: MD5 and SHA1 check failed for " + sourceHashes[i].filepath + " and " + dest);
                             d++;                            
                         }
                     }
@@ -243,48 +219,6 @@ namespace Condenser
             }
 
             return hashsuccess;
-
-            /*foreach(string path in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
-            {
-                Debug.WriteLine("Generating MD5 Hash for: " + path);                
-                Debug.WriteLine("Generating SHA1 Hash for: " + path);
-                destHashes.Add(new FileHashes
-                {
-                    filepath = path,
-                    md5 = HashOperations.MD5Hash(path),
-                    sha1 = HashOperations.SHA1Hash(path)
-                });
-                
-            }
-
-            for (int i = 0; i < sourceHashes.Count && i < destHashes.Count; i++ )
-            { 
-                StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-                if (comparer.Compare(sourceHashes[i].filepath., MD5destination[i]) == 0)
-                {
-                    Debug.WriteLine("MD5 match!");
-                }
-                else { l++; }
-            }
-
-            for (int j = 0; j < SHA1source.Count && j < SHA1destination.Count; j++)
-            {
-                
-                StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-                if (comparer.Compare(SHA1source[j], SHA1destination[j]) == 0)
-                {
-                    Debug.WriteLine("SHA1 match!");
-                }
-                else { d++; }
-            }*/
-
-
-
-            
         }
-
-        
-
-        
     }
 }

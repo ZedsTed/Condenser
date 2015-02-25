@@ -66,6 +66,17 @@ namespace Condenser
             return _endHexCodes;
         }*/
 
+        public void CarveManager()
+        {
+            LogWrite.WriteLine("File Carver: Started Carve Manager.");
+            int total = files.Length;
+            for (int i = 0; i < total; i++)
+            {
+                Carve(GetBytes(files[i]), i);
+                LogWrite.WriteLine("File Carver: Carving file " + files[i].ToString() + ". " + i + " of " + total + " files.");
+            }
+        }
+
         public byte[] GetBytes(string filepath)
         {
             byte[] data;
@@ -89,16 +100,7 @@ namespace Condenser
             return data;
         }
 
-        public void CarveManager()
-        {
-            Debug.WriteLine("Started Carve Manager.");
-            int total = files.Length;
-            for (int i = 0; i < total; i++)
-            {
-                Carve(GetBytes(files[i]), i);
-                Debug.WriteLine("Carving file " + i + " of " + total + " files.");
-            }
-        }
+
 
         public void Carve(byte[] data, int findex)
         {     
@@ -117,28 +119,22 @@ namespace Condenser
             }
             string datastring = Convert.ToString(sBuilder);
             //Now we scan the string for the hex code we want.
-            //Debug.WriteLine(datastring);
-             
-
-           
 
             for (int i = 0; i < startHexCodes.Length; i++)
             {
                 Match match = Regex.Match(datastring, startHexCodes[i], RegexOptions.IgnoreCase & RegexOptions.Singleline);
                 if (match.Success)
                 {
-                    Debug.WriteLine("Match success!");
+                    LogWrite.WriteLine("File Carver: Found start hex pattern for file. Type: " + startHexCodes[i]);
                     offset = (match.Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
                     Debug.WriteLine(offset);
                     
                     if (offset > 0)
                     {
                         int copysize = data.Length - offset;
-                        Array.Copy(data, offset, file, 0, copysize);                        
-                        Debug.WriteLine("Copying to new array. With offset.");
-  
+                        Array.Copy(data, offset, file, 0, copysize); 
                     }
-                    else { file = data; Debug.WriteLine("Created new byte array from 0 offset."); }
+                    else { file = data; }
                     switch (i)
                     { 
                         case 0:
@@ -173,15 +169,8 @@ namespace Condenser
                             break;
                     }
                     break;
-                    //Debug.WriteLine("Found JPG at: " + offset);
-
-                    //Create(file);
-                }
-                else { Debug.WriteLine("Found no media data!"); }
+                }                
             }
-
-
-            //return file;
         }
 
 
@@ -198,12 +187,11 @@ namespace Condenser
             }
             if (File.Exists(fpath + name + findex + type))
             {
-                File.Delete(fpath + name + findex + type);
-                Debug.WriteLine("Deleted JPG!");
+                File.Delete(fpath + name + findex + type);                
             }
 
             File.WriteAllBytes(fpath + name + findex + type, file);
-            Debug.WriteLine("Created JPG:\n" + fpath + name + findex + type + "\n");
+            LogWrite.WriteLine("File Carver: Created JPG:\n" + fpath + name + findex + type + "\n\n");
         }
 
         public void GIF(byte[] file, int findex)
@@ -221,7 +209,7 @@ namespace Condenser
             }
 
             File.WriteAllBytes(fpath + name + findex + type, file);
-            Debug.WriteLine("Created GIF\n" + fpath + name + findex + type + "\n");
+            LogWrite.WriteLine("File Carver: Created GIF:\n" + fpath + name + findex + type + "\n\n");
         }
         public void PNG(byte[] file, int findex)
         {
@@ -238,7 +226,7 @@ namespace Condenser
             }
 
             File.WriteAllBytes(fpath + name + findex + type, file);
-            Debug.WriteLine("Created PNG\n" + fpath + name + findex + type + "\n");
+            LogWrite.WriteLine("File Carver: Created PNG:\n" + fpath + name + findex + type + "\n\n");
         }
         public void FLV(byte[] file, int findex)
         {
@@ -255,7 +243,7 @@ namespace Condenser
             }
 
             File.WriteAllBytes(fpath + name + findex + type, file);
-            Debug.WriteLine("Created FLV\n" + fpath + name + findex + type + "\n");
+            LogWrite.WriteLine("File Carver: Created FLV:\n" + fpath + name + findex + type + "\n\n");
         }
         public void BMP(byte[] file, int findex)
         {
@@ -271,7 +259,7 @@ namespace Condenser
                 File.Delete(fpath + name + findex + type);
             }
             File.WriteAllBytes(fpath + name + findex + type, file);
-            Debug.WriteLine("Created BMP\n" + fpath + name + findex + type + "\n");
+            LogWrite.WriteLine("File Carver: Created BMP:\n" + fpath + name + findex + type + "\n\n");
         }
 
     }

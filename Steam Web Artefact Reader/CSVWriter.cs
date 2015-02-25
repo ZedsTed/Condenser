@@ -40,14 +40,15 @@ namespace Condenser
             string headers = "Name,Path,Size (bytes),Access Date,Creation Date,Modification Date,MD5 Hash,SHA1 Hash";
 
             StreamWriter stream = new StreamWriter(fullpath, true);
+            int j = data.Count;
             for (int i = 0; i < data.Count; i++)
             {
                 if (i == 0)
                 {
-                    Debug.WriteLine("Written headers.");
+                    LogWrite.WriteLine("CSV Tool: Created columns for csv output.");
                     stream.WriteLine(headers);
                 }
-                Debug.WriteLine("Writing row for file: " + i);
+                LogWrite.WriteLine("CSV Tool: Writing row " + i + " of " + j);
                 WriteRow(data[i], stream);
             }
             stream.Close();
@@ -57,8 +58,7 @@ namespace Condenser
         {
             bool firstColumn = true;
             StringBuilder sb = new StringBuilder();
-
-            Debug.WriteLine("Row being written..");
+            
             for (int j = 0; j < line.Length; j++)
             {
                 if (!firstColumn)

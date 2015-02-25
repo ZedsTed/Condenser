@@ -57,6 +57,7 @@
     <Compile Include="FileCarver.cs" />
     <Compile Include="FileOperations.cs" />
     <Compile Include="FileHashes.cs" />
+    <Compile Include="LogWrite.cs" />
     <Compile Include="IO.cs">
       <SubType>Form</SubType>
     </Compile>

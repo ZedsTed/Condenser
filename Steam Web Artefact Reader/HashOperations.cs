@@ -10,9 +10,9 @@ namespace Condenser
 {
     public class HashOperations
     {
-        string filePath, md5HashString, sha1HashString;
+        string filePath;
         bool md5, sha1 = false;
-        byte[] md5hash, sha1hash;
+
 
         public HashOperations()
         { }

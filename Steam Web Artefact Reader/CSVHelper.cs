@@ -21,7 +21,7 @@ namespace Condenser
 
             for (int i = 0; i < filelist.Count; i++)
             {
-                Debug.WriteLine("Getting file list data for file: " + i);
+                LogWrite.WriteLine("CSV Tool: Getting file list data for file: " + i);
                 filesdata.Add(GetFileData(filelist[i]));                
             }
 
@@ -52,7 +52,7 @@ namespace Condenser
             filedata[7] = FI.GetSHA1Hash();
 
 
-            Debug.WriteLine("Got file data.");
+            LogWrite.WriteLine("CSV Tool: Got metadata for file: " + file);
             return filedata;
         }
     }
