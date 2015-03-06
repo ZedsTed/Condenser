@@ -164,7 +164,7 @@ namespace Condenser
             }
             for (int i = 0; i < CompleteFileListView.Columns.Count; i++)
             {
-            CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
             //PopulateList();
         }
