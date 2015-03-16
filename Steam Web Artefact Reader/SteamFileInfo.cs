@@ -11,9 +11,6 @@ namespace Condenser
     {
         string file;
 
-        public SteamFileInfo()
-        { }
-
         public SteamFileInfo(string file)
         {
             this.file = file;
