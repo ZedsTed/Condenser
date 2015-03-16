@@ -13,6 +13,7 @@ namespace Condenser
     {
         string[] files;
         string[] startHexCodes = SetupStartHexCodes();
+        string[] endHexCodes = SetupEndHexCodes();
         public static string name = "file";
         public string path;
         
@@ -33,7 +34,7 @@ namespace Condenser
 
         private static string[] SetupStartHexCodes()
         {
-            //string array of length 12.
+            //string array of length 9.
             //6 types
             string[] _startHexCodes = 
             {
@@ -45,28 +46,26 @@ namespace Condenser
                 "ffd8fffe",                      //JPG
                 "464c5601",                      //FLV
                 "89504e47",                      //PNG
-                "424df8a9",                      //BMP
-                "424d6225",                      //BMP
-                "424d7603",                      //BMP
                 "3c21444f43545950452068746d6c3e" //HTML
             };
             return _startHexCodes;
         }
 
-        /*private Dictionary<string, string> SetupEndHexCodes()
+        private static string[] SetupEndHexCodes()
         {
-            Dictionary<string, string> _endHexCodes = new Dictionary<string, string>();
-
-            _endHexCodes.Add("gif1", "003b");
-            _endHexCodes.Add("gif2", "00003b");
-            _endHexCodes.Add("jpg1", "ffd9");
-            _endHexCodes.Add("jpg2", "ffd9");
-            _endHexCodes.Add("", "");
-            _endHexCodes.Add("", "");
-            _endHexCodes.Add("", "");
+            //string array of length 5
+            //5 types
+            string[] _endHexCodes = 
+            {
+                "003b",                  //GIF
+                "ffd9",                  //JPG
+                "01ae090000050129",      //FLV
+                "fffcfdfe",              //PNG
+                "3c2f68746d6c3e"         //HTML   
+            };
 
             return _endHexCodes;
-        }*/
+        }
 
         public void CarveManager()
         {
@@ -75,8 +74,10 @@ namespace Condenser
             for (int i = 0; i < total; i++)
             {
                 LogWrite.WriteLine("File Carver: Carving file " + files[i].ToString() + ". " + i + " of " + total + " files.");
-                Carve(GetBytes(files[i]), i);                
+                byte[] filebytes = GetBytes(files[i]);
+                Carve(filebytes, files[i], i);               
             }
+            LogWrite.WriteLine("File Carver: Finished File Carving.\n");
         }
 
         public byte[] GetBytes(string filepath)
@@ -104,10 +105,10 @@ namespace Condenser
 
 
 
-        public void Carve(byte[] data, int findex)
-        {     
+        public void Carve(byte[] data, string filepath, int findex)
+        {
 
-            
+            int endvalue = 0;
             int offset = 0;
             byte[] file = new byte[data.Length + 1];
 
@@ -132,8 +133,16 @@ namespace Condenser
                                         
                     if (offset > 0)
                     {
-                        int copysize = data.Length - offset;
-                        Array.Copy(data, offset, file, 0, copysize); 
+                        for (int j = 0; j < endHexCodes.Length; j++ )
+                        {
+                            Match endmatch = Regex.Match(datastring, endHexCodes[j], RegexOptions.IgnoreCase & RegexOptions.Singleline);
+                            if (endmatch.Success)
+                            {
+                                endvalue = (endmatch.Index / 2);
+                                int copysize = (data.Length - offset) - endvalue;
+                                Array.Copy(data, offset, file, 0, copysize);
+                            }   
+                        }
                     }
                     else { file = data; }
                     switch (i)
@@ -175,8 +184,15 @@ namespace Condenser
                             HTML(file, findex);
                             break;
                     }
-                    break;
-                }                
+                    if (endvalue == 0)
+                    {
+                        break;
+                    }
+                }
+                if (i == startHexCodes.Length - 1)
+                {
+                    LogWrite.WriteLine("File Carver: Found no hex codes that match for file: " + filepath + "\n");
+                }
             }
         }
 
