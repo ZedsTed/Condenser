@@ -109,7 +109,7 @@
             // newSession
             // 
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(152, 22);
+            this.newSession.Size = new System.Drawing.Size(140, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
@@ -257,18 +257,21 @@
             this.debugInformationToolStripMenuItem.Name = "debugInformationToolStripMenuItem";
             this.debugInformationToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.debugInformationToolStripMenuItem.Text = "View Logs";
+            this.debugInformationToolStripMenuItem.Click += new System.EventHandler(this.debugInformationToolStripMenuItem_Click);
             // 
             // userGuideToolStripMenuItem
             // 
             this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
             this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.userGuideToolStripMenuItem.Text = "User Guide";
+            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
             // 
             // aboutSteamWebArtefactReaderSWARToolStripMenuItem
             // 
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Name = "aboutSteamWebArtefactReaderSWARToolStripMenuItem";
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Text = "About Condenser";
+            this.aboutSteamWebArtefactReaderSWARToolStripMenuItem.Click += new System.EventHandler(this.aboutSteamWebArtefactReaderSWARToolStripMenuItem_Click);
             // 
             // steamDirBrowser
             // 

@@ -17,14 +17,16 @@ namespace Condenser
     public partial class Main : Form
     {
         public string source = @"C:\Condenser\Source";
-        public static string logpath = (@"C:\Condenser" + @"\logs\");
-        public string output = @"C:\Condenser\Output";
+        
+        public string output = System.Environment.CurrentDirectory + @"\Output";
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
         public string csvdir = @"\files_csv\";
         public string csvname = "file_list";
         public string carveoutputdir = @"\carve_results\";
-        public LogWrite LW = new LogWrite(logpath, "log.txt");
+        public static string logpath = (@"\logs\");
+
+
 
         public string Source
         {
@@ -55,10 +57,12 @@ namespace Condenser
             InitializeComponent();
             RefreshManager();
 
+
         }
 
         private void Main_Shown(object sender, EventArgs e)
         {
+            LogWrite LW = new LogWrite(Output + logpath, "log.txt");
             LogWrite.WriteLineNoDate("=== Condenser: A Steam Web Artefact and Metadata Tool ===");
             NewSession();
         }
@@ -96,12 +100,19 @@ namespace Condenser
         private void NewSession()
         {
             steamDirBrowser.ShowDialog();
-            Source = steamDirBrowser.SelectedPath;
+            if (steamDirBrowser.SelectedPath != null)
+            {
+                Source = steamDirBrowser.SelectedPath;
+            }
             LogWrite.WriteLine("Session source: " + Source);
             
-            outputBrowser.SelectedPath = System.Environment.CurrentDirectory;
+
+            outputBrowser.SelectedPath = Output;
             outputBrowser.ShowDialog();
-            Output = outputBrowser.SelectedPath;
+            if (outputBrowser.SelectedPath != null)
+            {
+                Output = outputBrowser.SelectedPath;
+            }
             LogWrite.WriteLine("Session output: " + Output);
         }
         
@@ -115,9 +126,9 @@ namespace Condenser
             time.Start();
             csvthread.Start();
 
-            //Run while loop in another thread?
             while (csvthread.ThreadState == System.Threading.ThreadState.Running)
             {
+                Update();
                 if (csvthread.ThreadState == System.Threading.ThreadState.Stopped)
                 {
                     time.Stop();
@@ -226,7 +237,9 @@ namespace Condenser
 
         private void loadCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SQLiteReader reader = new SQLiteReader(@"C:\Program Files (x86)\Steam\config\htmlcache\Cookies;");
+            string cookiespath = Source + config + @"htmlcache\Cookies";
+
+            SQLiteReader reader = new SQLiteReader(cookiespath);
 
             DataTable dbout = reader.GetConnection();
 
@@ -284,10 +297,11 @@ namespace Condenser
                 return null;
             }*/
             int selectedindex = CompleteFileListView.SelectedIndices[0];
+
             string filepath = CompleteFileListView.Items[selectedindex].SubItems[1].Text + @"\" + CompleteFileListView.Items[selectedindex].Text;
 
 
-            MessageBox.Show(filepath);
+            
 
             return filepath;
 
@@ -301,7 +315,7 @@ namespace Condenser
         {
             FileCarver FC = new FileCarver();
             string file = GetFileSelected();
-            FC.Carve(FC.GetBytes(file), 0);         
+            FC.Carve(FC.GetBytes(file), file, 0);        
 
         }
 
@@ -327,6 +341,7 @@ namespace Condenser
             carveThread.Start();
             while (carveThread.ThreadState == System.Threading.ThreadState.Running)
             {
+                Update();
                 if (carveThread.ThreadState == System.Threading.ThreadState.Stopped)
                 {
                     time.Stop();
@@ -353,12 +368,28 @@ namespace Condenser
                 Update();
                 if (copyThread.ThreadState == System.Threading.ThreadState.Stopped)
                 {
-                    statusOutputLabel.Text = "Finished copying all files.!";
+                    statusOutputLabel.Text = "Finished copying all files!";
                 }
             }
             
             
         }
+
+        private void debugInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(Output + logpath);
+        }
+
+        private void userGuideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutSteamWebArtefactReaderSWARToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)       {       }
@@ -376,6 +407,7 @@ namespace Condenser
         private void steamDirBrowser_HelpRequest(object sender, EventArgs e)       {       }
 
         private void ProgressBar_Click(object sender, EventArgs e)       {       }
+
 
 
     }
