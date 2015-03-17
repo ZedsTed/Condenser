@@ -18,14 +18,14 @@ namespace Condenser
     {
         public string source = @"C:\Condenser\Source";
         
-        public string output = System.Environment.CurrentDirectory + @"\Output";
+        public static string output = @"C:\Condenser\Output";
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
         public string csvdir = @"\files_csv\";
         public string csvname = "file_list";
         public string carveoutputdir = @"\carve_results\";
-        public static string logpath = (@"\logs\");
-
+        public static string logpath = (@"C:\Condenser\logs\");
+        public LogWrite LW = new LogWrite(logpath, "log.txt");
 
 
         public string Source
@@ -61,10 +61,9 @@ namespace Condenser
         }
 
         private void Main_Shown(object sender, EventArgs e)
-        {
-            LogWrite LW = new LogWrite(Output + logpath, "log.txt");
+        {     
             LogWrite.WriteLineNoDate("=== Condenser: A Steam Web Artefact and Metadata Tool ===");
-            NewSession();
+            SetDirectories();
         }
 
         private void Form1_Load(object sender, EventArgs e) 
@@ -100,6 +99,7 @@ namespace Condenser
         private void NewSession()
         {
             CompleteFileListView.Clear();
+            CompleteFileListView.Refresh();
             dataGridView1.DataSource = null;
             SetDirectories();
         }
@@ -112,7 +112,7 @@ namespace Condenser
             {
                 Source = steamDirBrowser.SelectedPath;
             }
-            LogWrite.WriteLine("Session source: " + Source);
+            LogWrite.WriteLine("Main: Session source: " + Source);
             
 
             outputBrowser.SelectedPath = Output;
@@ -121,7 +121,7 @@ namespace Condenser
             {
                 Output = outputBrowser.SelectedPath;
             }
-            LogWrite.WriteLine("Session output: " + Output);
+            LogWrite.WriteLine("Main: Session output: " + Output);
         }
         
         private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,7 +163,7 @@ namespace Condenser
             csv.Write();
 
             
-            Debug.WriteLine("Written.");
+            LogWrite.WriteLine("CSV Output: Finished writing to csv at " + csvpath);
         }
 
         private void newSession_Click_1(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace Condenser
             {
                 CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
-            //PopulateList();
+            
         }
 
         public List<ListViewItem> PopulateList()
@@ -191,6 +191,7 @@ namespace Condenser
             List<string> steamFiles = FO.GetAllFiles();
             
             int total = steamFiles.Count;
+            LogWrite.WriteLine("Artefact Discoverer: Found " + total + " files in the source directory.");
             List<ListViewItem> items = new List<ListViewItem>();
 
             for (int i = 0; i < steamFiles.Count; i++)
@@ -209,7 +210,6 @@ namespace Condenser
 
                 ListViewItem item = new ListViewItem(new[] { name, path, size, accessdate, creationdate, modifieddate, md5, sha1 });
                 items.Add(item);
-                Debug.WriteLine("Added file number " + i + " of " + steamFiles.Count); 
             }
 
             return items;
@@ -256,6 +256,7 @@ namespace Condenser
                 if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
                 {
                     dataGridView1.Columns[i].Visible = false;
+                    LogWrite.WriteLine("SQLite Reader: Found System.Byte[] data type in the cookies database, not outputting to data grid view due to formatting errors.");
                 }
             }
         }
@@ -350,9 +351,9 @@ namespace Condenser
             }
 
             long timetaken = time.ElapsedMilliseconds;
+            LogWrite.WriteLine("File Carver: Finished! Carved files in " + timetaken.ToString() + " milliseconds.");
 
-
-            io.IOtext.AppendText("Files carved in " + timetaken.ToString() + " milliseconds.\n");
+            
 
         }
 
@@ -371,7 +372,7 @@ namespace Condenser
 
         private void debugInformationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(Output + logpath);
+            Process.Start(logpath);
         }
 
 
