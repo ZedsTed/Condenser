@@ -126,105 +126,108 @@ namespace Condenser
 
             for (int i = 0; i < startHexCodes.Length; i++)
             {
-                Match match = Regex.Match(datastring, startHexCodes[i], RegexOptions.IgnoreCase & RegexOptions.Singleline);
-                if (match.Success)
+                Regex r = new Regex(startHexCodes[i], RegexOptions.IgnoreCase & RegexOptions.Singleline);
+                MatchCollection matches = r.Matches(datastring);
+                //Match match = Regex.Match(datastring, startHexCodes[i], RegexOptions.IgnoreCase & RegexOptions.Singleline);
+
+                if (matches.Count > 0)
                 {
-                    LogWrite.WriteLine("File Carver: Found start hex pattern for file. Type: " + startHexCodes[i]);
-                    offset = (match.Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
-                                        
-                    if (offset > 0)
+                    int ind = matches.Count;
+                    for (int m = 0; m < ind; m++)
                     {
-                        string endHexCode = "00";
-                        if (i == 0 || i == 1)//GIF
-                        {
-                            endHexCode = "003b";
-                        }
+                        
+                        LogWrite.WriteLine("File Carver: Found start hex pattern for file. Type: " + startHexCodes[i]);
+                        LogWrite.WriteLine("File Carver: Carving the " + ind + " for this file of the same type.");
+                        offset = (matches[m].Index / 2); //We need to divide it by two as hex is two chars and regex is checking them one at a time.
 
-                        else if (i == 2 || i == 3 || i == 4 || i == 5)//JPG
+                        if (offset > 0)
                         {
-                            endHexCode = "fffd9";
-                        }
-
-                        else if (i == 6)//FLV
-                        {
-                            endHexCode = "01ae090000050129";
-                        }
-
-                        else if (i == 7)//PNG
-                        {
-                            endHexCode = "fffcfdfe";
-                        }
-
-                        else if (i == 8)//HTML
-                        {
-                            endHexCode = "3c2f68746d6c3e";
-                        }
-
-                        Match endmatch = Regex.Match(datastring, endHexCode, RegexOptions.IgnoreCase & RegexOptions.Singleline);
-                        if (endmatch.Success)
-                        {
-
-                            LogWrite.WriteLine("File Carver: Found end hex pattern for file. Type: " + endHexCode);
-                            endvalue = (endmatch.Index / 2);
-                            if (endvalue > offset) //Ensures that we're only carving positive matches, where the endvalue is after the start.
+                            string endHexCode = "00";
+                            if (i == 0 || i == 1)//GIF
                             {
-                                int copysize = endvalue - offset;
-                                Array.Copy(data, offset, file, 0, copysize);
-                                LogWrite.WriteLine("File Carver: Carving with offset, and endvalue at " + endvalue.ToString() + " offset.");
+                                endHexCode = "003b";
                             }
-                        }
-                        if (!endmatch.Success)//If no hex code matches for the file type.
-                        {
-                            int copysize = data.Length - offset;
-                            Array.Copy(data, offset, file, 0, copysize);
-                            LogWrite.WriteLine("File Carver: Found no end hex code that matches. Carving the file from the offset to the end.");
-                        }
 
-                        for (int j = 0; j < endHexCodes.Length; j++ )
-                        {
-                            
+                            else if (i == 2 || i == 3 || i == 4 || i == 5)//JPG
+                            {
+                                endHexCode = "fffd9";
+                            }
 
+                            else if (i == 6)//FLV
+                            {
+                                endHexCode = "01ae090000050129";
+                            }
+
+                            else if (i == 7)//PNG
+                            {
+                                endHexCode = "fffcfdfe";
+                            }
+
+                            else if (i == 8)//HTML
+                            {
+                                endHexCode = "3c2f68746d6c3e";
+                            }
+
+                            Match endmatch = Regex.Match(datastring, endHexCode, RegexOptions.IgnoreCase & RegexOptions.Singleline);
+                            if (endmatch.Success)
+                            {
+
+                                LogWrite.WriteLine("File Carver: Found end hex pattern for file. Type: " + endHexCode);
+                                endvalue = (endmatch.Index / 2);
+                                if (endvalue > offset) //Ensures that we're only carving positive matches, where the endvalue is after the start.
+                                {
+                                    int copysize = endvalue - offset;
+                                    Array.Copy(data, offset, file, 0, copysize);
+                                    LogWrite.WriteLine("File Carver: Carving with offset, and endvalue at " + endvalue.ToString() + " offset.");
+                                }
+                            }
+                            /*if (!endmatch.Success)//If no hex code matches for the file type.
+                            {
+                                int copysize = data.Length - offset;
+                                Array.Copy(data, offset, file, 0, copysize);
+                                LogWrite.WriteLine("File Carver: Found no end hex code that matches. Carving the file from the offset to the end.");
+                            }*/
                         }
+                        else { file = data; }
+                        switch (i)
+                        {
+                            case 0:
+                                GIF(file, findex, i, m);
+                                break;
+                            case 1:
+                                GIF(file, findex, i, m);
+                                break;
+                            case 2:
+                                JPG(file, findex, i, m);
+                                break;
+                            case 3:
+                                JPG(file, findex, i, m);
+                                break;
+                            case 4:
+                                JPG(file, findex, i, m);
+                                break;
+                            case 5:
+                                JPG(file, findex, i, m);
+                                break;
+                            case 6:
+                                FLV(file, findex, i, m);
+                                break;
+                            case 7:
+                                PNG(file, findex, i, m);
+                                break;
+                            case 8:
+                                HTML(file, findex, i, m);
+                                break;
+                        }
+                        /*if (endvalue == 0)
+                        {
+                            break;
+                        }*/
                     }
-                    else { file = data; }
-                    switch (i)
-                    { 
-                        case 0:
-                            GIF(file, findex, i);
-                            break;
-                        case 1:
-                            GIF(file, findex, i);
-                            break;
-                        case 2:
-                            JPG(file, findex, i);
-                            break;
-                        case 3:
-                            JPG(file, findex, i);
-                            break;
-                        case 4:
-                            JPG(file, findex, i);
-                            break;
-                        case 5:
-                            JPG(file, findex, i);
-                            break;
-                        case 6:
-                            FLV(file, findex, i);
-                            break;
-                        case 7:
-                            PNG(file, findex, i);
-                            break;
-                        case 8:
-                            HTML(file, findex, i);
-                            break;
-                    }
-                    /*if (endvalue == 0)
+                    if (i == startHexCodes.Length)
                     {
-                        break;
-                    }*/
-                }
-                if (i == startHexCodes.Length)
-                {
-                    LogWrite.WriteLine("File Carver: Found no hex codes that match for file: " + filepath + "\n");
+                        LogWrite.WriteLine("File Carver: Found no hex codes that match for file: " + filepath + "\n");
+                    }
                 }
             }
         }
@@ -232,7 +235,7 @@ namespace Condenser
 
 
 
-        public void JPG(byte[] file, int findex, int i)
+        public void JPG(byte[] file, int findex, int i, int m)
         {
             string fpath = Path.Combine(path, @"jpg\");
             string type = ".jpg";
@@ -241,16 +244,16 @@ namespace Condenser
             {
                 Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(fpath + name + findex + "-" + i + type))
+            if (File.Exists(fpath + name + findex + "-" + i + "-" + m + type))
             {
-                File.Delete(fpath + name + findex + "-" + i + type);                
+                File.Delete(fpath + name + findex + "-" + i + "-" + m + type);                
             }
 
-            File.WriteAllBytes(fpath + name + findex + "-" + i + type, file);
-            LogWrite.WriteLine("File Carver: Created JPG:\n" + fpath + name + findex + "-" + i + type + "\n\n");
+            File.WriteAllBytes(fpath + name + findex + "-" + i + "-" + m + type, file);
+            LogWrite.WriteLine("File Carver: Created JPG:\n" + fpath + name + findex + "-" + i + "-" + m + type + "\n\n");
         }
 
-        public void GIF(byte[] file, int findex, int i)
+        public void GIF(byte[] file, int findex, int i, int m)
         {
             string fpath = Path.Combine(path, @"gif\");
             string type = ".gif";
@@ -259,15 +262,15 @@ namespace Condenser
             {
                 Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(fpath + name + findex + "-" + i + type))
+            if (File.Exists(fpath + name + findex + "-" + i + "-" + m + type))
             {
-                File.Delete(fpath + name + findex + "-" + i + type);
+                File.Delete(fpath + name + findex + "-" + i + "-" + m + type);
             }
 
-            File.WriteAllBytes(fpath + name + findex + "-" + i + type, file);
-            LogWrite.WriteLine("File Carver: Created GIF:\n" + fpath + name + findex + "-" + i + type + "\n\n");
+            File.WriteAllBytes(fpath + name + findex + "-" + i + "-" + m + type, file);
+            LogWrite.WriteLine("File Carver: Created GIF:\n" + fpath + name + findex + "-" + i + "-" + m + type + "\n\n");
         }
-        public void PNG(byte[] file, int findex, int i)
+        public void PNG(byte[] file, int findex, int i, int m)
         {
             string fpath = Path.Combine(path, @"png\");
             string type = ".png";
@@ -276,15 +279,15 @@ namespace Condenser
             {
                 Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(fpath + name + findex + "-" + i + type))
+            if (File.Exists(fpath + name + findex + "-" + i + "-" + m + type))
             {
-                File.Delete(fpath + name + findex + "-" + i + type);
+                File.Delete(fpath + name + findex + "-" + i + "-" + m + type);
             }
 
-            File.WriteAllBytes(fpath + name + findex + "-" + i + type, file);
-            LogWrite.WriteLine("File Carver: Created PNG:\n" + fpath + name + findex + "-" + i + type + "\n\n");
+            File.WriteAllBytes(fpath + name + findex + "-" + i + "-" + m + type, file);
+            LogWrite.WriteLine("File Carver: Created PNG:\n" + fpath + name + findex + "-" + i + "-" + m + type + "\n\n");
         }
-        public void FLV(byte[] file, int findex, int i)
+        public void FLV(byte[] file, int findex, int i, int m)
         {
             string fpath = Path.Combine(path, @"flv\");
             string type = ".flv";
@@ -293,15 +296,15 @@ namespace Condenser
             {
                 Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(fpath + name + findex + "-" + i + type))
+            if (File.Exists(fpath + name + findex + "-" + i + "-" + m + type))
             {
-                File.Delete(fpath + name + findex + "-" + i + type);
+                File.Delete(fpath + name + findex + "-" + i + "-" + m + type);
             }
 
-            File.WriteAllBytes(fpath + name + findex + "-" + i + type, file);
-            LogWrite.WriteLine("File Carver: Created FLV:\n" + fpath + name + findex + "-" + i + type + "\n\n");
+            File.WriteAllBytes(fpath + name + findex + "-" + i + "-" + m + type, file);
+            LogWrite.WriteLine("File Carver: Created FLV:\n" + fpath + name + findex + "-" + i + "-" + m + type + "\n\n");
         }
-        public void HTML(byte[] file, int findex, int i)
+        public void HTML(byte[] file, int findex, int i, int m)
         {
             string fpath = Path.Combine(path, @"html\");
             string type = ".html";
@@ -310,12 +313,12 @@ namespace Condenser
             {
                 Directory.CreateDirectory(fpath);
             }
-            if (File.Exists(fpath + name + findex + "-" + i + type))
+            if (File.Exists(fpath + name + findex + "-" + i + "-" + m + type))
             {
-                File.Delete(fpath + name + findex + "-" + i + type);
+                File.Delete(fpath + name + findex + "-" + i + "-" + m + type);
             }
-            File.WriteAllBytes(fpath + name + findex + "-" + i + type, file);
-            LogWrite.WriteLine("File Carver: Created HTML:\n" + fpath + name + findex + "-" + i + type + "\n\n");
+            File.WriteAllBytes(fpath + name + findex + "-" + i + "-" + m + type, file);
+            LogWrite.WriteLine("File Carver: Created HTML:\n" + fpath + name + findex + "-" + i + "-" + m + type + "\n\n");
         }
 
     }
