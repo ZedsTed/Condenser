@@ -99,6 +99,14 @@ namespace Condenser
 
         private void NewSession()
         {
+            CompleteFileListView.Clear();
+            dataGridView1.DataSource = null;
+            SetDirectories();
+        }
+
+
+        private void SetDirectories()
+        {
             steamDirBrowser.ShowDialog();
             if (steamDirBrowser.SelectedPath != null)
             {
@@ -118,7 +126,6 @@ namespace Condenser
         
         private void outputToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            statusOutputLabel.Text = "CSV output starting. This may take some time...";
             Stopwatch time = new Stopwatch();            
             
             Thread csvthread = new Thread(CreateCSV);            
@@ -137,9 +144,7 @@ namespace Condenser
                 }
             }
 
-            long timetaken = time.ElapsedMilliseconds;
-            statusOutputLabel.Text = "Output to csv complete! Took " + timetaken.ToString() + " milliseconds";
-            
+            long timetaken = time.ElapsedMilliseconds; 
         }
 
         public void CreateCSV()
@@ -175,7 +180,7 @@ namespace Condenser
             }
             for (int i = 0; i < CompleteFileListView.Columns.Count; i++)
             {
-            CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                CompleteFileListView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
             //PopulateList();
         }
@@ -324,13 +329,7 @@ namespace Condenser
             carverFolderBrowser.SelectedPath = Source;
             carverFolderBrowser.ShowDialog();
 
-            IO io = new IO();
-            io.Show();
-
-            io.IOtext.AppendText("Getting files...\n");
             string[] files = Directory.GetFiles(carverFolderBrowser.SelectedPath, "*", SearchOption.AllDirectories);
-            io.IOtext.AppendText("Got files, now carving them...\n");
-
             string _carveoutputdir = Output + carveoutputdir;
 
             FileCarver FC = new FileCarver(files, _carveoutputdir);
@@ -364,12 +363,7 @@ namespace Condenser
             copyThread.Start();
             while (copyThread.ThreadState == System.Threading.ThreadState.Running)
             {
-                statusOutputLabel.Text = "Copying files!";
                 Update();
-                if (copyThread.ThreadState == System.Threading.ThreadState.Stopped)
-                {
-                    statusOutputLabel.Text = "Finished copying all files!";
-                }
             }
             
             
@@ -380,10 +374,6 @@ namespace Condenser
             Process.Start(Output + logpath);
         }
 
-        private void userGuideToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void aboutSteamWebArtefactReaderSWARToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -408,6 +398,11 @@ namespace Condenser
         private void steamDirBrowser_HelpRequest(object sender, EventArgs e)       {       }
 
         private void ProgressBar_Click(object sender, EventArgs e)       {       }
+
+        private void changeSteamDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetDirectories();
+        }
 
 
 

@@ -48,10 +48,8 @@
             this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeOutputDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steamDirBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.outputBrowser = new System.Windows.Forms.FolderBrowserDialog();
@@ -64,24 +62,21 @@
             this.modifieddate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.md5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.sha1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.StatusInfo = new System.Windows.Forms.Panel();
-            this.statusOutputLabel = new System.Windows.Forms.Label();
             this.carverFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.cookiesDBGroupBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.StatusInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 323);
+            this.dataGridView1.Location = new System.Drawing.Point(19, 340);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ShowCellErrors = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1121, 384);
+            this.dataGridView1.Size = new System.Drawing.Size(1108, 398);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -109,7 +104,7 @@
             // newSession
             // 
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(140, 22);
+            this.newSession.Size = new System.Drawing.Size(152, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
@@ -224,8 +219,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeSteamDirectoryToolStripMenuItem,
-            this.changeOutputDirectoryToolStripMenuItem});
+            this.changeSteamDirectoryToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -233,20 +227,14 @@
             // changeSteamDirectoryToolStripMenuItem
             // 
             this.changeSteamDirectoryToolStripMenuItem.Name = "changeSteamDirectoryToolStripMenuItem";
-            this.changeSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.changeSteamDirectoryToolStripMenuItem.Text = "Change Source Directory";
-            // 
-            // changeOutputDirectoryToolStripMenuItem
-            // 
-            this.changeOutputDirectoryToolStripMenuItem.Name = "changeOutputDirectoryToolStripMenuItem";
-            this.changeOutputDirectoryToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.changeOutputDirectoryToolStripMenuItem.Text = "Change Output Directory";
+            this.changeSteamDirectoryToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.changeSteamDirectoryToolStripMenuItem.Text = "Change Directories";
+            this.changeSteamDirectoryToolStripMenuItem.Click += new System.EventHandler(this.changeSteamDirectoryToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.debugInformationToolStripMenuItem,
-            this.userGuideToolStripMenuItem,
             this.aboutSteamWebArtefactReaderSWARToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -258,13 +246,6 @@
             this.debugInformationToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.debugInformationToolStripMenuItem.Text = "View Logs";
             this.debugInformationToolStripMenuItem.Click += new System.EventHandler(this.debugInformationToolStripMenuItem_Click);
-            // 
-            // userGuideToolStripMenuItem
-            // 
-            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
-            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.userGuideToolStripMenuItem.Text = "User Guide";
-            this.userGuideToolStripMenuItem.Click += new System.EventHandler(this.userGuideToolStripMenuItem_Click);
             // 
             // aboutSteamWebArtefactReaderSWARToolStripMenuItem
             // 
@@ -340,36 +321,6 @@
             // 
             this.sha1.Text = "SHA1 Hash";
             // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(3, 1);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(60, 16);
-            this.statusLabel.TabIndex = 22;
-            this.statusLabel.Text = "Status:    ";
-            // 
-            // StatusInfo
-            // 
-            this.StatusInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.StatusInfo.Controls.Add(this.statusOutputLabel);
-            this.StatusInfo.Controls.Add(this.statusLabel);
-            this.StatusInfo.Location = new System.Drawing.Point(13, 723);
-            this.StatusInfo.Name = "StatusInfo";
-            this.StatusInfo.Size = new System.Drawing.Size(567, 21);
-            this.StatusInfo.TabIndex = 23;
-            // 
-            // statusOutputLabel
-            // 
-            this.statusOutputLabel.AutoSize = true;
-            this.statusOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusOutputLabel.Location = new System.Drawing.Point(47, 1);
-            this.statusOutputLabel.Name = "statusOutputLabel";
-            this.statusOutputLabel.Size = new System.Drawing.Size(32, 16);
-            this.statusOutputLabel.TabIndex = 23;
-            this.statusOutputLabel.Text = "Foo";
-            // 
             // carverFolderBrowser
             // 
             this.carverFolderBrowser.RootFolder = System.Environment.SpecialFolder.MyComputer;
@@ -379,15 +330,24 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // cookiesDBGroupBox
+            // 
+            this.cookiesDBGroupBox.Location = new System.Drawing.Point(13, 324);
+            this.cookiesDBGroupBox.Name = "cookiesDBGroupBox";
+            this.cookiesDBGroupBox.Size = new System.Drawing.Size(1120, 420);
+            this.cookiesDBGroupBox.TabIndex = 22;
+            this.cookiesDBGroupBox.TabStop = false;
+            this.cookiesDBGroupBox.Text = "Cookies Database";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1145, 756);
-            this.Controls.Add(this.StatusInfo);
             this.Controls.Add(this.CompleteFileListView);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.cookiesDBGroupBox);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.Text = "Condenser: A Steam Artefact and Metadata Tool";
@@ -396,8 +356,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.StatusInfo.ResumeLayout(false);
-            this.StatusInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -437,15 +395,11 @@
         private System.Windows.Forms.ColumnHeader sha1;
         private System.Windows.Forms.ToolStripMenuItem discoverWebBrowserDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputToCSVToolStripMenuItem;
-        private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.Panel StatusInfo;
-        private System.Windows.Forms.Label statusOutputLabel;
         private System.Windows.Forms.ToolStripMenuItem carveSingleFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem carveFolderContentsToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog carverFolderBrowser;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem changeOutputDirectoryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
+        private System.Windows.Forms.GroupBox cookiesDBGroupBox;
     }
 }
 
