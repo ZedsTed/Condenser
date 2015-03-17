@@ -387,7 +387,8 @@ namespace Condenser
 
         private void aboutSteamWebArtefactReaderSWARToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            About about = new About();
+            about.Show();
         }
 
         

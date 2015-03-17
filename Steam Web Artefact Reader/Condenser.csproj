@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="CSVHelper.cs" />
     <Compile Include="CSVWriter.cs" />
     <Compile Include="FileCarver.cs" />
@@ -77,6 +83,9 @@
     <Compile Include="SQLiteDBHelper.cs" />
     <Compile Include="SQLiteReader.cs" />
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
