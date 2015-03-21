@@ -18,9 +18,7 @@ namespace Condenser
         public string path;
         
         public int index = 0;
-
-        //Dictionary<string, string> endHexCodes = new Dictionary<string, string>();
-
+       
         public FileCarver()
         {
             
@@ -71,7 +69,6 @@ namespace Condenser
         {
             LogWrite.WriteLine("File Carver: Started Carve Manager.");
             int total = files.Length;
-            int runs = 0;
             for (int i = 0; i < total; i++)
             {
                 LogWrite.WriteLine("File Carver: Carving file " + files[i].ToString() + ". " + i + " of " + total + " files.");

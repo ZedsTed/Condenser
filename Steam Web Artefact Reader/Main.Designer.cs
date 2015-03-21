@@ -43,9 +43,6 @@
             this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveSingleFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveFolderContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataIntegrityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mD5HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sHA1HashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +101,7 @@
             // newSession
             // 
             this.newSession.Name = "newSession";
-            this.newSession.Size = new System.Drawing.Size(152, 22);
+            this.newSession.Size = new System.Drawing.Size(140, 22);
             this.newSession.Text = "New Session";
             this.newSession.Click += new System.EventHandler(this.newSession_Click_1);
             // 
@@ -115,8 +112,7 @@
             this.imageWebBrowserDataToolStripMenuItem,
             this.outputToCSVToolStripMenuItem,
             this.sQLiteToolStripMenuItem,
-            this.fileCarveToolStripMenuItem,
-            this.dataIntegrityToolStripMenuItem});
+            this.fileCarveToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -195,27 +191,6 @@
             this.carveFolderContentsToolStripMenuItem.Text = "Carve Folder Contents";
             this.carveFolderContentsToolStripMenuItem.Click += new System.EventHandler(this.carveFolderContentsToolStripMenuItem_Click);
             // 
-            // dataIntegrityToolStripMenuItem
-            // 
-            this.dataIntegrityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mD5HashToolStripMenuItem,
-            this.sHA1HashToolStripMenuItem});
-            this.dataIntegrityToolStripMenuItem.Name = "dataIntegrityToolStripMenuItem";
-            this.dataIntegrityToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.dataIntegrityToolStripMenuItem.Text = "File Operations";
-            // 
-            // mD5HashToolStripMenuItem
-            // 
-            this.mD5HashToolStripMenuItem.Name = "mD5HashToolStripMenuItem";
-            this.mD5HashToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.mD5HashToolStripMenuItem.Text = "MD5 Hash File..";
-            // 
-            // sHA1HashToolStripMenuItem
-            // 
-            this.sHA1HashToolStripMenuItem.Name = "sHA1HashToolStripMenuItem";
-            this.sHA1HashToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.sHA1HashToolStripMenuItem.Text = "SHA1 Hash File...";
-            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -256,7 +231,7 @@
             // 
             // steamDirBrowser
             // 
-            this.steamDirBrowser.Description = "Please select the Steam installation\'s root folder.";
+            this.steamDirBrowser.Description = "Please select the location of the Steam data.";
             this.steamDirBrowser.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.steamDirBrowser.ShowNewFolderButton = false;
             this.steamDirBrowser.HelpRequest += new System.EventHandler(this.steamDirBrowser_HelpRequest);
@@ -373,9 +348,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutSteamWebArtefactReaderSWARToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataIntegrityToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mD5HashToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sHA1HashToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sQLiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadCookiesTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshCookiesTableToolStripMenuItem;
