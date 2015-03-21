@@ -59,7 +59,7 @@ namespace Condenser
 
 
             LogWrite.WriteLine("FO (Get Directories): Config Directory: " + directoryConfig);
-            Debug.WriteLine("FO (Get Directories): AppCache Directory: " + directoryAppCache);
+            LogWrite.WriteLine("FO (Get Directories): AppCache Directory: " + directoryAppCache);
 
             // Grab files from directories.
 
@@ -80,13 +80,11 @@ namespace Condenser
 
         public void FileCopy()
         {
-            //Get config and appcache subdirs
-            //Copy config contents.
 
             LogWrite.WriteLine("File Copy: Copying source files from " + sourcepath + " to " + destinationpath);
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            FullCopy(sourcepath, destinationpath);//copy main config folder contents.
+            FullCopy(sourcepath, destinationpath);
             sw.Stop();
             LogWrite.WriteLine("File Copy: Finished copying files in " + sw.ElapsedMilliseconds.ToString() + " milliseconds.");
             LogWrite.WriteLine("File Copy: Performing data integrity checks on copied files.");
@@ -94,8 +92,8 @@ namespace Condenser
             {
                 LogWrite.WriteLine("File Copy: Hash check success for all files!");
             }
-            else { LogWrite.WriteLine("File Copy: Hash failed on some files."); }            
-             
+            else { LogWrite.WriteLine("File Copy: Hash failed on some files."); }
+            MessageBox.Show("File Copying done!");
         }
 
         public List<string> GetSubdirectories(string path, string subpath)
@@ -170,7 +168,7 @@ namespace Condenser
             List<FileHashes> sourceHashes = new List<FileHashes>();
             List<FileHashes> destHashes = new List<FileHashes>();
 
-           
+           //Perhaps have it call GetAllFiles instead?
 
             foreach(string path in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
             {

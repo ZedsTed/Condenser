@@ -13,19 +13,13 @@ namespace Condenser
     {
         String dbConnection;
 
-        /// <summary>
-        ///     Single Param Constructor for specifying the DB file.
-        /// </summary>
-        /// <param name="inputFile">The File containing the DB</param>
+
         public SQLiteDBHelper(String inputFile)
         {
             dbConnection = String.Format("Data Source={0}", inputFile);
         }
 
-        /// <summary>
-        ///     Single Param Constructor for specifying advanced connection options.
-        /// </summary>
-        /// <param name="connectionOpts">A dictionary containing all desired options and their values</param>
+
         public SQLiteDBHelper(Dictionary<String, String> connectionOpts)
         {
             String str = "";
@@ -37,11 +31,7 @@ namespace Condenser
             dbConnection = str;
         }
 
-        /// <summary>
-        ///     Allows the programmer to run a query against the Database.
-        /// </summary>
-        /// <param name="sql">The SQL to run</param>
-        /// <returns>A DataTable containing the result set.</returns>
+
         public DataTable GetDataTable(string sql)
         {
             DataTable dt = new DataTable();

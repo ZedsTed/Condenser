@@ -39,7 +39,6 @@
             this.sQLiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backupCookiesDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveSingleFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveFolderContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,8 +141,7 @@
             // 
             this.sQLiteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadCookiesTableToolStripMenuItem,
-            this.refreshCookiesTableToolStripMenuItem,
-            this.backupCookiesDatabaseToolStripMenuItem});
+            this.refreshCookiesTableToolStripMenuItem});
             this.sQLiteToolStripMenuItem.Name = "sQLiteToolStripMenuItem";
             this.sQLiteToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.sQLiteToolStripMenuItem.Text = "SQLite Reader";
@@ -160,12 +158,6 @@
             this.refreshCookiesTableToolStripMenuItem.Name = "refreshCookiesTableToolStripMenuItem";
             this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.refreshCookiesTableToolStripMenuItem.Text = "Refresh Cookies Table";
-            // 
-            // backupCookiesDatabaseToolStripMenuItem
-            // 
-            this.backupCookiesDatabaseToolStripMenuItem.Name = "backupCookiesDatabaseToolStripMenuItem";
-            this.backupCookiesDatabaseToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.backupCookiesDatabaseToolStripMenuItem.Text = "Backup Cookies Database";
             // 
             // fileCarveToolStripMenuItem
             // 
@@ -354,7 +346,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileCarveToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog steamDirBrowser;
         private System.Windows.Forms.FolderBrowserDialog outputBrowser;
-        private System.Windows.Forms.ToolStripMenuItem backupCookiesDatabaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageWebBrowserDataToolStripMenuItem;
         private System.Windows.Forms.ListView CompleteFileListView;
         private System.Windows.Forms.ColumnHeader filename;
