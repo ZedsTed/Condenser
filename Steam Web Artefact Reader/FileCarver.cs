@@ -171,6 +171,11 @@ namespace Condenser
                                 Array.Copy(data, offset, file, 0, copysize);
                                 LogWrite.WriteLine("File Carver: Carving with offset, and endvalue at " + endvalue.ToString() + " offset.");
                             }
+                            else 
+                            {
+                                LogWrite.WriteLine("File Carver: Start offset was greater than the end hex code offset, not carving file.");
+                                continue;
+                            }
                         }
                         if (!endmatch.Success)//If no hex code matches for the file type.
                         {
@@ -179,11 +184,7 @@ namespace Condenser
                             LogWrite.WriteLine("File Carver: Found no end hex code that matches. Carving the file from the offset to the end.");
                         }
 
-                        for (int j = 0; j < endHexCodes.Length; j++ )
-                        {
-                            
 
-                        }
                     }
                     else { file = data; }
                     switch (i)
