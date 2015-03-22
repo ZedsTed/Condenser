@@ -50,8 +50,8 @@ Condenser has a myriad of tools available to the user.
         -   GIF
 
         -   JPG
-
-        -   BMP
+        
+        -   PNG
 
         -   FLV
 
