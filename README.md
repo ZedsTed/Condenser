@@ -42,7 +42,7 @@ Condenser has a myriad of tools available to the user.
 
 -   File Carving
 
-    -   Carves either a single file or a folder of the user’s choice.
+    -   Carves a folder of the user’s choice.
 
     -   Low overhead file carving identifies and carves files of the following
         type:
