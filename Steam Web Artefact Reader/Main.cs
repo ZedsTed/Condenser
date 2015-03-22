@@ -21,7 +21,7 @@ namespace Condenser
         public static string output = @"C:\Condenser\Output";
         public string cache = @"\appcache\httpcache\";
         public string config = @"\config\";
-        public string csvdir = @"\files_csv\";
+        public string csvdir = @"\csv_output\";
         public string csvname = "file_list";
         public string carveoutputdir = @"\carve_results\";
         public static string logpath = (@"C:\Condenser\logs\");

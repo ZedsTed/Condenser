@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Condenser
 {
@@ -52,6 +53,7 @@ namespace Condenser
                 WriteRow(data[i], stream);
             }
             stream.Close();
+            MessageBox.Show("CSV writing complete!");
         }
 
         public void WriteRow(string[] line, StreamWriter write)
