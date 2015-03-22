@@ -13,24 +13,10 @@ namespace Condenser
     {
         String dbConnection;
 
-
         public SQLiteDBHelper(String inputFile)
         {
             dbConnection = String.Format("Data Source={0}", inputFile);
         }
-
-
-        public SQLiteDBHelper(Dictionary<String, String> connectionOpts)
-        {
-            String str = "";
-            foreach (KeyValuePair<String, String> row in connectionOpts)
-            {
-                str += String.Format("{0}={1}; ", row.Key, row.Value);
-            }
-            str = str.Trim().Substring(0, str.Length - 1);
-            dbConnection = str;
-        }
-
 
         public DataTable GetDataTable(string sql)
         {
@@ -51,9 +37,7 @@ namespace Condenser
                 throw new Exception(e.Message);
             }
             return dt;
-        }               
-
-
+        } 
 
     }
 }

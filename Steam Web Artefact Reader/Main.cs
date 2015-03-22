@@ -115,7 +115,7 @@ namespace Condenser
             LogWrite.WriteLine("Main: Session source: " + Source);
             
 
-            outputBrowser.SelectedPath = Output;
+            //outputBrowser.SelectedPath = Output;
             outputBrowser.ShowDialog();
             if (outputBrowser.SelectedPath != null)
             {
