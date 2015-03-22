@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace Condenser
 {
@@ -76,6 +77,7 @@ namespace Condenser
                 Carve(filebytes, files[i], i);
             }
             LogWrite.WriteLine("File Carver: Finished File Carving.\n");
+            MessageBox.Show("Finished file carving! Attempted carving on " + total + " files." );
         }
 
         public byte[] GetBytes(string filepath)
