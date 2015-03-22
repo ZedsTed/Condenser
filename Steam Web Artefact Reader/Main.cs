@@ -173,6 +173,18 @@ namespace Condenser
 
         private void discoverWebBrowserDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DirectoryInfo sourcecache = new DirectoryInfo(source + cache);
+            if (!sourcecache.Exists)
+            {
+                MessageBox.Show("No htmlcache/appcache. folder is present within the source folder. Please ensure you've selected a valid Steam installation.");
+                return;
+            }
+            DirectoryInfo sourceconfig = new DirectoryInfo(source + config);
+            if (!sourceconfig.Exists)
+            {
+                MessageBox.Show("No config/ folder is present within the source folder. Please ensure you've selected a valid Steam installation.");
+                return;
+            }
             List<ListViewItem> items = PopulateList();
             for (int i = 0; i < items.Count; i++)
             {
@@ -187,6 +199,7 @@ namespace Condenser
 
         public List<ListViewItem> PopulateList()
         { 
+
             FileOperations FO = new FileOperations(source, output, cache, config);
             List<string> steamFiles = FO.GetAllFiles();
             
