@@ -274,6 +274,27 @@ namespace Condenser
             }
         }
 
+        private void refreshCookiesTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string cookiespath = Source + config + @"htmlcache\Cookies";
+
+            SQLiteReader reader = new SQLiteReader(cookiespath);
+
+            DataTable dbout = reader.GetConnection();
+
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = dbout;
+            dataGridView1.ReadOnly = true;
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {   //We don't want to output any byte arrays to the data grid.
+                if (dataGridView1.Columns[i].ValueType.ToString() == "System.Byte[]")
+                {
+                    dataGridView1.Columns[i].Visible = false;
+                    LogWrite.WriteLine("SQLite Reader: Found System.Byte[] data type in the cookies database, not outputting to data grid view due to formatting errors.");
+                }
+            }
+        }
+
         private void findSteamDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -417,6 +438,8 @@ namespace Condenser
         {
             SetDirectories();
         }
+
+
 
 
 

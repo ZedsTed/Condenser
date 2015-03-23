@@ -40,7 +40,6 @@
             this.loadCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshCookiesTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileCarveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.carveSingleFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.carveFolderContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSteamDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -156,25 +155,18 @@
             // refreshCookiesTableToolStripMenuItem
             // 
             this.refreshCookiesTableToolStripMenuItem.Name = "refreshCookiesTableToolStripMenuItem";
-            this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.refreshCookiesTableToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.refreshCookiesTableToolStripMenuItem.Text = "Refresh Cookies Table";
+            this.refreshCookiesTableToolStripMenuItem.Click += new System.EventHandler(this.refreshCookiesTableToolStripMenuItem_Click);
             // 
             // fileCarveToolStripMenuItem
             // 
             this.fileCarveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.carveSingleFileToolStripMenuItem,
             this.carveFolderContentsToolStripMenuItem});
             this.fileCarveToolStripMenuItem.Name = "fileCarveToolStripMenuItem";
             this.fileCarveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.fileCarveToolStripMenuItem.Text = "File Carve";
             this.fileCarveToolStripMenuItem.Click += new System.EventHandler(this.fileCarveToolStripMenuItem_Click);
-            // 
-            // carveSingleFileToolStripMenuItem
-            // 
-            this.carveSingleFileToolStripMenuItem.Name = "carveSingleFileToolStripMenuItem";
-            this.carveSingleFileToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.carveSingleFileToolStripMenuItem.Text = "Carve Single File";
-            this.carveSingleFileToolStripMenuItem.Click += new System.EventHandler(this.carveSingleFileToolStripMenuItem_Click);
             // 
             // carveFolderContentsToolStripMenuItem
             // 
@@ -358,7 +350,6 @@
         private System.Windows.Forms.ColumnHeader sha1;
         private System.Windows.Forms.ToolStripMenuItem discoverWebBrowserDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputToCSVToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem carveSingleFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem carveFolderContentsToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog carverFolderBrowser;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
